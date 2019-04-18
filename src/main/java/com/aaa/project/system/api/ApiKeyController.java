@@ -1,5 +1,6 @@
 package com.aaa.project.system.api;
 
+import com.aaa.common.support.Convert;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.keyContainer.domain.KeyContainer;
 import com.aaa.project.system.keyContainer.service.IKeyContainerService;
@@ -15,13 +16,11 @@ import java.util.List;
  * 钥匙接口
  */
 @RestController
-@RequestMapping("/api/key")
+@RequestMapping("/key")
 public class ApiKeyController {
     @Autowired
     private IKeyContainerService keyContainerService;
 
-
-    @RequiresGuest
     @RequestMapping("/aroundContainer")
     public AjaxResult aroundContainer(@RequestParam(name = "posLng",required = true) String posLng,
                                       @RequestParam(name = "posLat",required = true) String posLat) {
