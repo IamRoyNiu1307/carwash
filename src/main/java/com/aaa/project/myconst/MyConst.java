@@ -3,7 +3,7 @@ package com.aaa.project.myconst;
 /**
  * 常数类
  */
-public class SysConst {
+public class MyConst {
     //高德地图API Web服务的key
     public static final String MAP_WEB_KEY = "553ac3eed11ec277ed5afe84e3d492aa";
     //高德地图API 微信小程序服务的key
