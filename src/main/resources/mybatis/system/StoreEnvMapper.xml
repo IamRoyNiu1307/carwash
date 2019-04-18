@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.storeEnv.mapper.StoreEnvMapper">
+    
+    <resultMap type="StoreEnv" id="StoreEnvResult">
+        <result property="id"    column="id"    />
+        <result property="storeId"    column="store_id"    />
+        <result property="imagePath"    column="image_path"    />
+    </resultMap>
+	
+	<sql id="selectStoreEnvVo">
+        select id, store_id, image_path from cw_store_env
+    </sql>
+	
+    <select id="selectStoreEnvList" parameterType="StoreEnv" resultMap="StoreEnvResult">
+        <include refid="selectStoreEnvVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="storeId != null  and storeId != '' "> and store_id = #{storeId}</if>
+             <if test="imagePath != null  and imagePath != '' "> and image_path = #{imagePath}</if>
+         </where>
+    </select>
+    
+    <select id="selectStoreEnvById" parameterType="Integer" resultMap="StoreEnvResult">
+        <include refid="selectStoreEnvVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStoreEnv" parameterType="StoreEnv">
+        insert into cw_store_env
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="storeId != null  and storeId != ''  ">store_id,</if>
+			<if test="imagePath != null  and imagePath != ''  ">image_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="storeId != null  and storeId != ''  ">#{storeId},</if>
+			<if test="imagePath != null  and imagePath != ''  ">#{imagePath},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateStoreEnv" parameterType="StoreEnv">
+        update cw_store_env
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null  and storeId != ''  ">store_id = #{storeId},</if>
+            <if test="imagePath != null  and imagePath != ''  ">image_path = #{imagePath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteStoreEnvById" parameterType="Integer">
+        delete from cw_store_env where id = #{id}
+    </delete>
+	
+    <delete id="deleteStoreEnvByIds" parameterType="String">
+        delete from cw_store_env where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
