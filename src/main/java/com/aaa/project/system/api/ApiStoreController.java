@@ -4,10 +4,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 顾客接口
+ * 门店接口
  */
-
 @RestController
-@RequestMapping("/consumer")
-public class ConsumerController {
+@RequestMapping("/store")
+public class ApiStoreController {
 }
