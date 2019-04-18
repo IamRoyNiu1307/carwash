@@ -11,23 +11,15 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								UUID：<input type="text" name="uuid"/>
+								城市编码：<input type="text" name="cityid"/>
 							</li>
 
 							<li>
-								名称：<input type="text" name="containerName"/>
+								城市名称：<input type="text" name="city"/>
 							</li>
 
 							<li>
-								经度：<input type="text" name="posLng"/>
-							</li>
-
-							<li>
-								纬度：<input type="text" name="posLat"/>
-							</li>
-
-							<li>
-								城市编号：<input type="text" name="cityid"/>
+								所属省份编码：<input type="text" name="provinceid"/>
 							</li>
 
 							<li>
@@ -40,16 +32,16 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:keyContainer:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:cities:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:keyContainer:edit">
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:cities:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:keyContainer:remove">
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:cities:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:keyContainer:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:cities:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
 			</div>
@@ -60,9 +52,9 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:keyContainer:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:keyContainer:remove')}]];
-        var prefix = ctx + "system/keyContainer";
+        var editFlag = [[${@permission.hasPermi('system:cities:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:cities:remove')}]];
+        var prefix = ctx + "system/cities";
 
         $(function() {
             var options = {
@@ -71,7 +63,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "钥匙柜",
+                modalName: "城市",
 				search: false,
 		        showExport: true,
                 columns: [{
@@ -79,32 +71,22 @@
 		        },
 				{
 					field : 'id', 
-					title : '编号',
+					title : '主键',
 					visible: false
 				},
 				{
-					field : 'uuid', 
-					title : 'UUID',
-					sortable: true
-				},
-				{
-					field : 'containerName', 
-					title : '名称',
-					sortable: true
-				},
-				{
-					field : 'posLng', 
-					title : '经度',
-					sortable: true
-				},
-				{
-					field : 'posLat', 
-					title : '纬度',
-					sortable: true
-				},
-				{
 					field : 'cityid', 
-					title : '城市编号',
+					title : '城市编码',
+					sortable: true
+				},
+				{
+					field : 'city', 
+					title : '城市名称',
+					sortable: true
+				},
+				{
+					field : 'provinceid', 
+					title : '所属省份编码',
 					sortable: true
 				},
 		        {

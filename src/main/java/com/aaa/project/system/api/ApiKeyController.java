@@ -16,7 +16,7 @@ import java.util.List;
  * 钥匙接口
  */
 @RestController
-@RequestMapping("/key")
+@RequestMapping("/api/key")
 public class ApiKeyController {
     @Autowired
     private IKeyContainerService keyContainerService;
