@@ -26,7 +26,7 @@ public class MyTest {
         objects.add("121.481488,39.990464");
         objects.add("122.481488,39.990464");
 
-        List<Integer> distanceList = Distance.getDistanceList(objects, "116.481488,39.990464");
+        List<Integer> distanceList = Distance.getDistanceList(objects, "116.481488,39.990464",1);
         System.out.println(distanceList);
     }
 
