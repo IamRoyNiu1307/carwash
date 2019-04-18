@@ -11,11 +11,7 @@
 					<div class="select-list">
 						<ul id="searchUl">
 							<li>
-								<span class="textSpan">门店编号：</span><input type="text" name="storeId"/>
-							</li>
-
-							<li>
-								<span class="textSpan">门店环境图片路径：</span><input type="text" name="imagePath"/>
+								<span class="textSpan">状态名称：</span><input type="text" name="statusName"/>
 							</li>
 
 							<li>
@@ -28,16 +24,16 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:storeEnv:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:status:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:storeEnv:edit">
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:status:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:storeEnv:remove">
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:status:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:storeEnv:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:status:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
 			</div>
@@ -48,9 +44,9 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:storeEnv:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:storeEnv:remove')}]];
-        var prefix = ctx + "system/storeEnv";
+        var editFlag = [[${@permission.hasPermi('system:status:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:status:remove')}]];
+        var prefix = ctx + "system/status";
 
         $(function() {
             var options = {
@@ -59,7 +55,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "门店环境",
+                modalName: "状态",
 				search: false,
 		        showExport: true,
                 columns: [{
@@ -71,13 +67,8 @@
 					visible: false
 				},
 				{
-					field : 'storeId', 
-					title : '门店编号',
-					sortable: true
-				},
-				{
-					field : 'imagePath', 
-					title : '门店环境图片路径',
+					field : 'statusName', 
+					title : '状态名称',
 					sortable: true
 				},
 		        {

@@ -12,13 +12,13 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								字典名称：<input type="text" name="dictName"/>
+								<span class="textSpan">字典名称：</span><input type="text" name="dictName"/>
 							</li>
 							<li>
-								字典类型：<input type="text" name="dictType"/>
+								<span class="textSpan">字典类型：</span><input type="text" name="dictType"/>
 							</li>
 							<li>
-								字典状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+								<span class="textSpan">字典状态：</span><select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
 									<option value="">所有</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>

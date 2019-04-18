@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.consumerAccount.mapper.ConsumerAccountMapper">
+    
+    <resultMap type="ConsumerAccount" id="ConsumerAccountResult">
+        <result property="id"    column="id"    />
+        <result property="consumerAccount"    column="consumer_account"    />
+        <result property="consumerPassword"    column="consumer_password"    />
+        <result property="openid"    column="openid"    />
+    </resultMap>
+	
+	<sql id="selectConsumerAccountVo">
+        select id, consumer_account, consumer_password, openid from cw_consumer_account
+    </sql>
+	
+    <select id="selectConsumerAccountList" parameterType="ConsumerAccount" resultMap="ConsumerAccountResult">
+        <include refid="selectConsumerAccountVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="consumerAccount != null  and consumerAccount != '' "> and consumer_account = #{consumerAccount}</if>
+             <if test="consumerPassword != null  and consumerPassword != '' "> and consumer_password = #{consumerPassword}</if>
+             <if test="openid != null  and openid != '' "> and openid = #{openid}</if>
+         </where>
+    </select>
+    
+    <select id="selectConsumerAccountById" parameterType="Integer" resultMap="ConsumerAccountResult">
+        <include refid="selectConsumerAccountVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertConsumerAccount" parameterType="ConsumerAccount">
+        insert into cw_consumer_account
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="consumerAccount != null  and consumerAccount != ''  ">consumer_account,</if>
+			<if test="consumerPassword != null  and consumerPassword != ''  ">consumer_password,</if>
+			<if test="openid != null  and openid != ''  ">openid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="consumerAccount != null  and consumerAccount != ''  ">#{consumerAccount},</if>
+			<if test="consumerPassword != null  and consumerPassword != ''  ">#{consumerPassword},</if>
+			<if test="openid != null  and openid != ''  ">#{openid},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateConsumerAccount" parameterType="ConsumerAccount">
+        update cw_consumer_account
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="consumerAccount != null  and consumerAccount != ''  ">consumer_account = #{consumerAccount},</if>
+            <if test="consumerPassword != null  and consumerPassword != ''  ">consumer_password = #{consumerPassword},</if>
+            <if test="openid != null  and openid != ''  ">openid = #{openid},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteConsumerAccountById" parameterType="Integer">
+        delete from cw_consumer_account where id = #{id}
+    </delete>
+	
+    <delete id="deleteConsumerAccountByIds" parameterType="String">
+        delete from cw_consumer_account where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

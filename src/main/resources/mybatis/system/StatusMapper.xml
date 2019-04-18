@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.status.mapper.StatusMapper">
+    
+    <resultMap type="Status" id="StatusResult">
+        <result property="id"    column="id"    />
+        <result property="statusName"    column="status_name"    />
+    </resultMap>
+	
+	<sql id="selectStatusVo">
+        select id, status_name from cw_status
+    </sql>
+	
+    <select id="selectStatusList" parameterType="Status" resultMap="StatusResult">
+        <include refid="selectStatusVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="statusName != null  and statusName != '' "> and status_name = #{statusName}</if>
+         </where>
+    </select>
+    
+    <select id="selectStatusById" parameterType="Integer" resultMap="StatusResult">
+        <include refid="selectStatusVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStatus" parameterType="Status">
+        insert into cw_status
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="statusName != null  and statusName != ''  ">status_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="statusName != null  and statusName != ''  ">#{statusName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateStatus" parameterType="Status">
+        update cw_status
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="statusName != null  and statusName != ''  ">status_name = #{statusName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteStatusById" parameterType="Integer">
+        delete from cw_status where id = #{id}
+    </delete>
+	
+    <delete id="deleteStatusByIds" parameterType="String">
+        delete from cw_status where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

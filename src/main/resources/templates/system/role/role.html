@@ -12,13 +12,13 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								角色名称：<input type="text" name="roleName"/>
+								<span class="textSpan">角色名称：</span><input type="text" name="roleName"/>
 							</li>
 							<li>
-								权限字符：<input type="text" name="roleKey"/>
+								<span class="textSpan">权限字符：</span><input type="text" name="roleKey"/>
 							</li>
 							<li>
-								角色状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+								<span class="textSpan">角色状态：</span><select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
 									<option value="">所有</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>

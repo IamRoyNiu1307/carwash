@@ -56,7 +56,7 @@ public class KeyContainer extends BaseEntity
 	{
 		return containerName;
 	}
-	public void setPosLng(BigDecimal posLng)
+	public void setPosLng(BigDecimal posLng) 
 	{
 		this.posLng = posLng;
 	}

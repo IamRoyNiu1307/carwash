@@ -11,10 +11,10 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								菜单名称：<input type="text" name="menuName"/>
+								<span class="textSpan">菜单名称：</span><input type="text" name="menuName"/>
 							</li>
 							<li>
-								菜单状态：<select name="visible" th:with="type=${@dict.getType('sys_show_hide')}">
+								<span class="textSpan">菜单状态：</span><select name="visible" th:with="type=${@dict.getType('sys_show_hide')}">
 									<option value="">所有</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>

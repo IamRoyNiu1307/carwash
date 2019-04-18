@@ -51,10 +51,5 @@ public interface IKeyContainerService
      */
 	public int deleteKeyContainerByIds(String ids);
 
-	/**
-	 * 查找坐标附近的钥匙柜
-	 * @param posLng 经度
-	 * @param posLat 纬度
-	 */
-	List<KeyContainer> getAroundContainer(String posLng, String posLat);
+    List<KeyContainer> getAroundContainer(String posLng, String posLat);
 }
