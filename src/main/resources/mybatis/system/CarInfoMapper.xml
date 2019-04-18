@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.carInfo.mapper.CarInfoMapper">
+    
+    <resultMap type="CarInfo" id="CarInfoResult">
+        <result property="id"    column="id"    />
+        <result property="carLicence"    column="car_licence"    />
+        <result property="brand"    column="brand"    />
+        <result property="typeName"    column="type_name"    />
+        <result property="color"    column="color"    />
+        <result property="carAddrLng"    column="car_addr_lng"    />
+        <result property="carAddrLat"    column="car_addr_lat"    />
+        <result property="ownerAccount"    column="owner_account"    />
+        <result property="carDefault"    column="car_default"    />
+    </resultMap>
+	
+	<sql id="selectCarInfoVo">
+        select id, car_licence, brand, type_name, color, car_addr_lng, car_addr_lat, owner_account, car_default from cw_car_info
+    </sql>
+	
+    <select id="selectCarInfoList" parameterType="CarInfo" resultMap="CarInfoResult">
+        <include refid="selectCarInfoVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="carLicence != null  and carLicence != '' "> and car_licence = #{carLicence}</if>
+             <if test="brand != null  and brand != '' "> and brand = #{brand}</if>
+             <if test="typeName != null  and typeName != '' "> and type_name = #{typeName}</if>
+             <if test="color != null  and color != '' "> and color = #{color}</if>
+             <if test="carAddrLng != null "> and car_addr_lng = #{carAddrLng}</if>
+             <if test="carAddrLat != null "> and car_addr_lat = #{carAddrLat}</if>
+             <if test="ownerAccount != null  and ownerAccount != '' "> and owner_account = #{ownerAccount}</if>
+             <if test="carDefault != null "> and car_default = #{carDefault}</if>
+         </where>
+    </select>
+    
+    <select id="selectCarInfoById" parameterType="Integer" resultMap="CarInfoResult">
+        <include refid="selectCarInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCarInfo" parameterType="CarInfo">
+        insert into cw_car_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="carLicence != null  and carLicence != ''  ">car_licence,</if>
+			<if test="brand != null  and brand != ''  ">brand,</if>
+			<if test="typeName != null  and typeName != ''  ">type_name,</if>
+			<if test="color != null  and color != ''  ">color,</if>
+			<if test="carAddrLng != null  ">car_addr_lng,</if>
+			<if test="carAddrLat != null  ">car_addr_lat,</if>
+			<if test="ownerAccount != null  and ownerAccount != ''  ">owner_account,</if>
+			<if test="carDefault != null  ">car_default,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="carLicence != null  and carLicence != ''  ">#{carLicence},</if>
+			<if test="brand != null  and brand != ''  ">#{brand},</if>
+			<if test="typeName != null  and typeName != ''  ">#{typeName},</if>
+			<if test="color != null  and color != ''  ">#{color},</if>
+			<if test="carAddrLng != null  ">#{carAddrLng},</if>
+			<if test="carAddrLat != null  ">#{carAddrLat},</if>
+			<if test="ownerAccount != null  and ownerAccount != ''  ">#{ownerAccount},</if>
+			<if test="carDefault != null  ">#{carDefault},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCarInfo" parameterType="CarInfo">
+        update cw_car_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="carLicence != null  and carLicence != ''  ">car_licence = #{carLicence},</if>
+            <if test="brand != null  and brand != ''  ">brand = #{brand},</if>
+            <if test="typeName != null  and typeName != ''  ">type_name = #{typeName},</if>
+            <if test="color != null  and color != ''  ">color = #{color},</if>
+            <if test="carAddrLng != null  ">car_addr_lng = #{carAddrLng},</if>
+            <if test="carAddrLat != null  ">car_addr_lat = #{carAddrLat},</if>
+            <if test="ownerAccount != null  and ownerAccount != ''  ">owner_account = #{ownerAccount},</if>
+            <if test="carDefault != null  ">car_default = #{carDefault},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteCarInfoById" parameterType="Integer">
+        delete from cw_car_info where id = #{id}
+    </delete>
+	
+    <delete id="deleteCarInfoByIds" parameterType="String">
+        delete from cw_car_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

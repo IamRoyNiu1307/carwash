@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul id="searchUl">
+							<li>
+								<span class="textSpan">车牌号：</span><input type="text" name="carLicence"/>
+							</li>
+
+							<li>
+								<span class="textSpan">品牌：</span><input type="text" name="brand"/>
+							</li>
+
+							<li>
+								<span class="textSpan">车辆型号：</span><input type="text" name="typeName"/>
+							</li>
+
+							<li>
+								<span class="textSpan">颜色：</span><input type="text" name="color"/>
+							</li>
+
+							<li>
+								<span class="textSpan">车位地址(经度)：</span><input type="text" name="carAddrLng"/>
+							</li>
+
+							<li>
+								<span class="textSpan">车位地址(纬度)：</span><input type="text" name="carAddrLat"/>
+							</li>
+
+							<li>
+								<span class="textSpan">所属账号：</span><input type="text" name="ownerAccount"/>
+							</li>
+
+							<li>
+								<span class="textSpan">是否默认：</span><input type="text" name="carDefault"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:carInfo:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:carInfo:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:carInfo:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:carInfo:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:carInfo:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:carInfo:remove')}]];
+        var prefix = ctx + "system/carInfo";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "车辆",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '编号',
+					visible: false
+				},
+				{
+					field : 'carLicence', 
+					title : '车牌号',
+					sortable: true
+				},
+				{
+					field : 'brand', 
+					title : '品牌',
+					sortable: true
+				},
+				{
+					field : 'typeName', 
+					title : '车辆型号',
+					sortable: true
+				},
+				{
+					field : 'color', 
+					title : '颜色',
+					sortable: true
+				},
+				{
+					field : 'carAddrLng', 
+					title : '车位地址(经度)',
+					sortable: true
+				},
+				{
+					field : 'carAddrLat', 
+					title : '车位地址(纬度)',
+					sortable: true
+				},
+				{
+					field : 'ownerAccount', 
+					title : '所属账号',
+					sortable: true
+				},
+				{
+					field : 'carDefault', 
+					title : '是否默认',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
