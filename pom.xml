@@ -39,6 +39,7 @@
 		<jsoup.version>1.11.3</jsoup.version>
 		<poi.version>3.17</poi.version>
 		<oshi.version>3.9.1</oshi.version>
+		<hutool.version>4.1.19</hutool.version>
 	</properties>
 
 	<dependencies>
@@ -259,6 +260,13 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
 			<version>${poi.version}</version>
+		</dependency>
+
+		<!-- hutool -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>${hutool.version}</version>
 		</dependency>
 
 	</dependencies>
