@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/consumer")
+@RequestMapping("/api/consumer")
 public class ApiConsumerController {
 }

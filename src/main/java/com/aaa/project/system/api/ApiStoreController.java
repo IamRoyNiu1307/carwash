@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
  * 门店接口
  */
 @RestController
-@RequestMapping("/store")
+@RequestMapping("/api/store")
 public class ApiStoreController {
 }

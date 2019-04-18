@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
  * 车辆接口
  */
 @RestController
-@RequestMapping("/car")
+@RequestMapping("/api/car")
 public class ApiCarController {
 }
