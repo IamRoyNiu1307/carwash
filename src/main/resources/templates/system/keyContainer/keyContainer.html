@@ -11,6 +11,14 @@
 					<div class="select-list">
 						<ul>
 							<li>
+								UUID：<input type="text" name="uuid"/>
+							</li>
+
+							<li>
+								名称：<input type="text" name="containerName"/>
+							</li>
+
+							<li>
 								经度：<input type="text" name="posLng"/>
 							</li>
 
@@ -19,7 +27,7 @@
 							</li>
 
 							<li>
-								UUID：<input type="text" name="uUID"/>
+								城市编号：<input type="text" name="cityid"/>
 							</li>
 
 							<li>
@@ -75,6 +83,16 @@
 					visible: false
 				},
 				{
+					field : 'uuid', 
+					title : 'UUID',
+					sortable: true
+				},
+				{
+					field : 'containerName', 
+					title : '名称',
+					sortable: true
+				},
+				{
 					field : 'posLng', 
 					title : '经度',
 					sortable: true
@@ -85,8 +103,8 @@
 					sortable: true
 				},
 				{
-					field : 'uUID', 
-					title : 'UUID',
+					field : 'cityid', 
+					title : '城市编号',
 					sortable: true
 				},
 		        {

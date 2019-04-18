@@ -1,5 +1,6 @@
 package com.aaa.project.test;
 
+import cn.hutool.core.util.IdUtil;
 import com.aaa.common.utils.Distance;
 import com.aaa.common.utils.ReGeo;
 import org.junit.Test;
@@ -27,5 +28,10 @@ public class MyTest {
 
         List<Integer> distanceList = Distance.getDistanceList(objects, "116.481488,39.990464");
         System.out.println(distanceList);
+    }
+
+    @Test
+    public void testUUID(){
+        System.out.println(IdUtil.simpleUUID());
     }
 }

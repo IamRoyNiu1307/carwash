@@ -1,6 +1,5 @@
 package com.aaa.project.system.keyContainer.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,20 +80,14 @@ public class KeyContainerServiceImpl implements IKeyContainerService
 		return keyContainerMapper.deleteKeyContainerByIds(Convert.toStrArray(ids));
 	}
 
+	/**
+	 * 获取附近钥匙柜列表
+	 * @param posLng 经度
+	 * @param posLat 	纬度
+	 * @return 附近钥匙柜列表
+	 */
 	@Override
-	public List<KeyContainer> getAroundContainer(String posLng, String posLat){
-
-		List<KeyContainer> containerList = new ArrayList<>();
-
-		//解析经纬度，获得该经纬度所在的城市
-
-		//查找城市编号
-
-		//查找同城所有的钥匙柜
-
-		//遍历同城所有的钥匙柜，距离小于阈值的放入containerList中
-
+	public List<KeyContainer> getAroundContainer(String posLng, String posLat) {
 		return null;
 	}
-	
 }
