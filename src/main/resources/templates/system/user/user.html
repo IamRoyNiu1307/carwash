@@ -37,13 +37,13 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								登录名称：<input type="text" name="loginName"/>
+								<span class="textSpan">登录名称：</span><input type="text" name="loginName"/>
 							</li>
 							<li>
-								手机号码：<input type="text" name="phonenumber"/>
+								<span class="textSpan">手机号码：</span><input type="text" name="phonenumber"/>
 							</li>
 							<li>
-								用户状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+								<span class="textSpan">用户状态：</span><select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
 									<option value="">所有</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>

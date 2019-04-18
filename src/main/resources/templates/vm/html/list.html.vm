@@ -9,18 +9,18 @@
 			<div class="col-sm-12 search-collapse">
 				<form id="formId">
 					<div class="select-list">
-						<ul>
+						<ul id="searchUl">
 #foreach($column in $columns)
 #if($column.columnName != $primaryKey.columnName)
 #if(!${column.configInfo})
 							<li>
-								${column.columnComment}：<input type="text" name="${column.attrname}"/>
+								<span class="textSpan">${column.columnComment}：</span><input type="text" name="${column.attrname}"/>
 							</li>
 
 #else
 #if(${column.configInfo.type} == "dict")
 							<li>
-								${column.columnComment}：<select name="${column.attrname}" th:with="type=${@dict.getType('${column.configInfo.value}')}">
+                                <span class="textSpan">${column.columnComment}：</span><select name="${column.attrname}" th:with="type=${@dict.getType('${column.configInfo.value}')}">
 									<option value="">所有</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 								</select>
