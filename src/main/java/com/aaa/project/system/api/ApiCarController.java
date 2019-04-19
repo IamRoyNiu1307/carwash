@@ -1,11 +1,12 @@
 package com.aaa.project.system.api;
 
+import com.aaa.common.utils.file.FileUploadUtils;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.carInfo.domain.CarInfo;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * 车辆接口
@@ -22,4 +23,5 @@ public class ApiCarController {
         }
         return ajaxResult;
     }
+
 }
