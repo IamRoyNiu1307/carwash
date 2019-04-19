@@ -52,6 +52,7 @@ public class ConsumerAccountServiceImpl implements IConsumerAccountService
 	@Override
 	public int insertConsumerAccount(ConsumerAccount consumerAccount)
 	{
+		this.cleanOpenid(consumerAccount.getOpenid());
 	    return consumerAccountMapper.insertConsumerAccount(consumerAccount);
 	}
 	
@@ -87,5 +88,35 @@ public class ConsumerAccountServiceImpl implements IConsumerAccountService
 	@Override
 	public ConsumerAccount selectConsumerAccountByAccount(String account) {
 		return consumerAccountMapper.selectConsumerAccountByAccount(account);
+	}
+
+	/**
+	 * 根据openid查找该openid绑定的账号
+	 * @param openid
+	 * @return
+	 */
+	@Override
+	public ConsumerAccount selectAccountByOpenid(String openid) {
+		return consumerAccountMapper.selectAccountByOpenid(openid);
+	}
+
+	/**
+	 * 清空该openid的绑定信息
+	 * @param openid
+	 */
+	@Override
+	public void cleanOpenid(String openid) {
+		consumerAccountMapper.cleanOpenid(openid);
+	}
+
+	/**
+	 * 绑定openid和account
+	 * @param account
+	 * @param openid
+	 */
+	@Override
+	public void bindAccountWithOpenid(String account, String openid) {
+		this.cleanOpenid(openid);
+		consumerAccountMapper.bindAccountWithOpenid(account,openid);
 	}
 }

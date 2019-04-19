@@ -34,6 +34,14 @@ public class MyConst {
     public static final int DISTANCE_TYPE_STEP = 3;
     //时段map
     public static final Map<String,Integer> TIME_MAP = new HashMap<>();
+    //短信类型：账号登录、注册
+    public static final int TYPE_ACCOUNT = 0;
+    //短信类型：获得取件码
+    public static final int TYPE_KEY = 1;
+    //发送短信目的：登录
+    public static final String TODO_LOGIN = "login";
+    //发送短信目的：注册
+    public static final String TODO_REGISTER = "register";
 
     static{
         TIME_MAP.put("08时",8);
@@ -43,7 +51,7 @@ public class MyConst {
         TIME_MAP.put("24时",24);
     }
 
-    //carImage保存路径前缀
-    public  static  final  String CAR_IMAGE_Pre="E:/IdeaProject/carwash/src/main/resources/static/fileupload/car/";
+    //车辆照片请求路径
+    public static final String CAR_IMAGE_DIR = "/car/";
 
 }

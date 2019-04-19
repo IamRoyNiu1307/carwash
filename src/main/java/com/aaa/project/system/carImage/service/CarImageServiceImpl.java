@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.aaa.common.utils.file.FileUploadUtils.upload;
-import static com.aaa.project.myconst.MyConst.CAR_IMAGE_Pre;
+import static com.aaa.project.myconst.MyConst.CAR_IMAGE_DIR;
 
 /**
  * 汽车图片 服务层实现
@@ -91,7 +91,7 @@ public class CarImageServiceImpl implements ICarImageService {
     @Override
     public String UpdateCarImageByCarInfoId(int carInfoId, MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
         //得到文件路径
-        String url = CAR_IMAGE_Pre + upload(CAR_IMAGE_Pre, file, ".jpg");
+        String url = CAR_IMAGE_DIR + upload("E:/IdeaProject/carwash/src/main/resources/static/fileupload/car/", file, ".jpg");
         // 组合一个carImage对象
         CarImage carImage = new CarImage();
         carImage.setCarInfoId(carInfoId);

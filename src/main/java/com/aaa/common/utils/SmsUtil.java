@@ -7,12 +7,12 @@ import com.zhenzi.sms.ZhenziSmsClient;
 import javax.servlet.http.HttpSession;
 import java.util.Random;
 
+import static com.aaa.project.myconst.MyConst.TYPE_ACCOUNT;
+import static com.aaa.project.myconst.MyConst.TYPE_KEY;
+
 public class SmsUtil {
 
-    //短信类型：账号登录、注册
-    private static final int TYPE_ACCOUNT = 0;
-    //短信类型：获得取件码
-    private static final int TYPE_KEY = 1;
+
 
     public static AjaxResult sendSms(HttpSession session, String phone){
         return sendSms(session,phone,TYPE_ACCOUNT);
@@ -37,13 +37,13 @@ public class SmsUtil {
             // 发送短信
             ZhenziSmsClient client = new ZhenziSmsClient("https://sms_developer.zhenzikj.com", "100701",
                     "e63cba85-be9b-40d0-bfa2-d70bbc13cb6f");
-            String result = client.send(phone, "您的验证码为:【" + verifyCode +"】，"+ msg);
+            String result = client.send(phone, "您的验证码为:" + verifyCode +"，"+ msg);
             json = JSONObject.parseObject(result);
             if (json.getIntValue("code") != 0)// 发送短信失败
                 return AjaxResult.error("短信发送失败！");
             //将验证码存到session中,同时存入创建时间
             json = new JSONObject();
-            json.put("verifyCode", verifyCode);
+            json.put("code", verifyCode);
             json.put("createTime", System.currentTimeMillis());
             // 将认证码存入SESSION
             session.setAttribute("verifyCode", json);

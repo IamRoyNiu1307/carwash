@@ -37,6 +37,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="selectAccountByOpenid" parameterType="String" resultMap="ConsumerAccountResult">
+        <include refid="selectConsumerAccountVo"/>
+        <where>
+            openid = #{openid}
+        </where>
+    </select>
+
     <insert id="insertConsumerAccount" parameterType="ConsumerAccount">
         insert into cw_consumer_account
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -61,6 +68,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="openid != null  and openid != ''  ">openid = #{openid},</if>
         </trim>
         where id = #{id}
+    </update>
+
+    <update id="cleanOpenid">
+        update cw_consumer_account
+        set openid = NULL
+        where openid = #{openid}
+    </update>
+
+    <update id="bindAccountWithOpenid">
+        update cw_consumer_account
+        set openid = #{openid}
+        where consumer_account = #{account}
     </update>
 
 	<delete id="deleteConsumerAccountById" parameterType="Integer">
