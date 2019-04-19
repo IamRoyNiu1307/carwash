@@ -43,4 +43,7 @@ public class MyConst {
         TIME_MAP.put("24时",24);
     }
 
+    //carImage保存路径前缀
+    public  static  final  String CAR_IMAGE_Pre="E:/IdeaProject/carwash/src/main/resources/static/fileupload/car/";
+
 }

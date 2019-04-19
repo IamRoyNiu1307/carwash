@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.aaa.common.utils.file.FileUploadUtils.upload;
+import static com.aaa.project.myconst.MyConst.CAR_IMAGE_Pre;
 
 /**
  * 汽车图片 服务层实现
@@ -90,16 +91,16 @@ public class CarImageServiceImpl implements ICarImageService {
     @Override
     public String UpdateCarImageByCarInfoId(int carInfoId, MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
         //得到文件路径
-        String url = upload("E:/UpLoad/", file, "jpg");
+        String url = CAR_IMAGE_Pre + upload(CAR_IMAGE_Pre, file, ".jpg");
         // 组合一个carImage对象
         CarImage carImage = new CarImage();
         carImage.setCarInfoId(carInfoId);
         carImage.setImageUrl(url);
         // 操作 1-首先判断是否已有信息
-        List<CarImage> carImages = carImageMapper.selectCarImageList(carImage);
+        List<CarImage> carImages = carImageMapper.selectCarImageListByCarInfoId(carInfoId);
         if (carImages.size() > 0) {
             //1.2-有 更新信息
-            carImageMapper.updateCarImage(carImage);
+            carImageMapper.updateCarImageByCarInfoId(carImage);
             return "更新成功";
         } else {
             // 1.1-没有 插入信息

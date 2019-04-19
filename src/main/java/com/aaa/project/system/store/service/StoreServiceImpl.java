@@ -12,7 +12,8 @@ import com.aaa.project.system.store.mapper.StoreMapper;
 import com.aaa.project.system.store.domain.Store;
 import com.aaa.common.support.Convert;
 
-import static com.aaa.project.myconst.MyConst.GET_DISTANCE_TYPE_BEELINE;
+import static com.aaa.project.myconst.MyConst.DISTANCE_TYPE_STRAIGHT;
+
 
 /**
  * 门店 服务层实现
@@ -106,7 +107,7 @@ public class StoreServiceImpl implements IStoreService {
             String pom = each.getPosLng() + "," + each.getPosLat(); //组合数据
             storePom.add(pom);
         }
-        List<Integer> distanceList = Distance.getDistanceList(storePom, posLng + "," + posLat, GET_DISTANCE_TYPE_BEELINE); //直线距离
+        List<Integer> distanceList = Distance.getDistanceList(storePom, posLng + "," + posLat, DISTANCE_TYPE_STRAIGHT); //直线距离
         List<Map<String, Object>> data = new ArrayList<>();
         for (int i = 0; i < distanceList.size(); i++) {
             Map dataMap = new HashMap();

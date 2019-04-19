@@ -7,7 +7,7 @@ aaa:
   # 版权年份
   copyrightYear: 2018
   # 文件上传绝对路径
-  profile: /Users/roy/project/carwash/src/main/resources/static/fileupload/
+  profile: E:/IdeaProject/carwash/src/main/resources/static/fileupload/car/
   #profile: D:
   # 获取ip地址开关
   addressEnabled: true

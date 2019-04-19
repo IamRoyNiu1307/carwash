@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.project.system.carImage.mapper.CarImageMapper">
-    
+
     <resultMap type="CarImage" id="CarImageResult">
-        <result property="id"    column="id"    />
-        <result property="carInfoId"    column="car_info_id"    />
-        <result property="imageUrl"    column="image_url"    />
+        <result property="id" column="id"/>
+        <result property="carInfoId" column="car_info_id"/>
+        <result property="imageUrl" column="image_url"/>
     </resultMap>
-	
-	<sql id="selectCarImageVo">
+
+    <sql id="selectCarImageVo">
         select id, car_info_id, image_url from cw_car_image
     </sql>
-	
+
     <select id="selectCarImageList" parameterType="CarImage" resultMap="CarImageResult">
         <include refid="selectCarImageVo"/>
-        <where>  
-            <if test="id != null "> and id = #{id}</if>
-             <if test="carInfoId != null "> and car_info_id = #{carInfoId}</if>
-             <if test="imageUrl != null  and imageUrl != '' "> and image_url = #{imageUrl}</if>
-         </where>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="carInfoId != null ">and car_info_id = #{carInfoId}</if>
+            <if test="imageUrl != null  and imageUrl != '' ">and image_url = #{imageUrl}</if>
+        </where>
     </select>
-    
+    <select id="selectCarImageListByCarInfoId" parameterType="integer" resultMap="CarImageResult">
+        <include refid="selectCarImageVo"/>
+        where car_info_id = #{carInfoId}
+    </select>
+
+
     <select id="selectCarImageById" parameterType="Integer" resultMap="CarImageResult">
         <include refid="selectCarImageVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertCarImage" parameterType="CarImage">
         insert into cw_car_image
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">id,</if>
-			<if test="carInfoId != null  ">car_info_id,</if>
-			<if test="imageUrl != null  and imageUrl != ''  ">image_url,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">id,</if>
+            <if test="carInfoId != null  ">car_info_id,</if>
+            <if test="imageUrl != null  and imageUrl != ''  ">image_url,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">#{id},</if>
-			<if test="carInfoId != null  ">#{carInfoId},</if>
-			<if test="imageUrl != null  and imageUrl != ''  ">#{imageUrl},</if>
-         </trim>
+            <if test="id != null  ">#{id},</if>
+            <if test="carInfoId != null  ">#{carInfoId},</if>
+            <if test="imageUrl != null  and imageUrl != ''  ">#{imageUrl},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateCarImage" parameterType="CarImage">
         update cw_car_image
         <trim prefix="SET" suffixOverrides=",">
@@ -50,16 +55,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where id = #{id}
     </update>
+    <update id="updateCarImageByCarInfoId" parameterType="CarImage">
+        update cw_car_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="imageUrl != null  and imageUrl != ''  ">image_url = #{imageUrl},</if>
+        </trim>
+        where car_info_id = #{carInfoId}
+    </update>
 
-	<delete id="deleteCarImageById" parameterType="Integer">
+
+    <delete id="deleteCarImageById" parameterType="Integer">
         delete from cw_car_image where id = #{id}
     </delete>
-	
+
     <delete id="deleteCarImageByIds" parameterType="String">
-        delete from cw_car_image where id in 
+        delete from cw_car_image where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
 </mapper>
