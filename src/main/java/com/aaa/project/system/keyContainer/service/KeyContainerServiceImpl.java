@@ -93,8 +93,8 @@ public class KeyContainerServiceImpl implements IKeyContainerService {
     /**
      * 查询距离离目标距离低于阈值的钥匙柜信息
      *
-     * @param posLng
-     * @param posLat
+     * @param posLng 经度
+     * @param posLat 纬度
      * @return 结果
      */
     @Override
