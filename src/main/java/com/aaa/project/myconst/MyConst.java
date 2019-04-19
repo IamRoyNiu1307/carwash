@@ -19,4 +19,15 @@ public class MyConst {
     public static final String APPID = "wxde6415f50b2d05c3";
     //微信小程序appsecret
     public static final String APPSECRET = "300bda0ea35e7f536f4d8125dac6783a";
+    //附近钥匙柜最大距离
+    public static final int MAX_CONTAINER_DISTANCE = 10000;
+    //按照直线距离测量
+    public static final int GET_DISTANCE_TYPE_BEELINE = 0;
+    //按照驾车方式测量
+    public static final int GET_DISTANCE_TYPE_CAR = 1;
+    //按照公交方式测量
+    public static final int GET_DISTANCE_TYPE_BUS = 2;
+    //按照步行方式测量
+    public static final int GET_DISTANCE_TYPE_WALK = 3;
+
 }
