@@ -121,6 +121,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
+    <update id="cancelOrderByOrderId">
+        update cw_order set status_id = 206,finish_date = #{finishDate} where order_id = #{orderId}
+    </update>
+
 	<delete id="deleteOrderById" parameterType="Integer">
         delete from cw_order where id = #{id}
     </delete>

@@ -1,6 +1,9 @@
 package com.aaa.project.system.order.service;
 
 import com.aaa.project.system.order.domain.Order;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,5 +53,14 @@ public interface IOrderService
      * @return 结果
      */
 	public int deleteOrderByIds(String ids);
+
+	/**
+	 * 取消订单
+	 *
+	 * @param orderId 需要取消的订单ID
+	 * @param finishDate 订单完成时间
+	 */
+
+	public void cancelOrderByOrderId(@Param("orderId") String orderId,@Param("finishDate") Date finishDate);
 	
 }

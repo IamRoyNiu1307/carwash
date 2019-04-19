@@ -1,12 +1,14 @@
 package com.aaa.project.system.order.service;
 
-import java.util.List;
+import com.aaa.common.support.Convert;
+import com.aaa.project.system.order.domain.Order;
+import com.aaa.project.system.order.mapper.OrderMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aaa.project.system.order.mapper.OrderMapper;
-import com.aaa.project.system.order.domain.Order;
-import com.aaa.project.system.order.service.IOrderService;
-import com.aaa.common.support.Convert;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 订单 服务层实现
@@ -79,5 +81,15 @@ public class OrderServiceImpl implements IOrderService
 	{
 		return orderMapper.deleteOrderByIds(Convert.toStrArray(ids));
 	}
-	
+
+	/**
+	 * 取消订单
+	 *
+	 * @param orderId 需要取消的订单ID
+	 * @param finishDate 订单完成时间
+	 */
+	@Override
+	public void cancelOrderByOrderId(@Param("orderId") String orderId, @Param("finishDate") Date finishDate){
+		orderMapper.cancelOrderByOrderId(orderId,finishDate);
+	};
 }

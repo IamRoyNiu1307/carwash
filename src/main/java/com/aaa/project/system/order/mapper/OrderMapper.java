@@ -1,7 +1,10 @@
 package com.aaa.project.system.order.mapper;
 
 import com.aaa.project.system.order.domain.Order;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 订单 数据层
@@ -58,5 +61,14 @@ public interface OrderMapper
      * @return 结果
      */
 	public int deleteOrderByIds(String[] ids);
+
+	/**
+	 * 取消订单
+	 *
+	 * @param orderId 需要取消的订单ID
+	 * @param finishDate 订单完成时间
+	 */
+
+	public void cancelOrderByOrderId(@Param("orderId") String orderId, @Param("finishDate") Date finishDate);
 	
 }
