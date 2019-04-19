@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.storeService.mapper.StoreServiceMapper">
+    
+    <resultMap type="StoreService" id="StoreServiceResult">
+        <result property="id"    column="id"    />
+        <result property="storeId"    column="store_id"    />
+        <result property="serviceName"    column="service_name"    />
+        <result property="description"    column="description"    />
+        <result property="statusId"    column="status_id"    />
+        <result property="cost"    column="cost"    />
+        <result property="numberPurchased"    column="number_purchased"    />
+    </resultMap>
+	
+	<sql id="selectStoreServiceVo">
+        select id, store_id, service_name, description, status_id, cost, number_purchased from cw_store_service
+    </sql>
+	
+    <select id="selectStoreServiceList" parameterType="StoreService" resultMap="StoreServiceResult">
+        <include refid="selectStoreServiceVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="storeId != null  and storeId != '' "> and store_id = #{storeId}</if>
+             <if test="serviceName != null  and serviceName != '' "> and service_name = #{serviceName}</if>
+             <if test="description != null  and description != '' "> and description = #{description}</if>
+             <if test="statusId != null "> and status_id = #{statusId}</if>
+             <if test="cost != null "> and cost = #{cost}</if>
+             <if test="numberPurchased != null "> and number_purchased = #{numberPurchased}</if>
+         </where>
+    </select>
+    
+    <select id="selectStoreServiceById" parameterType="Integer" resultMap="StoreServiceResult">
+        <include refid="selectStoreServiceVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectStoreServiceByStoreId" parameterType="string" resultMap="StoreServiceResult">
+        <include refid="selectStoreServiceVo"/>
+        where store_id = #{store_id}
+    </select>
+        
+    <insert id="insertStoreService" parameterType="StoreService">
+        insert into cw_store_service
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="storeId != null  and storeId != ''  ">store_id,</if>
+			<if test="serviceName != null  and serviceName != ''  ">service_name,</if>
+			<if test="description != null  and description != ''  ">description,</if>
+			<if test="statusId != null  ">status_id,</if>
+			<if test="cost != null  ">cost,</if>
+			<if test="numberPurchased != null  ">number_purchased,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="storeId != null  and storeId != ''  ">#{storeId},</if>
+			<if test="serviceName != null  and serviceName != ''  ">#{serviceName},</if>
+			<if test="description != null  and description != ''  ">#{description},</if>
+			<if test="statusId != null  ">#{statusId},</if>
+			<if test="cost != null  ">#{cost},</if>
+			<if test="numberPurchased != null  ">#{numberPurchased},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateStoreService" parameterType="StoreService">
+        update cw_store_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null  and storeId != ''  ">store_id = #{storeId},</if>
+            <if test="serviceName != null  and serviceName != ''  ">service_name = #{serviceName},</if>
+            <if test="description != null  and description != ''  ">description = #{description},</if>
+            <if test="statusId != null  ">status_id = #{statusId},</if>
+            <if test="cost != null  ">cost = #{cost},</if>
+            <if test="numberPurchased != null  ">number_purchased = #{numberPurchased},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteStoreServiceById" parameterType="Integer">
+        delete from cw_store_service where id = #{id}
+    </delete>
+	
+    <delete id="deleteStoreServiceByIds" parameterType="String">
+        delete from cw_store_service where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

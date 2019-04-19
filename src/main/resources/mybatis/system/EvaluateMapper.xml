@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.evaluate.mapper.EvaluateMapper">
+    
+    <resultMap type="Evaluate" id="EvaluateResult">
+        <result property="id"    column="id"    />
+        <result property="storeId"    column="store_id"    />
+        <result property="pushTime"    column="push_time"    />
+        <result property="consumerAccount"    column="consumer_account"    />
+        <result property="star"    column="star"    />
+    </resultMap>
+	
+	<sql id="selectEvaluateVo">
+        select id, store_id, push_time, consumer_account, star from cw_evaluate
+    </sql>
+	
+    <select id="selectEvaluateList" parameterType="Evaluate" resultMap="EvaluateResult">
+        <include refid="selectEvaluateVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="storeId != null "> and store_id = #{storeId}</if>
+             <if test="pushTime != null "> and push_time = #{pushTime}</if>
+             <if test="consumerAccount != null  and consumerAccount != '' "> and consumer_account = #{consumerAccount}</if>
+             <if test="star != null "> and star = #{star}</if>
+         </where>
+    </select>
+    
+    <select id="selectEvaluateById" parameterType="Integer" resultMap="EvaluateResult">
+        <include refid="selectEvaluateVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEvaluate" parameterType="Evaluate">
+        insert into cw_evaluate
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="storeId != null  ">store_id,</if>
+			<if test="pushTime != null  ">push_time,</if>
+			<if test="consumerAccount != null  and consumerAccount != ''  ">consumer_account,</if>
+			<if test="star != null  ">star,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="storeId != null  ">#{storeId},</if>
+			<if test="pushTime != null  ">#{pushTime},</if>
+			<if test="consumerAccount != null  and consumerAccount != ''  ">#{consumerAccount},</if>
+			<if test="star != null  ">#{star},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateEvaluate" parameterType="Evaluate">
+        update cw_evaluate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null  ">store_id = #{storeId},</if>
+            <if test="pushTime != null  ">push_time = #{pushTime},</if>
+            <if test="consumerAccount != null  and consumerAccount != ''  ">consumer_account = #{consumerAccount},</if>
+            <if test="star != null  ">star = #{star},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteEvaluateById" parameterType="Integer">
+        delete from cw_evaluate where id = #{id}
+    </delete>
+	
+    <delete id="deleteEvaluateByIds" parameterType="String">
+        delete from cw_evaluate where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

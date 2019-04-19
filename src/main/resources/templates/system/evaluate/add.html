@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-evaluate-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">业务编号：</label>
+				<div class="col-sm-8">
+					<input id="storeId" name="storeId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">发表时间：</label>
+				<div class="col-sm-8">
+					<input id="pushTime" name="pushTime" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">评论账号：</label>
+				<div class="col-sm-8">
+					<input id="consumerAccount" name="consumerAccount" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">好评星级：</label>
+				<div class="col-sm-8">
+					<input id="star" name="star" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/evaluate"
+		$("#form-evaluate-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-evaluate-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

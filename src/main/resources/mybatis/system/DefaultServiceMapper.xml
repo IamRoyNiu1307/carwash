@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.defaultService.mapper.DefaultServiceMapper">
+    
+    <resultMap type="DefaultService" id="DefaultServiceResult">
+        <result property="id"    column="id"    />
+        <result property="serviceName"    column="service_name"    />
+        <result property="description"    column="description"    />
+    </resultMap>
+	
+	<sql id="selectDefaultServiceVo">
+        select id, service_name, description from cw_default_service
+    </sql>
+
+    <select id="selectDefaultService" parameterType="DefaultService" resultMap="DefaultServiceResult">
+        <include refid="selectDefaultServiceVo"/>
+    </select>
+
+    <select id="selectDefaultServiceList" parameterType="DefaultService" resultMap="DefaultServiceResult">
+        <include refid="selectDefaultServiceVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="serviceName != null  and serviceName != '' "> and service_name = #{serviceName}</if>
+             <if test="description != null  and description != '' "> and description = #{description}</if>
+         </where>
+    </select>
+    
+    <select id="selectDefaultServiceById" parameterType="Integer" resultMap="DefaultServiceResult">
+        <include refid="selectDefaultServiceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDefaultService" parameterType="DefaultService">
+        insert into cw_default_service
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="serviceName != null  and serviceName != ''  ">service_name,</if>
+			<if test="description != null  and description != ''  ">description,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="serviceName != null  and serviceName != ''  ">#{serviceName},</if>
+			<if test="description != null  and description != ''  ">#{description},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateDefaultService" parameterType="DefaultService">
+        update cw_default_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serviceName != null  and serviceName != ''  ">service_name = #{serviceName},</if>
+            <if test="description != null  and description != ''  ">description = #{description},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteDefaultServiceById" parameterType="Integer">
+        delete from cw_default_service where id = #{id}
+    </delete>
+	
+    <delete id="deleteDefaultServiceByIds" parameterType="String">
+        delete from cw_default_service where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
