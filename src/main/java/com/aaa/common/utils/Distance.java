@@ -5,7 +5,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Distance {
@@ -24,7 +23,7 @@ public class Distance {
      *             2：公交规划距离（仅支持同城坐标,QPS不可超过1，否则可能导致意外）
      *             3：步行规划距离（仅支持5km之间的距离）
      * @return 距离列表
-     */ 
+     */
     public static List<Integer> getDistanceList(List<String> posList,String location,int type){
         List<Integer> distanceList = new ArrayList<>();
 
@@ -43,7 +42,6 @@ public class Distance {
 
         JSONObject jsonObject = new JSONObject(resultJson);
 
-        System.out.println(resultJson);
         JSONArray results = jsonObject.getJSONArray("results");
 
         for(int i = 0;i<results.length();i++){

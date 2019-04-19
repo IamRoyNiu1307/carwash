@@ -18,7 +18,8 @@ public interface ConsumerAccountMapper
      * @return 消费者账号信息
      */
 	public ConsumerAccount selectConsumerAccountById(Integer id);
-	
+
+	public ConsumerAccount selectConsumerAccountByAccount(String account);
 	/**
      * 查询消费者账号列表
      * 

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-order-edit" th:object="${order}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">订单编号：</label>
+				<div class="col-sm-8">
+					<input id="orderId" name="orderId" th:field="*{orderId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">消费者账号：</label>
+				<div class="col-sm-8">
+					<input id="consumerAccount" name="consumerAccount" th:field="*{consumerAccount}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">门店编号：</label>
+				<div class="col-sm-8">
+					<input id="storeId" name="storeId" th:field="*{storeId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">订单状态编号：</label>
+				<div class="col-sm-8">
+					<input id="statusId" name="statusId" th:field="*{statusId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">付款状态编号：</label>
+				<div class="col-sm-8">
+					<input id="payStatusId" name="payStatusId" th:field="*{payStatusId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">下单时间：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">完成时间：</label>
+				<div class="col-sm-8">
+					<input id="finishDate" name="finishDate" th:field="*{finishDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆编号：</label>
+				<div class="col-sm-8">
+					<input id="carId" name="carId" th:field="*{carId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车辆所在地址：</label>
+				<div class="col-sm-8">
+					<input id="carAddress" name="carAddress" th:field="*{carAddress}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">钥匙信息编号：</label>
+				<div class="col-sm-8">
+					<input id="keyInfoId" name="keyInfoId" th:field="*{keyInfoId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">模式编号：</label>
+				<div class="col-sm-8">
+					<input id="typeId" name="typeId" th:field="*{typeId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">工作人员账号：</label>
+				<div class="col-sm-8">
+					<input id="userAccount" name="userAccount" th:field="*{userAccount}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="orderComment" name="orderComment" th:field="*{orderComment}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">预约时间：</label>
+				<div class="col-sm-8">
+					<input id="appointmentTime" name="appointmentTime" th:field="*{appointmentTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">时间段：</label>
+				<div class="col-sm-8">
+					<input id="timeQuantum" name="timeQuantum" th:field="*{timeQuantum}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">预算范围编号：</label>
+				<div class="col-sm-8">
+					<input id="expectCostId" name="expectCostId" th:field="*{expectCostId}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/order"
+		$("#form-order-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-order-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>
