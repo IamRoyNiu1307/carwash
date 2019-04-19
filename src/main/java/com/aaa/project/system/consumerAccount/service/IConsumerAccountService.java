@@ -52,5 +52,6 @@ public interface IConsumerAccountService
      * @return 结果
      */
 	public int deleteConsumerAccountByIds(String ids);
-	
+
+    ConsumerAccount selectConsumerAccountByAccount(String account);
 }

@@ -32,9 +32,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectConsumerAccountByAccount" parameterType="String" resultMap="ConsumerAccountResult">
         <include refid="selectConsumerAccountVo"/>
-        where consumer_account = #{account}
+        <where>
+            consumer_account = #{consumerAccount}
+        </where>
     </select>
-        
+
     <insert id="insertConsumerAccount" parameterType="ConsumerAccount">
         insert into cw_consumer_account
 		<trim prefix="(" suffix=")" suffixOverrides=",">

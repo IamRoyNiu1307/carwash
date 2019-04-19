@@ -84,5 +84,14 @@ public class ConsumerAccountServiceImpl implements IConsumerAccountService
 	{
 		return consumerAccountMapper.deleteConsumerAccountByIds(Convert.toStrArray(ids));
 	}
-	
+
+	/**
+	 * 根据账号查找实体
+	 * @param account 顾客账号
+	 * @return
+	 */
+	@Override
+	public ConsumerAccount selectConsumerAccountByAccount(String account) {
+		return consumerAccountMapper.selectConsumerAccountByAccount(account);
+	}
 }

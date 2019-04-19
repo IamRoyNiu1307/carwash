@@ -59,5 +59,12 @@ public interface ConsumerAccountMapper
      * @return 结果
      */
 	public int deleteConsumerAccountByIds(String[] ids);
+
+	/**
+	 * 根据账号查找实体
+	 * @param consumerAccount 顾客账号
+	 * @return
+	 */
+	ConsumerAccount selectConsumerAccountByAccount(String consumerAccount);
 	
 }
