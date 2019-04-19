@@ -1,5 +1,8 @@
 package com.aaa.project.myconst;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 常数类
  */
@@ -29,4 +32,14 @@ public class MyConst {
     public static final int DISTANCE_TYPE_BUS = 2;
     //高德地图距离计算 步行距离
     public static final int DISTANCE_TYPE_STEP = 3;
+    //时段map
+    public static final Map<String,Integer> TIME_MAP = new HashMap<>();
+
+    static{
+        TIME_MAP.put("08时",8);
+        TIME_MAP.put("12时",12);
+        TIME_MAP.put("16时",16);
+        TIME_MAP.put("20时",20);
+        TIME_MAP.put("24时",24);
+    }
 }
