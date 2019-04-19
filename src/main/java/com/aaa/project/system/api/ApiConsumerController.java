@@ -1,5 +1,6 @@
 package com.aaa.project.system.api;
 
+import com.aaa.framework.shiro.service.PasswordService;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.consumerAccount.domain.ConsumerAccount;
 import com.aaa.project.system.consumerAccount.service.IConsumerAccountService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Random;
 
 /**
@@ -24,26 +26,28 @@ public class ApiConsumerController {
 
     @Autowired
     private IConsumerAccountService consumerAccountService;
+    @Autowired
+    private PasswordService passwordService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AjaxResult login(@RequestParam(name = "account", required = true) String account,
                             @RequestParam(name = "password", required = false) String password,
-                            @RequestParam(name = "code", required = false) String code) {
+                            @RequestParam(name = "code", required = false) String code,
+                            HttpSession session) {
         AjaxResult ajaxResult = new AjaxResult();
-        if (password != null){
-            ConsumerAccount consumer =  consumerAccountService.selectConsumerAccountByAccount(account);
-            if(consumer == null){
-                return ajaxResult.error("该用户不存在！");
+        ConsumerAccount consumer =  consumerAccountService.selectConsumerAccountByAccount(account);
+        if(consumer!=null){
+            if (password != null && passwordService.encryptPassword(account, password, account).equals(consumer.getConsumerPassword())){
+                ajaxResult.put("account",account);
+            } else if (code != null && code.equals(String.valueOf(session.getAttribute("code")))){
+                ajaxResult.put("account",account);
+            }else {
+            ajaxResult.put("code",1).put("msg","账号或密码错误！");
             }
-            if (password.equals(consumer.getConsumerPassword())){
-                return ajaxResult.success();
-            }
-        } else if (code != null){
-            ConsumerAccount consumer =  consumerAccountService.selectConsumerAccountByAccount(account);
-            if(consumer == null){
-                return ajaxResult.error("该用户不存在！");
-            }
+        }else{
+            return ajaxResult.put("code",1).put("msg","账号不存在！");
         }
+
         return ajaxResult;
     }
 
