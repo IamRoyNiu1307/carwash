@@ -1,17 +1,15 @@
 package com.aaa.project.test;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.NumberUtil;
 import com.aaa.common.utils.Distance;
+import com.aaa.common.utils.IDUtil;
 import com.aaa.common.utils.ReGeo;
-import com.aaa.project.system.api.ApiKeyController;
-import com.aaa.project.system.keyContainer.domain.KeyContainer;
-import com.aaa.project.system.keyContainer.service.KeyContainerServiceImpl;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MyTest {
     @Test
@@ -49,5 +47,14 @@ public class MyTest {
         a.add(6);
         a.add(4);
         System.out.println(a);
+    }
+
+    @Test
+    public void getOrderNoByUUID() {
+        String id = IDUtil.createID();
+        System.out.println(id);
+        id = IDUtil.createID();
+        System.out.println(id);
+
     }
 }
