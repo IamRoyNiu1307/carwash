@@ -51,5 +51,10 @@ public interface IConsumerAccountService
      */
 	public int deleteConsumerAccountByIds(String ids);
 
+    /**
+     * 根据账号查找实体
+     * @param account 账号
+     * @return 实体
+     */
     ConsumerAccount selectConsumerAccountByAccount(String account);
 }
