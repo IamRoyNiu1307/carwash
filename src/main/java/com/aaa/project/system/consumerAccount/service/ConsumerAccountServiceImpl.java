@@ -31,12 +31,7 @@ public class ConsumerAccountServiceImpl implements IConsumerAccountService
 	{
 	    return consumerAccountMapper.selectConsumerAccountById(id);
 	}
-
-	@Override
-	public ConsumerAccount selectConsumerAccountByAccount(String account) {
-		return consumerAccountMapper.selectConsumerAccountByAccount(account);
-	}
-
+	
 	/**
      * 查询消费者账号列表
      * 
