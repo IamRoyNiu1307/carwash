@@ -29,11 +29,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectConsumerAccountVo"/>
         where id = #{id}
     </select>
-
-    <select id="selectConsumerAccountByAccount" parameterType="String" resultMap="ConsumerAccountResult">
-        <include refid="selectConsumerAccountVo"/>
-        where consumer_account = #{account}
-    </select>
         
     <insert id="insertConsumerAccount" parameterType="ConsumerAccount">
         insert into cw_consumer_account

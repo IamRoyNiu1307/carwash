@@ -1,59 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.project.system.keyContainer.mapper.KeyContainerMapper">
-    
+
     <resultMap type="KeyContainer" id="KeyContainerResult">
-        <result property="id"    column="id"    />
-        <result property="uuid"    column="uuid"    />
-        <result property="containerName"    column="container_name"    />
-        <result property="posLng"    column="pos_lng"    />
-        <result property="posLat"    column="pos_lat"    />
-        <result property="cityid"    column="cityid"    />
+        <result property="id" column="id"/>
+        <result property="uuid" column="uuid"/>
+        <result property="containerName" column="container_name"/>
+        <result property="posLng" column="pos_lng"/>
+        <result property="posLat" column="pos_lat"/>
+        <result property="cityid" column="cityid"/>
     </resultMap>
-	
-	<sql id="selectKeyContainerVo">
+
+    <sql id="selectKeyContainerVo">
         select id, uuid, container_name, pos_lng, pos_lat, cityid from cw_key_container
     </sql>
-	
+
     <select id="selectKeyContainerList" parameterType="KeyContainer" resultMap="KeyContainerResult">
         <include refid="selectKeyContainerVo"/>
-        <where>  
-            <if test="id != null "> and id = #{id}</if>
-             <if test="uuid != null  and uuid != '' "> and uuid = #{uuid}</if>
-             <if test="containerName != null  and containerName != '' "> and container_name = #{containerName}</if>
-             <if test="posLng != null "> and pos_lng = #{posLng}</if>
-             <if test="posLat != null "> and pos_lat = #{posLat}</if>
-             <if test="cityid != null  and cityid != '' "> and cityid = #{cityid}</if>
-         </where>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="uuid != null  and uuid != '' ">and uuid = #{uuid}</if>
+            <if test="containerName != null  and containerName != '' ">and container_name = #{containerName}</if>
+            <if test="posLng != null ">and pos_lng = #{posLng}</if>
+            <if test="posLat != null ">and pos_lat = #{posLat}</if>
+            <if test="cityid != null  and cityid != '' ">and cityid = #{cityid}</if>
+        </where>
     </select>
-    
+
     <select id="selectKeyContainerById" parameterType="Integer" resultMap="KeyContainerResult">
         <include refid="selectKeyContainerVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="selectKeyContainerListByCityId" parameterType="string" resultMap="KeyContainerResult">
+        <include refid="selectKeyContainerVo"/>
+        where cityid = #{cityId}
+    </select>
+
     <insert id="insertKeyContainer" parameterType="KeyContainer">
         insert into cw_key_container
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">id,</if>
-			<if test="uuid != null  and uuid != ''  ">uuid,</if>
-			<if test="containerName != null  and containerName != ''  ">container_name,</if>
-			<if test="posLng != null  ">pos_lng,</if>
-			<if test="posLat != null  ">pos_lat,</if>
-			<if test="cityid != null  and cityid != ''  ">cityid,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">id,</if>
+            <if test="uuid != null  and uuid != ''  ">uuid,</if>
+            <if test="containerName != null  and containerName != ''  ">container_name,</if>
+            <if test="posLng != null  ">pos_lng,</if>
+            <if test="posLat != null  ">pos_lat,</if>
+            <if test="cityid != null  and cityid != ''  ">cityid,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">#{id},</if>
-			<if test="uuid != null  and uuid != ''  ">#{uuid},</if>
-			<if test="containerName != null  and containerName != ''  ">#{containerName},</if>
-			<if test="posLng != null  ">#{posLng},</if>
-			<if test="posLat != null  ">#{posLat},</if>
-			<if test="cityid != null  and cityid != ''  ">#{cityid},</if>
-         </trim>
+            <if test="id != null  ">#{id},</if>
+            <if test="uuid != null  and uuid != ''  ">#{uuid},</if>
+            <if test="containerName != null  and containerName != ''  ">#{containerName},</if>
+            <if test="posLng != null  ">#{posLng},</if>
+            <if test="posLat != null  ">#{posLat},</if>
+            <if test="cityid != null  and cityid != ''  ">#{cityid},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateKeyContainer" parameterType="KeyContainer">
         update cw_key_container
         <trim prefix="SET" suffixOverrides=",">
@@ -66,15 +71,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-	<delete id="deleteKeyContainerById" parameterType="Integer">
+    <delete id="deleteKeyContainerById" parameterType="Integer">
         delete from cw_key_container where id = #{id}
     </delete>
-	
+
     <delete id="deleteKeyContainerByIds" parameterType="String">
-        delete from cw_key_container where id in 
+        delete from cw_key_container where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
 </mapper>
