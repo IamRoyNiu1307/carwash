@@ -5,7 +5,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Distance {
@@ -43,7 +42,6 @@ public class Distance {
 
         JSONObject jsonObject = new JSONObject(resultJson);
 
-        System.out.println(resultJson);
         JSONArray results = jsonObject.getJSONArray("results");
 
         for(int i = 0;i<results.length();i++){
