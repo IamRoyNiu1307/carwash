@@ -45,8 +45,11 @@ public class ApiStoreController {
      * @param evaluate
      */
     @RequestMapping("/evaluate")
-    public void evaluate(@RequestParam(name="evaluate",required = true) Evaluate evaluate){
+    public AjaxResult evaluate(@RequestParam(name="evaluate",required = true) Evaluate evaluate){
         evaluateService.insertEvaluate(evaluate);
+        AjaxResult ajaxResult = new AjaxResult();
+        ajaxResult.success("评价成功");
+        return ajaxResult;
     }
 
 }
