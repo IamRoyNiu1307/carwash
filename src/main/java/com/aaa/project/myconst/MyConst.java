@@ -19,4 +19,8 @@ public class MyConst {
     public static final String APPID = "wxde6415f50b2d05c3";
     //微信小程序appsecret
     public static final String APPSECRET = "300bda0ea35e7f536f4d8125dac6783a";
+
+    public static final int MAX_CONTAINER_DISTANCE = 10000;
+
+    public static final int GET_DISTANCE_TYPE_CAR = 1;
 }

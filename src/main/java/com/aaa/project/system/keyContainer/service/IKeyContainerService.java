@@ -2,6 +2,7 @@ package com.aaa.project.system.keyContainer.service;
 
 import com.aaa.project.system.keyContainer.domain.KeyContainer;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 钥匙柜 服务层
@@ -51,5 +52,5 @@ public interface IKeyContainerService
      */
 	public int deleteKeyContainerByIds(String ids);
 
-    List<KeyContainer> getAroundContainer(String posLng, String posLat);
+    List<Map<String, Object>> getAroundContainer(String posLng, String posLat);
 }

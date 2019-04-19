@@ -58,5 +58,6 @@ public interface KeyContainerMapper
      * @return 结果
      */
 	public int deleteKeyContainerByIds(String[] ids);
-	
+
+    List<KeyContainer> selectKeyContainerListByCityId(String cityid);
 }

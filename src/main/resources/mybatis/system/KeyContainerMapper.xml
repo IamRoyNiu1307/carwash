@@ -33,6 +33,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectKeyContainerVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectKeyContainerListByCityId" parameterType="String" resultMap="KeyContainerResult">
+        <include refid="selectKeyContainerVo"/>
+        where cityid = #{cityid}
+    </select>
         
     <insert id="insertKeyContainer" parameterType="KeyContainer">
         insert into cw_key_container
