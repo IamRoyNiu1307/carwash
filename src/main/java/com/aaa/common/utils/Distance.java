@@ -4,6 +4,7 @@ import com.aaa.project.myconst.MyConst;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,12 +21,12 @@ public class Distance {
      *                必须指出，当为1时会考虑路况，故在不同时间请求返回结果可能不同。
      *                此策略和驾车路径规划接口的 strategy=4策略基本一致，策略为“ 躲避拥堵的路线，但是可能会存在绕路的情况，耗时可能较长 ”
      *                若需要实现高德地图客户端效果，可以考虑使用驾车路径规划接口
-     *              2：公交规划距离（仅支持同城坐标,QPS不可超过1，否则可能导致意外）
-     *              3：步行规划距离（仅支持5km之间的距离）
+     *             2：公交规划距离（仅支持同城坐标,QPS不可超过1，否则可能导致意外）
+     *             3：步行规划距离（仅支持5km之间的距离）
      * @return 距离列表
-     */
-    public static List<Integer> getDistanceList(LinkedList<String> posList,String location,int type){
-        List<Integer> distanceList = new LinkedList<>();
+     */ 
+    public static List<Integer> getDistanceList(List<String> posList,String location,int type){
+        List<Integer> distanceList = new ArrayList<>();
 
         String posStr = "";
 
