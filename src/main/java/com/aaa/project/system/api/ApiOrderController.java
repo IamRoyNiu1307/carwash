@@ -17,7 +17,8 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/order")
 public class ApiOrderController {
-
+    @Autowired
+    private IOrderService orderService;
 
 
     /**
@@ -45,9 +46,12 @@ public class ApiOrderController {
         ajaxResult.success("创建订单成功");
         return ajaxResult;
     }
-    @Autowired
-    private IOrderService orderService;
 
+    /**
+     *  根据订单ID修改订单状态取消订单
+     * @param orderId 订单ID
+     * @return
+     */
     @RequestMapping("/cancelOrder")
     public AjaxResult cancelOrder(@RequestParam(name="orderId",required = true)String orderId){
         Date finishDate=new Date();
