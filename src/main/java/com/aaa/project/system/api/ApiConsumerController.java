@@ -34,6 +34,15 @@ public class ApiConsumerController {
     @Autowired
     private PasswordService passwordService;
 
+    /**
+     * 登录接口
+     * @param account 账号
+     * @param password 密码
+     * @param openid openid
+     * @param code 验证码
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AjaxResult login(@RequestParam(name = "account", required = true) String account,
                             @RequestParam(name = "password", required = false) String password,
@@ -69,6 +78,15 @@ public class ApiConsumerController {
         return ajaxResult;
     }
 
+    /**
+     * 发送验证码
+     * @param account 账号
+     * @param todo 操作
+     *             register：注册
+     *             login   ：登录
+     * @param session
+     * @return
+     */
     @RequestMapping("/sendCode")
     public AjaxResult sendCode(@RequestParam(name = "account", required = true) String account,
                                @RequestParam(name = "todo",required = true) String todo,
@@ -86,6 +104,14 @@ public class ApiConsumerController {
         return null;
     }
 
+    /**
+     * 注册接口
+     * @param account 账号
+     * @param openid openid
+     * @param code 验证码
+     * @param session
+     * @return
+     */
     @RequestMapping("/register")
     public AjaxResult register(@RequestParam(name = "account", required = true) String account,
                                @RequestParam(name = "openid", required = true) String openid,
@@ -103,12 +129,12 @@ public class ApiConsumerController {
         }
     }
 
-    @RequestMapping("/setSession")
-    public AjaxResult setSession(HttpSession session){
-        System.out.println(session);
-        return AjaxResult.success();
-    }
 
+    /**
+     * 根据openid获得绑定的账号
+     * @param openid
+     * @return
+     */
     @RequestMapping("/bind")
     public AjaxResult bind(@RequestParam(name = "openid")String openid){
         ConsumerAccount consumerAccount = consumerAccountService.selectAccountByOpenid(openid);
