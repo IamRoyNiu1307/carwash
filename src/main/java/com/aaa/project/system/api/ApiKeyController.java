@@ -1,10 +1,7 @@
 package com.aaa.project.system.api;
 
-import com.aaa.common.support.Convert;
 import com.aaa.framework.web.domain.AjaxResult;
-import com.aaa.project.system.keyContainer.domain.KeyContainer;
 import com.aaa.project.system.keyContainer.service.IKeyContainerService;
-import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,9 +19,16 @@ public class ApiKeyController {
     @Autowired
     private IKeyContainerService keyContainerService;
 
+    /**
+     * 获取周边钥匙柜信息
+     *
+     * @param posLng 经度
+     * @param posLat 纬度
+     * @return 结果
+     */
     @RequestMapping("/aroundContainer")
-    public AjaxResult aroundContainer(@RequestParam(name = "posLng",required = true) String posLng,
-                                      @RequestParam(name = "posLat",required = true) String posLat) {
+    public AjaxResult aroundContainer(@RequestParam(name = "posLng", required = true) String posLng,
+                                      @RequestParam(name = "posLat", required = true) String posLat) {
         //1-新建结果对象
         AjaxResult ajaxResult = new AjaxResult();
         //2-根据经纬度得到周围钥匙柜
