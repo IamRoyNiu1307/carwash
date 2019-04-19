@@ -19,7 +19,6 @@ public interface ConsumerAccountMapper
      */
 	public ConsumerAccount selectConsumerAccountById(Integer id);
 
-	public ConsumerAccount selectConsumerAccountByAccount(String account);
 	/**
      * 查询消费者账号列表
      * 
