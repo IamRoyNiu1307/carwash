@@ -9,9 +9,9 @@ import java.util.Random;
 
 public class SmsUtil {
 
-    //短信类型：账号注册、登录验证码
+    //短信类型：账号登录、注册
     private static final int TYPE_ACCOUNT = 0;
-    //短信类型：取件码
+    //短信类型：获得取件码
     private static final int TYPE_KEY = 1;
 
     public static AjaxResult sendSms(HttpSession session, String phone){
@@ -43,7 +43,7 @@ public class SmsUtil {
                 return AjaxResult.error("短信发送失败！");
             //将验证码存到session中,同时存入创建时间
             json = new JSONObject();
-            json.put("code", verifyCode);
+            json.put("verifyCode", verifyCode);
             json.put("createTime", System.currentTimeMillis());
             // 将认证码存入SESSION
             session.setAttribute("verifyCode", json);
