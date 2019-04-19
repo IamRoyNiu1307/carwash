@@ -19,8 +19,14 @@ public class MyConst {
     public static final String APPID = "wxde6415f50b2d05c3";
     //微信小程序appsecret
     public static final String APPSECRET = "300bda0ea35e7f536f4d8125dac6783a";
-
+    //搜索附近钥匙柜的搜索范围
     public static final int MAX_CONTAINER_DISTANCE = 10000;
-
-    public static final int GET_DISTANCE_TYPE_CAR = 1;
+    //高德地图距离计算 直线距离
+    public static final int DISTANCE_TYPE_STRAIGHT = 0;
+    //高德地图距离计算 驾车导航距离
+    public static final int DISTANCE_TYPE_CAR = 1;
+    //高德地图距离计算 公交规划距离
+    public static final int DISTANCE_TYPE_BUS = 2;
+    //高德地图距离计算 步行距离
+    public static final int DISTANCE_TYPE_STEP = 3;
 }

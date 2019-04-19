@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.aaa.project.myconst.MyConst.GET_DISTANCE_TYPE_CAR;
+import static com.aaa.project.myconst.MyConst.DISTANCE_TYPE_STRAIGHT;
 import static com.aaa.project.myconst.MyConst.MAX_CONTAINER_DISTANCE;
 
 /**
@@ -117,7 +117,7 @@ public class KeyContainerServiceImpl implements IKeyContainerService {
             keyContainerPom.add(pom);
         }
         // 2-得到每个钥匙柜子到目标点距离数据
-        List<Integer> distanceList = Distance.getDistanceList(keyContainerPom, posLng + "," + posLat, GET_DISTANCE_TYPE_CAR);
+        List<Integer> distanceList = Distance.getDistanceList(keyContainerPom, posLng + "," + posLat, DISTANCE_TYPE_STRAIGHT);
         //list存放钥匙柜信息，和到用户距离信息
         List<Map<String, Object>> data = new ArrayList<>();
         for(int i=0;i<keyContainers.size();i++){
