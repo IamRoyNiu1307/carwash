@@ -58,5 +58,11 @@ public interface StoreEnvMapper
      * @return 结果
      */
 	public int deleteStoreEnvByIds(String[] ids);
-	
+
+	/**
+	 * 根据storeid查询该门店的环境实体类
+	 * @param storeId
+	 * @return
+	 */
+	StoreEnv selectStoreEnvByStoreId(String storeId);
 }
