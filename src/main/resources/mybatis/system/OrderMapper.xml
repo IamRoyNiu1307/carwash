@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="appointmentTime"    column="appointment_time"    />
         <result property="timeQuantum"    column="time_quantum"    />
         <result property="expectCostId"    column="expect_cost_id"    />
+        <association property="keyInfo" column="key_info_id" select="com.aaa.project.system.keyInfo.mapper.KeyInfoMapper.selectKeyInfoById" />
     </resultMap>
 	
 	<sql id="selectOrderVo">

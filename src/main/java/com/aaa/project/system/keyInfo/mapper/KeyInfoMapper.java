@@ -58,5 +58,12 @@ public interface KeyInfoMapper
      * @return 结果
      */
 	public int deleteKeyInfoByIds(String[] ids);
+
+	/**
+	 * 根据钥匙信息ID查询钥匙信息
+	 * @param keyInfoId 钥匙信息ID
+	 * @return 钥匙信息
+	 */
+	public KeyInfo selectKeyInfoByKeyInfoId(Integer keyInfoId);
 	
 }

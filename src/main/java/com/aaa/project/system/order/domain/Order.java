@@ -1,5 +1,6 @@
 package com.aaa.project.system.order.domain;
 
+import com.aaa.project.system.keyInfo.domain.KeyInfo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -49,6 +50,8 @@ public class Order extends BaseEntity
 	private Integer timeQuantum;
 	/** 预算范围编号 */
 	private Integer expectCostId;
+	/** KeyInfo实体类*/
+	private KeyInfo keyInfo;
 
 	public void setId(Integer id) 
 	{
@@ -204,7 +207,15 @@ public class Order extends BaseEntity
 		return expectCostId;
 	}
 
-    public String toString() {
+	public KeyInfo getKeyInfo() {
+		return keyInfo;
+	}
+
+	public void setKeyInfo(KeyInfo keyInfo) {
+		this.keyInfo = keyInfo;
+	}
+
+	public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("orderId", getOrderId())

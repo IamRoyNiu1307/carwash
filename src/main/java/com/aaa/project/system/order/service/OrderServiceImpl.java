@@ -112,7 +112,7 @@ public class OrderServiceImpl implements IOrderService
 	 */
 	@Override
 	public Order selectOrderByOrderId(String orderId){
-		Order order = orderMapper.selectOrderByOrderId(orderId);
-		return order;
+		return orderMapper.selectOrderByOrderId(orderId);
 	};
+
 }

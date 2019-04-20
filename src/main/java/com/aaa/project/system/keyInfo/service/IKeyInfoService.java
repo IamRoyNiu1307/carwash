@@ -1,6 +1,8 @@
 package com.aaa.project.system.keyInfo.service;
 
 import com.aaa.project.system.keyInfo.domain.KeyInfo;
+import com.aaa.project.system.order.domain.Order;
+
 import java.util.List;
 
 /**
@@ -50,5 +52,13 @@ public interface IKeyInfoService
      * @return 结果
      */
 	public int deleteKeyInfoByIds(String ids);
+
+	/**
+	 * 根据钥匙信息和钥匙柜id更新订单的钥匙信息
+	 * @param keyInfo 钥匙信息
+	 * @param uuid 钥匙柜id
+	 * @return
+	 */
+	public boolean updateKeyInfoByKeyInfo(KeyInfo keyInfo, String uuid, Order order);
 	
 }

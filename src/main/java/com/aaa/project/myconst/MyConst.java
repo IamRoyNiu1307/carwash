@@ -43,6 +43,11 @@ public class MyConst {
     //发送短信目的：注册
     public static final String TODO_REGISTER = "register";
 
+    //钥匙状态：已寄存
+    public static final Integer STATUS_KEY_STORED=300;
+    //钥匙状态：已取出
+    public static final Integer STATUS_KEY_TAKED=301;
+
     static{
         TIME_MAP.put("08时",8);
         TIME_MAP.put("12时",12);

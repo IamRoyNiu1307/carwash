@@ -27,8 +27,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectKeyInfoVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectKeyInfoByKeyInfoId" parameterType="integer" resultMap="KeyInfoResult">
+        <include refid="selectKeyInfoVo"/>
+        where id =#{keyInfoId}
+    </select>
         
-    <insert id="insertKeyInfo" parameterType="KeyInfo">
+    <insert id="insertKeyInfo" useGeneratedKeys="true" keyProperty="id" parameterType="KeyInfo">
         insert into cw_key_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">id,</if>

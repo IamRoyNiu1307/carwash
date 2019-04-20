@@ -1,12 +1,17 @@
 package com.aaa.project.system.keyInfo.service;
 
-import java.util.List;
+import com.aaa.common.support.Convert;
+import com.aaa.project.system.keyInfo.domain.KeyInfo;
+import com.aaa.project.system.keyInfo.mapper.KeyInfoMapper;
+import com.aaa.project.system.order.domain.Order;
+import com.aaa.project.system.order.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aaa.project.system.keyInfo.mapper.KeyInfoMapper;
-import com.aaa.project.system.keyInfo.domain.KeyInfo;
-import com.aaa.project.system.keyInfo.service.IKeyInfoService;
-import com.aaa.common.support.Convert;
+
+import java.util.List;
+
+import static com.aaa.project.myconst.MyConst.STATUS_KEY_STORED;
+import static com.aaa.project.myconst.MyConst.STATUS_KEY_TAKED;
 
 /**
  * 钥匙 服务层实现
@@ -19,6 +24,8 @@ public class KeyInfoServiceImpl implements IKeyInfoService
 {
 	@Autowired
 	private KeyInfoMapper keyInfoMapper;
+	@Autowired
+	private OrderMapper orderMapper;
 
 	/**
      * 查询钥匙信息
@@ -79,5 +86,56 @@ public class KeyInfoServiceImpl implements IKeyInfoService
 	{
 		return keyInfoMapper.deleteKeyInfoByIds(Convert.toStrArray(ids));
 	}
-	
+
+	/**
+	 * 根据钥匙信息和钥匙柜id更新订单的钥匙信息
+	 * @param keyInfo 钥匙信息
+	 * @param uuid 钥匙柜id
+	 * @return
+	 */
+	@Override
+	public boolean updateKeyInfoByKeyInfo(KeyInfo keyInfo, String uuid, Order order){
+		if(keyInfo==null){
+			//新建一个钥匙信息
+			KeyInfo keyInfo2=new KeyInfo();
+			keyInfo2.setContainerId(uuid);
+			keyInfo2.setStatusId(STATUS_KEY_STORED);
+			//将新建的钥匙信息添加到数据库中
+			keyInfoMapper.insertKeyInfo(keyInfo2);
+			//将钥匙信息添加到订单中
+			order.setKeyInfoId(keyInfo2.getId());
+			//更新数据库中的订单信息
+			orderMapper.updateOrder(order);
+			return true;
+		}else if(keyInfo.getStatusId().equals(STATUS_KEY_STORED)) {
+				//判断钥匙信息上的钥匙柜id是否与传入的钥匙柜id相符合
+				if(keyInfo.getContainerId().equals(uuid)){
+					//如果钥匙柜id符合，则更改钥匙状态
+					keyInfo.setStatusId(STATUS_KEY_TAKED);
+					//更新钥匙信息
+					keyInfoMapper.updateKeyInfo(keyInfo);
+					//更改订单中的钥匙信息
+					order.setKeyInfo(keyInfo);
+					//更新订单信息
+					orderMapper.updateOrder(order);
+					return true;
+				}else {
+					return false;
+				}
+		}else if(keyInfo.getStatusId().equals(STATUS_KEY_TAKED)) {
+			//更改钥匙柜id和钥匙状态
+			keyInfo.setContainerId(uuid);
+			keyInfo.setStatusId(STATUS_KEY_STORED);
+			//更新钥匙信息
+			keyInfoMapper.updateKeyInfo(keyInfo);
+			//更改订单中的钥匙信息
+			order.setKeyInfo(keyInfo);
+			//更新订单信息
+			orderMapper.updateOrder(order);
+			return true;
+		}
+		return true;
+	};
+
+
 }
