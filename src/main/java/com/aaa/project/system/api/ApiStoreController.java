@@ -75,7 +75,8 @@ public class ApiStoreController {
         //2-根据经纬度得到周围门店信息
         List<Map<String, Object>> aroundStoreList = storeService.searchAroundStore(posLng, posLat);
         //3-赋值
-        ajaxResult.put("aroundContainerList", aroundStoreList);
+        ajaxResult.put("code",0);
+        ajaxResult.put("aroundStoreList", aroundStoreList);
         //4-返回结果
         return ajaxResult;
     }

@@ -98,14 +98,15 @@ public class CarImageServiceImpl implements ICarImageService {
         carImage.setImageUrl(url);
         // 操作 1-首先判断是否已有信息
         List<CarImage> carImages = carImageMapper.selectCarImageListByCarInfoId(carInfoId);
-        if (carImages.size() > 0) {
-            //1.2-有 更新信息
-            carImageMapper.updateCarImageByCarInfoId(carImage);
-            return "更新成功";
-        } else {
-            // 1.1-没有 插入信息
+        if (carImages.size() < 3) {
+            //1.1-image小于3的情况下 插入信息
             carImageMapper.insertCarImage(carImage);
             return "插入成功";
+        } else {
+            // 1.2-image大于3的情况下替换掉图片
+            carImages.get(0).setImageUrl(carImage.getImageUrl());
+            carImageMapper.updateCarImage(carImages.get(0));
+            return "更新成功";
         }
     }
 

@@ -41,6 +41,7 @@ public class ApiKeyController {
         //2-根据经纬度得到周围钥匙柜
         List<Map<String, Object>> aroundContainerList = keyContainerService.getAroundContainer(posLng, posLat);
         //3-赋值
+        ajaxResult.put("code",0);
         ajaxResult.put("aroundContainerList", aroundContainerList);
         //4-返回结果
         return ajaxResult;
