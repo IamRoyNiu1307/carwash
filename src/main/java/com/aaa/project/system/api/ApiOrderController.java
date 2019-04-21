@@ -1,15 +1,12 @@
 package com.aaa.project.system.api;
 
 
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import com.aaa.common.utils.IDUtil;
 import com.aaa.common.utils.ReGeo;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.carInfo.domain.CarInfo;
 import com.aaa.project.system.carInfo.service.ICarInfoService;
-import com.aaa.project.system.order.domain.Order;
-import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.List;
 import java.util.List;
 
 import static com.aaa.project.myconst.MyConst.*;

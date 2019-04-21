@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aaa.project.system.status.mapper.StatusMapper;
 import com.aaa.project.system.status.domain.Status;
-import com.aaa.project.system.status.service.IStatusService;
 import com.aaa.common.support.Convert;
 
 /**
