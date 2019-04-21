@@ -42,6 +42,19 @@ public class MyConst {
     public static final int STATUS_ORDER_CREATED=200;
     //订单状态：代付款
     public static final int STATUS_ORDER_UNPAY=201;
+    //短信类型：账号登录、注册
+    public static final int TYPE_ACCOUNT = 0;
+    //短信类型：获得取件码
+    public static final int TYPE_KEY = 1;
+    //发送短信目的：登录
+    public static final String TODO_LOGIN = "login";
+    //发送短信目的：注册
+    public static final String TODO_REGISTER = "register";
+
+    //钥匙状态：已寄存
+    public static final Integer STATUS_KEY_STORED=300;
+    //钥匙状态：已取出
+    public static final Integer STATUS_KEY_TAKED=301;
 
     static{
         TIME_MAP.put("08时",8);
@@ -50,5 +63,9 @@ public class MyConst {
         TIME_MAP.put("20时",20);
         TIME_MAP.put("24时",24);
     }
+
+    //车辆照片请求路径
+    public static final String CAR_IMAGE_DIR = "/car/";
+
 
 }

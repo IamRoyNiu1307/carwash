@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="appointmentTime"    column="appointment_time"    />
         <result property="timeQuantum"    column="time_quantum"    />
         <result property="expectCostId"    column="expect_cost_id"    />
+        <association property="keyInfo" column="key_info_id" select="com.aaa.project.system.keyInfo.mapper.KeyInfoMapper.selectKeyInfoById" />
     </resultMap>
 	
 	<sql id="selectOrderVo">
@@ -55,7 +56,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectOrderVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="selectOrderListByConsumerAccountAndStatusId" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where consumer_account = #{consumerAccount}<if test="statusId != null"> and status_id = #{statusId}</if>
+    </select>
+
+    <select id="selectOrderByOrderId" parameterType="String" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where order_id = #{orderId}
+    </select>
     <insert id="insertOrder" parameterType="Order">
         insert into cw_order
 		<trim prefix="(" suffix=")" suffixOverrides=",">

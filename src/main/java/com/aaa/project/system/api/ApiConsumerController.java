@@ -1,5 +1,6 @@
 package com.aaa.project.system.api;
 
+import com.aaa.common.utils.SmsUtil;
 import com.aaa.framework.shiro.service.PasswordService;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.consumerAccount.domain.ConsumerAccount;
@@ -16,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Random;
 
+import static com.aaa.project.myconst.MyConst.TODO_LOGIN;
+import static com.aaa.project.myconst.MyConst.TODO_REGISTER;
+import static com.aaa.project.myconst.MyConst.TYPE_ACCOUNT;
+
 /**
  * 顾客接口
  */
@@ -29,20 +34,42 @@ public class ApiConsumerController {
     @Autowired
     private PasswordService passwordService;
 
+    /**
+     * 登录接口
+     * @param account 账号
+     * @param password 密码
+     * @param openid openid
+     * @param code 验证码
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AjaxResult login(@RequestParam(name = "account", required = true) String account,
                             @RequestParam(name = "password", required = false) String password,
+                            @RequestParam(name = "openid", required = false) String openid,
                             @RequestParam(name = "code", required = false) String code,
                             HttpSession session) {
+        System.out.println(account+"   "+password);
         AjaxResult ajaxResult = new AjaxResult();
         ConsumerAccount consumer =  consumerAccountService.selectConsumerAccountByAccount(account);
         if(consumer!=null){
-            if (password != null && passwordService.encryptPassword(account, password, account).equals(consumer.getConsumerPassword())){
+            if (password != null ){
+                if(passwordService.encryptPassword(account, password, account).equals(consumer.getConsumerPassword())){
+                    consumerAccountService.bindAccountWithOpenid(account,openid);
+                    ajaxResult.put("account",account);
+                    ajaxResult.put("msg","登录成功！");
+                }else{
+                    ajaxResult.put("code",1).put("msg","账号或密码错误！");
+                }
+
+            }
+            if (code != null &&
+                    code.equals(String.valueOf(JSONObject.parseObject(session.getAttribute("verifyCode").toString()).get("code")))){
+                consumerAccountService.bindAccountWithOpenid(account,openid);
                 ajaxResult.put("account",account);
-            } else if (code != null && code.equals(String.valueOf(session.getAttribute("code")))){
-                ajaxResult.put("account",account);
+                ajaxResult.put("msg","登录成功！");
             }else {
-            ajaxResult.put("code",1).put("msg","账号或密码错误！");
+                ajaxResult.put("code",1).put("msg","验证码错误！");
             }
         }else{
             return ajaxResult.put("code",1).put("msg","账号不存在！");
@@ -51,34 +78,69 @@ public class ApiConsumerController {
         return ajaxResult;
     }
 
-    @RequestMapping("/register")
-    public AjaxResult register(@RequestParam(name = "account", required = true) String account, HttpServletRequest request) {
-        AjaxResult ajaxResult = new AjaxResult();
-        if (account != null){
-            JSONObject json = null;
-            // 生成6位验证码
-            String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
-            // 发送短信
-            ZhenziSmsClient client = new ZhenziSmsClient("https://sms_developer.zhenzikj.com", "100701",
-                    "e63cba85-be9b-40d0-bfa2-d70bbc13cb6f");
-            String result = null;
-            try {
-                result = client.send(account, "您的验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次！");
-            } catch (Exception e) {
-                e.printStackTrace();
+    /**
+     * 发送验证码
+     * @param account 账号
+     * @param todo 操作
+     *             register：注册
+     *             login   ：登录
+     * @param session
+     * @return
+     */
+    @RequestMapping("/sendCode")
+    public AjaxResult sendCode(@RequestParam(name = "account", required = true) String account,
+                               @RequestParam(name = "todo",required = true) String todo,
+                               HttpSession session) {
+        if(todo.equals(TODO_REGISTER)) {
+            ConsumerAccount consumerAccount = consumerAccountService.selectConsumerAccountByAccount(account);
+            if (consumerAccount != null) {
+                return AjaxResult.error("该手机号已经注册！");
+            } else {
+                return SmsUtil.sendSms(session, account, TYPE_ACCOUNT);
             }
-            json = JSONObject.parseObject(result);
-            if (json.getIntValue("code") != 0)// 发送短信失败
-                return ajaxResult.error(1, "验证码发送失败");
-            // 将验证码存到session中,同时存入创建时间
-            // 以json存放，这里使用的是阿里的fastjson
-            //HttpSession session = request.getSession();
-            json = new JSONObject();
-            json.put("verifyCode", verifyCode);
-            json.put("createTime", System.currentTimeMillis());
-            // 将认证码存入SESSION
-            request.getSession().setAttribute("verifyCode", json);
-            return ajaxResult.success("验证码已发送，请注意查收");
+        }else if(todo.equals(TODO_LOGIN)){
+            return SmsUtil.sendSms(session, account, TYPE_ACCOUNT);
+        }
+        return null;
+    }
+
+    /**
+     * 注册接口
+     * @param account 账号
+     * @param openid openid
+     * @param code 验证码
+     * @param session
+     * @return
+     */
+    @RequestMapping("/register")
+    public AjaxResult register(@RequestParam(name = "account", required = true) String account,
+                               @RequestParam(name = "openid", required = true) String openid,
+                               @RequestParam(name = "code", required = true) String code,
+                               HttpSession session){
+        JSONObject verifyCode = JSONObject.parseObject(session.getAttribute("verifyCode").toString());
+        if(code.equals(verifyCode.get("code"))){
+            ConsumerAccount consumerAccount = new ConsumerAccount();
+            consumerAccount.setConsumerAccount(account);
+            consumerAccount.setOpenid(openid);
+            consumerAccountService.insertConsumerAccount(consumerAccount);
+            return AjaxResult.success("注册成功！");
+        }else{
+            return AjaxResult.error("验证码错误！");
+        }
+    }
+
+
+    /**
+     * 根据openid获得绑定的账号
+     * @param openid
+     * @return
+     */
+    @RequestMapping("/bind")
+    public AjaxResult bind(@RequestParam(name = "openid")String openid){
+        ConsumerAccount consumerAccount = consumerAccountService.selectAccountByOpenid(openid);
+        AjaxResult ajaxResult = new AjaxResult();
+        if(consumerAccount!=null) {
+            ajaxResult.put("account", consumerAccount.getConsumerAccount());
         }
         return ajaxResult;
     }

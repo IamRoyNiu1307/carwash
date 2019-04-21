@@ -57,4 +57,24 @@ public interface IConsumerAccountService
      * @return 实体
      */
     ConsumerAccount selectConsumerAccountByAccount(String account);
+
+	/**
+	 * 根据openid查找该openid绑定的账号
+	 * @param openid
+	 * @return
+	 */
+	ConsumerAccount selectAccountByOpenid(String openid);
+
+	/**
+	 * 清空该openid的绑定信息
+	 * @param openid
+	 */
+	void cleanOpenid(String openid);
+
+	/**
+	 * 绑定openid和account
+	 * @param account
+	 * @param openid
+	 */
+	void bindAccountWithOpenid(String account, String openid);
 }

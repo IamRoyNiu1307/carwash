@@ -1,91 +1,98 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.project.system.store.mapper.StoreMapper">
-    
+
     <resultMap type="Store" id="StoreResult">
-        <result property="id"    column="id"    />
-        <result property="storeId"    column="store_id"    />
-        <result property="storeName"    column="store_name"    />
-        <result property="ownerAccount"    column="owner_account"    />
-        <result property="provinceid"    column="provinceid"    />
-        <result property="cityid"    column="cityid"    />
-        <result property="street"    column="street"    />
-        <result property="posLng"    column="pos_lng"    />
-        <result property="posLat"    column="pos_lat"    />
-        <result property="contacts"    column="contacts"    />
-        <result property="contactsPhone"    column="contacts_phone"    />
-        <result property="statusId"    column="status_id"    />
-        <result property="introduction"    column="introduction"    />
-        <result property="faviconPath"    column="favicon_path"    />
+        <result property="id" column="id"/>
+        <result property="storeId" column="store_id"/>
+        <result property="storeName" column="store_name"/>
+        <result property="ownerAccount" column="owner_account"/>
+        <result property="provinceid" column="provinceid"/>
+        <result property="cityid" column="cityid"/>
+        <result property="street" column="street"/>
+        <result property="posLng" column="pos_lng"/>
+        <result property="posLat" column="pos_lat"/>
+        <result property="contacts" column="contacts"/>
+        <result property="contactsPhone" column="contacts_phone"/>
+        <result property="statusId" column="status_id"/>
+        <result property="introduction" column="introduction"/>
+        <result property="faviconPath" column="favicon_path"/>
+        <collection property="storeEnvList" column="store_id" select="com.aaa.project.system.storeEnv.mapper.StoreEnvMapper.selectStoreEnvByStoreId" />
+
     </resultMap>
-	
-	<sql id="selectStoreVo">
+
+    <sql id="selectStoreVo">
         select id, store_id, store_name, owner_account, provinceid, cityid, street, pos_lng, pos_lat, contacts, contacts_phone, status_id, introduction, favicon_path from cw_store
     </sql>
-	
+
     <select id="selectStoreList" parameterType="Store" resultMap="StoreResult">
         <include refid="selectStoreVo"/>
-        <where>  
-            <if test="id != null "> and id = #{id}</if>
-             <if test="storeId != null  and storeId != '' "> and store_id = #{storeId}</if>
-             <if test="storeName != null  and storeName != '' "> and store_name = #{storeName}</if>
-             <if test="ownerAccount != null  and ownerAccount != '' "> and owner_account = #{ownerAccount}</if>
-             <if test="provinceid != null  and provinceid != '' "> and provinceid = #{provinceid}</if>
-             <if test="cityid != null  and cityid != '' "> and cityid = #{cityid}</if>
-             <if test="street != null  and street != '' "> and street = #{street}</if>
-             <if test="posLng != null "> and pos_lng = #{posLng}</if>
-             <if test="posLat != null "> and pos_lat = #{posLat}</if>
-             <if test="contacts != null  and contacts != '' "> and contacts = #{contacts}</if>
-             <if test="contactsPhone != null  and contactsPhone != '' "> and contacts_phone = #{contactsPhone}</if>
-             <if test="statusId != null "> and status_id = #{statusId}</if>
-             <if test="introduction != null  and introduction != '' "> and introduction = #{introduction}</if>
-             <if test="faviconPath != null  and faviconPath != '' "> and favicon_path = #{faviconPath}</if>
-         </where>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="storeId != null  and storeId != '' ">and store_id = #{storeId}</if>
+            <if test="storeName != null  and storeName != '' ">and store_name = #{storeName}</if>
+            <if test="ownerAccount != null  and ownerAccount != '' ">and owner_account = #{ownerAccount}</if>
+            <if test="provinceid != null  and provinceid != '' ">and provinceid = #{provinceid}</if>
+            <if test="cityid != null  and cityid != '' ">and cityid = #{cityid}</if>
+            <if test="street != null  and street != '' ">and street = #{street}</if>
+            <if test="posLng != null ">and pos_lng = #{posLng}</if>
+            <if test="posLat != null ">and pos_lat = #{posLat}</if>
+            <if test="contacts != null  and contacts != '' ">and contacts = #{contacts}</if>
+            <if test="contactsPhone != null  and contactsPhone != '' ">and contacts_phone = #{contactsPhone}</if>
+            <if test="statusId != null ">and status_id = #{statusId}</if>
+            <if test="introduction != null  and introduction != '' ">and introduction = #{introduction}</if>
+            <if test="faviconPath != null  and faviconPath != '' ">and favicon_path = #{faviconPath}</if>
+        </where>
     </select>
-    
+
     <select id="selectStoreById" parameterType="Integer" resultMap="StoreResult">
         <include refid="selectStoreVo"/>
-        where id = #{id}
+        where id= #{id}
     </select>
-        
+
+    <select id="selectStoreByCityId" parameterType="string" resultMap="StoreResult">
+        <include refid="selectStoreVo"/>
+        where cityid = #{cityId}
+    </select>
+
     <insert id="insertStore" parameterType="Store">
         insert into cw_store
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">id,</if>
-			<if test="storeId != null  and storeId != ''  ">store_id,</if>
-			<if test="storeName != null  and storeName != ''  ">store_name,</if>
-			<if test="ownerAccount != null  and ownerAccount != ''  ">owner_account,</if>
-			<if test="provinceid != null  and provinceid != ''  ">provinceid,</if>
-			<if test="cityid != null  and cityid != ''  ">cityid,</if>
-			<if test="street != null  and street != ''  ">street,</if>
-			<if test="posLng != null  ">pos_lng,</if>
-			<if test="posLat != null  ">pos_lat,</if>
-			<if test="contacts != null  and contacts != ''  ">contacts,</if>
-			<if test="contactsPhone != null  and contactsPhone != ''  ">contacts_phone,</if>
-			<if test="statusId != null  ">status_id,</if>
-			<if test="introduction != null  and introduction != ''  ">introduction,</if>
-			<if test="faviconPath != null  and faviconPath != ''  ">favicon_path,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">id,</if>
+            <if test="storeId != null  and storeId != ''  ">store_id,</if>
+            <if test="storeName != null  and storeName != ''  ">store_name,</if>
+            <if test="ownerAccount != null  and ownerAccount != ''  ">owner_account,</if>
+            <if test="provinceid != null  and provinceid != ''  ">provinceid,</if>
+            <if test="cityid != null  and cityid != ''  ">cityid,</if>
+            <if test="street != null  and street != ''  ">street,</if>
+            <if test="posLng != null  ">pos_lng,</if>
+            <if test="posLat != null  ">pos_lat,</if>
+            <if test="contacts != null  and contacts != ''  ">contacts,</if>
+            <if test="contactsPhone != null  and contactsPhone != ''  ">contacts_phone,</if>
+            <if test="statusId != null  ">status_id,</if>
+            <if test="introduction != null  and introduction != ''  ">introduction,</if>
+            <if test="faviconPath != null  and faviconPath != ''  ">favicon_path,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null  ">#{id},</if>
-			<if test="storeId != null  and storeId != ''  ">#{storeId},</if>
-			<if test="storeName != null  and storeName != ''  ">#{storeName},</if>
-			<if test="ownerAccount != null  and ownerAccount != ''  ">#{ownerAccount},</if>
-			<if test="provinceid != null  and provinceid != ''  ">#{provinceid},</if>
-			<if test="cityid != null  and cityid != ''  ">#{cityid},</if>
-			<if test="street != null  and street != ''  ">#{street},</if>
-			<if test="posLng != null  ">#{posLng},</if>
-			<if test="posLat != null  ">#{posLat},</if>
-			<if test="contacts != null  and contacts != ''  ">#{contacts},</if>
-			<if test="contactsPhone != null  and contactsPhone != ''  ">#{contactsPhone},</if>
-			<if test="statusId != null  ">#{statusId},</if>
-			<if test="introduction != null  and introduction != ''  ">#{introduction},</if>
-			<if test="faviconPath != null  and faviconPath != ''  ">#{faviconPath},</if>
-         </trim>
+            <if test="id != null  ">#{id},</if>
+            <if test="storeId != null  and storeId != ''  ">#{storeId},</if>
+            <if test="storeName != null  and storeName != ''  ">#{storeName},</if>
+            <if test="ownerAccount != null  and ownerAccount != ''  ">#{ownerAccount},</if>
+            <if test="provinceid != null  and provinceid != ''  ">#{provinceid},</if>
+            <if test="cityid != null  and cityid != ''  ">#{cityid},</if>
+            <if test="street != null  and street != ''  ">#{street},</if>
+            <if test="posLng != null  ">#{posLng},</if>
+            <if test="posLat != null  ">#{posLat},</if>
+            <if test="contacts != null  and contacts != ''  ">#{contacts},</if>
+            <if test="contactsPhone != null  and contactsPhone != ''  ">#{contactsPhone},</if>
+            <if test="statusId != null  ">#{statusId},</if>
+            <if test="introduction != null  and introduction != ''  ">#{introduction},</if>
+            <if test="faviconPath != null  and faviconPath != ''  ">#{faviconPath},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateStore" parameterType="Store">
         update cw_store
         <trim prefix="SET" suffixOverrides=",">
@@ -106,15 +113,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-	<delete id="deleteStoreById" parameterType="Integer">
+    <delete id="deleteStoreById" parameterType="Integer">
         delete from cw_store where id = #{id}
     </delete>
-	
+
     <delete id="deleteStoreByIds" parameterType="String">
-        delete from cw_store where id in 
+        delete from cw_store where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
 </mapper>

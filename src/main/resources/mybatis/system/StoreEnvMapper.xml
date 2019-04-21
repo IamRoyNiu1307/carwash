@@ -27,6 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectStoreEnvVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectStoreEnvByStoreId" parameterType="String" resultMap="StoreEnvResult">
+        <include refid="selectStoreEnvVo"/>
+        where store_id = #{storeId}
+    </select>
         
     <insert id="insertStoreEnv" parameterType="StoreEnv">
         insert into cw_store_env

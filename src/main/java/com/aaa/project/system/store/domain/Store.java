@@ -1,10 +1,12 @@
 package com.aaa.project.system.store.domain;
 
+import com.aaa.project.system.storeEnv.domain.StoreEnv;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 门店表 cw_store
@@ -44,6 +46,8 @@ public class Store extends BaseEntity
 	private String introduction;
 	/** 图标路径 */
 	private String faviconPath;
+
+	private List<StoreEnv> storeEnvList;
 
 	public void setId(Integer id) 
 	{
@@ -172,7 +176,15 @@ public class Store extends BaseEntity
 		return faviconPath;
 	}
 
-    public String toString() {
+	public List<StoreEnv> getStoreEnvList() {
+		return storeEnvList;
+	}
+
+	public void setStoreEnvList(List<StoreEnv> storeEnvList) {
+		this.storeEnvList = storeEnvList;
+	}
+
+	public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("storeId", getStoreId())

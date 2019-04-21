@@ -1,7 +1,9 @@
 package com.aaa.project.system.consumerAccount.mapper;
 
 import com.aaa.project.system.consumerAccount.domain.ConsumerAccount;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 消费者账号 数据层
@@ -65,5 +67,25 @@ public interface ConsumerAccountMapper
 	 * @return
 	 */
 	ConsumerAccount selectConsumerAccountByAccount(String consumerAccount);
-	
+
+	/**
+	 * 根据openid查找绑定的账号
+	 * @param openid
+	 * @return
+	 */
+	void cleanOpenid(String openid);
+
+	/**
+	 * 绑定账号和openid
+	 * @param account
+	 * @param openid
+	 */
+	void bindAccountWithOpenid(@Param("account") String account,@Param("openid") String openid);
+
+	/**
+	 * 根据openid查找该openid绑定的账号
+	 * @param openid
+	 * @return
+	 */
+	ConsumerAccount selectAccountByOpenid(String openid);
 }
