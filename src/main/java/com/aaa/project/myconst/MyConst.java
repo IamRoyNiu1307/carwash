@@ -34,6 +34,14 @@ public class MyConst {
     public static final int DISTANCE_TYPE_STEP = 3;
     //时段map
     public static final Map<String,Integer> TIME_MAP = new HashMap<>();
+    //模式：快速下单
+    public static final int MODEL_QUICKCREATE = 0;
+    //模式: 指定门店下单
+    public static final int MODEL_SELECTSTORE = 1;
+    //订单状态：待接单
+    public static final int STATUS_ORDER_CREATED=200;
+    //订单状态：代付款
+    public static final int STATUS_ORDER_UNPAY=201;
 
     static{
         TIME_MAP.put("08时",8);
@@ -42,4 +50,5 @@ public class MyConst {
         TIME_MAP.put("20时",20);
         TIME_MAP.put("24时",24);
     }
+
 }

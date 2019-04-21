@@ -3,9 +3,8 @@ package com.aaa.project.system.api;
 
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.evaluate.domain.Evaluate;
-import com.aaa.project.system.evaluate.service.EvaluateServiceImpl;
-import com.aaa.project.system.storeService.domain.StoreService;
-import com.aaa.project.system.storeService.service.StoreServiceServiceImpl;
+import com.aaa.project.system.evaluate.service.IEvaluateService;
+import com.aaa.project.system.storeService.service.IStoreServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,10 +21,10 @@ import java.util.List;
 public class ApiStoreController {
 
     @Autowired
-    private StoreServiceServiceImpl storeServiceService;
+    private IStoreServiceService storeServiceService;
 
     @Autowired
-    private EvaluateServiceImpl evaluateService;
+    private IEvaluateService evaluateService;
 
     /**
      * 业务列表

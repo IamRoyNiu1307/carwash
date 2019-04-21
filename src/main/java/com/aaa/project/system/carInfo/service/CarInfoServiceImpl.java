@@ -31,7 +31,18 @@ public class CarInfoServiceImpl implements ICarInfoService
 	{
 	    return carInfoMapper.selectCarInfoById(id);
 	}
-	
+
+	/**
+	 * 查询车辆信息
+	 *
+	 * @param consumerAccount 所属账号
+	 * @return
+	 */
+	@Override
+	public CarInfo selectCarInfoByConsumerAccount(String consumerAccount) {
+		return carInfoMapper.selectCarInfoByConsumerAccount(consumerAccount);
+	}
+
 	/**
      * 查询车辆列表
      * 

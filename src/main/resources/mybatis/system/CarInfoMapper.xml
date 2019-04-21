@@ -39,6 +39,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCarInfoVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectCarInfoByConsumerAccount" parameterType="string" resultMap="CarInfoResult">
+        <include refid="selectCarInfoVo"/>
+        where owner_account = #{owner_account}
+    </select>
         
     <insert id="insertCarInfo" parameterType="CarInfo">
         insert into cw_car_info

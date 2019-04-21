@@ -18,6 +18,13 @@ public interface CarInfoMapper
      * @return 车辆信息
      */
 	public CarInfo selectCarInfoById(Integer id);
+
+	/**
+	 * 查询 车辆信息
+	 * @param consumerAccount 所属账号
+	 * @return 车辆信息
+	 */
+	public CarInfo selectCarInfoByConsumerAccount(String consumerAccount);
 	
 	/**
      * 查询车辆列表

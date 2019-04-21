@@ -1,15 +1,25 @@
 package com.aaa.project.system.api;
 
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUtil;
+import com.aaa.common.utils.IDUtil;
+import com.aaa.common.utils.ReGeo;
 import com.aaa.framework.web.domain.AjaxResult;
-import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.project.system.carInfo.domain.CarInfo;
+import com.aaa.project.system.carInfo.service.ICarInfoService;
+import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import static com.aaa.project.myconst.MyConst.*;
 
 /**
  * 订单接口
@@ -19,6 +29,8 @@ import java.util.Date;
 public class ApiOrderController {
     @Autowired
     private IOrderService orderService;
+    @Autowired
+    private ICarInfoService carInfoService;
 
 
     /**
@@ -34,17 +46,46 @@ public class ApiOrderController {
      */
     @RequestMapping("/createOrder")
     public AjaxResult createOrder(@RequestParam(name="consumerAccount",required = true) String consumerAccount,
-                                  @RequestParam(name="serviceIdList",required = true)int serviceIdList,
+                                  @RequestParam(name="serviceIdList[]",required = true)List<Integer> serviceIdList,
                                   @RequestParam(name="startTime",required =true )String startTime,
                                   @RequestParam(name="startHour",required =true )String startHour,
                                   @RequestParam(name="endHour",required = true)String endHour,
                                   @RequestParam(name="expectCostId",required = true)int expectCostId,
                                   @RequestParam(name="orderComment",required = false)String orderComment,
                                   @RequestParam(name = "storeId",required = false) String storeId){
-        AjaxResult ajaxResult = new AjaxResult();
+        Order order = new Order();
+        //获取车辆信息
+        CarInfo carInfo = carInfoService.selectCarInfoByConsumerAccount(consumerAccount);
 
-        ajaxResult.success("创建订单成功");
-        return ajaxResult;
+        //订单编号
+        order.setOrderId(IDUtil.createID());
+        //车辆编号
+        order.setCarId(carInfo.getId());
+        //车辆地址
+        String address =(String) ReGeo.reGeo(carInfo.getCarAddrLng(), carInfo.getCarAddrLat()).get("formattedAddress");
+        order.setCarAddress(address);
+        //消费者账号
+        order.setConsumerAccount(consumerAccount);
+        //订单状态编号
+        order.setStatusId(storeId==null? STATUS_ORDER_CREATED : STATUS_ORDER_UNPAY );
+        //门店编号
+        order.setStoreId(storeId);
+        //下单时间
+        order.setCreateDate(new Date());
+        //模式编号
+        order.setTypeId(storeId==null? MODEL_QUICKCREATE : MODEL_SELECTSTORE );
+        //预约时间
+        order.setAppointmentTime(DateUtil.parse(startTime+" "+TIME_MAP.get(startHour)+":00","yyyy-MM-dd HH:mm"));
+        //时间段
+        order.setTimeQuantum(TIME_MAP.get(endHour)-TIME_MAP.get(startHour));
+        //预算范围
+        order.setExpectCostId(expectCostId);
+        //订单备注
+        order.setOrderComment(orderComment);
+
+        System.out.println(serviceIdList);
+        orderService.insertOrder(order);
+        return AjaxResult.success("下单成功");
     }
 
     /**
