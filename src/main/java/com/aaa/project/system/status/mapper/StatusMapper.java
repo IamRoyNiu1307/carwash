@@ -58,5 +58,24 @@ public interface StatusMapper
      * @return 结果
      */
 	public int deleteStatusByIds(String[] ids);
+
+	/**
+	 * 根据id查询状态名称
+	 * @param id 状态ID
+	 * @return 状态名称
+	 */
+	public String selectStatusNameById(Integer id);
+
+	/**
+	 * 查询所有的钥匙状态信息
+	 * @return 钥匙信息集合
+	 */
+	public List<Status> selectAllKeyStatus();
+
+	/**
+	 * 查询所有订单状态信息
+	 * @return 订单信息集合
+	 */
+	public List<Status> selectAllOrderStatus();
 	
 }

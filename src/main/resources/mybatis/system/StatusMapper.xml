@@ -25,6 +25,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectStatusVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectStatusNameById" parameterType="Integer" resultType="string">
+        select status_name from cw_status where id = #{id}
+    </select>
+
+    <select id="selectAllKeyStatus" resultMap="StatusResult">
+        <include refid="selectStatusVo"/>
+        where id between 300 and 399
+    </select>
+
+    <select id="selectAllOrderStatus" resultMap="StatusResult">
+        <include refid="selectStatusVo"/>
+        where id between 200 and 299
+    </select>
         
     <insert id="insertStatus" parameterType="Status">
         insert into cw_status

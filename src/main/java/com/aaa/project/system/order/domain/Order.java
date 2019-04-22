@@ -40,6 +40,8 @@ public class Order extends BaseEntity
 	private Integer keyInfoId;
 	/** 模式编号 */
 	private Integer typeId;
+	/** 模式名称*/
+	private String typeName;
 	/** 工作人员账号 */
 	private String userAccount;
 	/** 备注 */
@@ -52,6 +54,8 @@ public class Order extends BaseEntity
 	private Integer expectCostId;
 	/** KeyInfo实体类*/
 	private KeyInfo keyInfo;
+	/** status名称*/
+	private String statusName;
 
 	public void setId(Integer id) 
 	{
@@ -157,7 +161,15 @@ public class Order extends BaseEntity
 		this.typeId = typeId;
 	}
 
-	public Integer getTypeId() 
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public Integer getTypeId()
 	{
 		return typeId;
 	}
@@ -213,6 +225,14 @@ public class Order extends BaseEntity
 
 	public void setKeyInfo(KeyInfo keyInfo) {
 		this.keyInfo = keyInfo;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
 	}
 
 	public String toString() {

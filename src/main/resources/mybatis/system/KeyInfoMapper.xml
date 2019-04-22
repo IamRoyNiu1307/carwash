@@ -8,6 +8,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="containerId"    column="container_id"    />
         <result property="statusId"    column="status_id"    />
+        <association property="statusName" column="status_id" select="com.aaa.project.system.status.mapper.StatusMapper.selectStatusNameById">
+        </association>
     </resultMap>
 	
 	<sql id="selectKeyInfoVo">

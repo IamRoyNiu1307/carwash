@@ -1,23 +1,23 @@
 package com.aaa.project.system.keyInfo.controller;
 
-import java.util.List;
+import com.aaa.common.utils.poi.ExcelUtil;
+import com.aaa.framework.aspectj.lang.annotation.Log;
+import com.aaa.framework.aspectj.lang.enums.BusinessType;
+import com.aaa.framework.web.controller.BaseController;
+import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.system.keyInfo.domain.KeyInfo;
+import com.aaa.project.system.keyInfo.service.IKeyInfoService;
+import com.aaa.project.system.status.domain.Status;
+import com.aaa.project.system.status.service.IStatusService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.aaa.framework.aspectj.lang.annotation.Log;
-import com.aaa.framework.aspectj.lang.enums.BusinessType;
-import com.aaa.project.system.keyInfo.domain.KeyInfo;
-import com.aaa.project.system.keyInfo.service.IKeyInfoService;
-import com.aaa.framework.web.controller.BaseController;
-import com.aaa.framework.web.page.TableDataInfo;
-import com.aaa.framework.web.domain.AjaxResult;
-import com.aaa.common.utils.poi.ExcelUtil;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 钥匙 信息操作处理
@@ -33,6 +33,8 @@ public class KeyInfoController extends BaseController
 	
 	@Autowired
 	private IKeyInfoService keyInfoService;
+	@Autowired
+	private IStatusService statusService;
 	
 	@RequiresPermissions("system:keyInfo:view")
 	@GetMapping()
@@ -72,9 +74,11 @@ public class KeyInfoController extends BaseController
 	 * 新增钥匙
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(HttpServletRequest req)
 	{
-	    return prefix + "/add";
+		List<Status> statusList=statusService.selectAllKeyStatus();
+		req.setAttribute("statusList",statusList);
+		return prefix + "/add";
 	}
 	
 	/**
@@ -96,7 +100,9 @@ public class KeyInfoController extends BaseController
 	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
 		KeyInfo keyInfo = keyInfoService.selectKeyInfoById(id);
+		List<Status> statusList = statusService.selectAllKeyStatus();
 		mmap.put("keyInfo", keyInfo);
+		mmap.put("statusList",statusList);
 	    return prefix + "/edit";
 	}
 	

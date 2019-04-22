@@ -1,11 +1,12 @@
 package com.aaa.project.system.status.service;
 
-import java.util.List;
+import com.aaa.common.support.Convert;
+import com.aaa.project.system.status.domain.Status;
+import com.aaa.project.system.status.mapper.StatusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aaa.project.system.status.mapper.StatusMapper;
-import com.aaa.project.system.status.domain.Status;
-import com.aaa.common.support.Convert;
+
+import java.util.List;
 
 /**
  * 状态 服务层实现
@@ -78,5 +79,26 @@ public class StatusServiceImpl implements IStatusService
 	{
 		return statusMapper.deleteStatusByIds(Convert.toStrArray(ids));
 	}
-	
+
+	/**
+	 * 根据id查询状态名称
+	 * @param id 状态ID
+	 * @return 状态名称
+	 */
+	@Override
+	public String selectStatusNameById(Integer id){return statusMapper.selectStatusNameById(id);};
+
+	/**
+	 * 查询所有的钥匙状态信息
+	 * @return 钥匙信息集合
+	 */
+	@Override
+	public List<Status> selectAllKeyStatus(){return statusMapper.selectAllKeyStatus();};
+
+	/**
+	 * 查询所有订单状态信息
+	 * @return 订单信息集合
+	 */
+	@Override
+	public List<Status> selectAllOrderStatus(){return statusMapper.selectAllOrderStatus();};
 }

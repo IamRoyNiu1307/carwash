@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.model.mapper.ModelMapper">
+    
+    <resultMap type="Model" id="ModelResult">
+        <result property="id"    column="id"    />
+        <result property="modelName"    column="model_name"    />
+    </resultMap>
+	
+	<sql id="selectModelVo">
+        select id, model_name from cw_model
+    </sql>
+	
+    <select id="selectModelList" parameterType="Model" resultMap="ModelResult">
+        <include refid="selectModelVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="modelName != null  and modelName != '' "> and model_name = #{modelName}</if>
+         </where>
+    </select>
+    
+    <select id="selectModelById" parameterType="Integer" resultMap="ModelResult">
+        <include refid="selectModelVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectModelNameById" parameterType="Integer" resultType="String">
+        select model_name from cw_model where id = #{id}
+    </select>
+
+    <select id="selectAllModel" resultMap="ModelResult">
+        <include refid="selectModelVo"/>
+    </select>
+        
+    <insert id="insertModel" parameterType="Model">
+        insert into cw_model
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="modelName != null  and modelName != ''  ">model_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="modelName != null  and modelName != ''  ">#{modelName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateModel" parameterType="Model">
+        update cw_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="modelName != null  and modelName != ''  ">model_name = #{modelName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteModelById" parameterType="Integer">
+        delete from cw_model where id = #{id}
+    </delete>
+	
+    <delete id="deleteModelByIds" parameterType="String">
+        delete from cw_model where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

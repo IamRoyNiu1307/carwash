@@ -20,6 +20,8 @@ public class KeyInfo extends BaseEntity
 	private String containerId;
 	/** 状态编号 */
 	private Integer statusId;
+	/** 状态名称*/
+	private String statusName;
 
 	public void setId(Integer id) 
 	{
@@ -49,7 +51,15 @@ public class KeyInfo extends BaseEntity
 		return statusId;
 	}
 
-    public String toString() {
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("containerId", getContainerId())

@@ -11,11 +11,7 @@
 					<div class="select-list">
 						<ul id="searchUl">
 							<li>
-								<span class="textSpan">钥匙柜编号：</span><input type="text" name="containerId"/>
-							</li>
-
-							<li>
-								<span class="textSpan">状态名称：</span><input type="text" name="statusName"/>
+								<span class="textSpan">模式名称：</span><input type="text" name="modelName"/>
 							</li>
 
 							<li>
@@ -28,16 +24,16 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:keyInfo:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:model:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:keyInfo:edit">
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:model:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:keyInfo:remove">
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:model:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:keyInfo:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:model:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
 			</div>
@@ -48,9 +44,9 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:keyInfo:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:keyInfo:remove')}]];
-        var prefix = ctx + "system/keyInfo";
+        var editFlag = [[${@permission.hasPermi('system:model:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:model:remove')}]];
+        var prefix = ctx + "system/model";
 
         $(function() {
             var options = {
@@ -59,7 +55,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "钥匙",
+                modalName: "模式",
 				search: false,
 		        showExport: true,
                 columns: [{
@@ -71,13 +67,8 @@
 					visible: false
 				},
 				{
-					field : 'containerId', 
-					title : '钥匙柜编号',
-					sortable: true
-				},
-				{
-					field : 'statusName',
-					title : '状态名称',
+					field : 'modelName', 
+					title : '模式名称',
 					sortable: true
 				},
 		        {

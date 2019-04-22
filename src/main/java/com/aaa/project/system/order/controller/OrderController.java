@@ -6,14 +6,19 @@ import com.aaa.framework.aspectj.lang.enums.BusinessType;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.system.model.domain.Model;
+import com.aaa.project.system.model.service.IModelService;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.service.IOrderService;
+import com.aaa.project.system.status.domain.Status;
+import com.aaa.project.system.status.service.IStatusService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -30,6 +35,10 @@ public class OrderController extends BaseController
 	
 	@Autowired
 	private IOrderService orderService;
+	@Autowired
+	private IStatusService statusService;
+	@Autowired
+	private IModelService modelService;
 	
 	@RequiresPermissions("system:order:view")
 	@GetMapping()
@@ -69,9 +78,13 @@ public class OrderController extends BaseController
 	 * 新增订单
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(HttpServletRequest req)
 	{
-	    return prefix + "/add";
+		List<Status> statusList = statusService.selectAllOrderStatus();
+		List<Model> models = modelService.selectAllModel();
+		req.setAttribute("statusList",statusList);
+		req.setAttribute("modelList",models);
+		return prefix + "/add";
 	}
 	
 	/**
@@ -93,7 +106,11 @@ public class OrderController extends BaseController
 	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
 		Order order = orderService.selectOrderById(id);
+		List<Status> statusList = statusService.selectAllOrderStatus();
+		List<Model> models = modelService.selectAllModel();
+		mmap.put("modelList",models);
 		mmap.put("order", order);
+		mmap.put("statusList",statusList);
 	    return prefix + "/edit";
 	}
 	
