@@ -21,6 +21,11 @@ public class ApiCarController {
     @Autowired
     private ICarImageService carImageService;
 
+    /**
+     * 新增或修改车辆信息
+     * @param carInfo
+     * @return
+     */
     @RequestMapping(value = "/setCarInfo", method = RequestMethod.POST)
     public AjaxResult setCarInfo(@RequestBody CarInfo carInfo) {
         AjaxResult ajaxResult = new AjaxResult();
