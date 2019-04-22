@@ -63,4 +63,11 @@ public interface ICarInfoService
 	 * @param consumerAccount 账号
 	 */
 	public void cleanDefaultCarInfo(String consumerAccount);
+
+	/**
+	 * 获取用户默认车辆信息
+	 * @param consumerAccount 用户账号
+	 * @return 默认车辆信息
+	 */
+    CarInfo selectDefaultCarInfoByAccount(String consumerAccount);
 }

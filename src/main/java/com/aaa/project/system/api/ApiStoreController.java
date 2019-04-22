@@ -4,6 +4,8 @@ package com.aaa.project.system.api;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.evaluate.domain.Evaluate;
 import com.aaa.project.system.evaluate.service.IEvaluateService;
+import com.aaa.project.system.storeEnv.domain.StoreEnv;
+import com.aaa.project.system.storeEnv.service.IStoreEnvService;
 import com.aaa.project.system.storeService.service.IStoreServiceService;
 import com.aaa.project.system.store.service.IStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class ApiStoreController {
 
     @Autowired
     private IEvaluateService evaluateService;
+
+    @Autowired
+    private IStoreEnvService storeEnvService;
 
     /**
      * 业务列表
@@ -76,6 +81,20 @@ public class ApiStoreController {
         ajaxResult.put("code",0);
         ajaxResult.put("aroundStoreList", aroundStoreList);
         //4-返回结果
+        return ajaxResult;
+    }
+
+    /**
+     * 获取门店环境照片
+     * @param storeId 门店编号
+     * @return 门店环境
+     */
+    @RequestMapping("/getStoreEnv")
+    public AjaxResult getStoreEnv(@RequestParam("storeId")String storeId){
+        AjaxResult ajaxResult = new AjaxResult();
+        List<StoreEnv> envList = storeEnvService.selectStoreEnvByStoreId(storeId);
+        ajaxResult.put("code",0);
+        ajaxResult.put("envList",envList);
         return ajaxResult;
     }
 

@@ -1,6 +1,7 @@
 package com.aaa.project.system.order.domain;
 
 import com.aaa.project.system.keyInfo.domain.KeyInfo;
+import com.aaa.project.system.store.domain.Store;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -28,6 +29,8 @@ public class Order extends BaseEntity
 	private Integer statusId;
 	/** 付款状态编号 */
 	private Integer payStatusId;
+	/** 付款时间 */
+	private Date payDate;
 	/** 下单时间 */
 	private Date createDate;
 	/** 完成时间 */
@@ -56,6 +59,8 @@ public class Order extends BaseEntity
 	private KeyInfo keyInfo;
 	/** status名称*/
 	private String statusName;
+	/** 门店*/
+	private Store store;
 
 	public void setId(Integer id) 
 	{
@@ -111,7 +116,16 @@ public class Order extends BaseEntity
 	{
 		return payStatusId;
 	}
-	public void setCreateDate(Date createDate) 
+
+	public Date getPayDate() {
+		return payDate;
+	}
+
+	public void setPayDate(Date payDate) {
+		this.payDate = payDate;
+	}
+
+	public void setCreateDate(Date createDate)
 	{
 		this.createDate = createDate;
 	}
@@ -233,6 +247,14 @@ public class Order extends BaseEntity
 
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
+	}
+
+	public Store getStore() {
+		return store;
+	}
+
+	public void setStore(Store store) {
+		this.store = store;
 	}
 
 	public String toString() {

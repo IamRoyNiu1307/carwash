@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectStoreEnvVo"/>
         where store_id = #{storeId}
     </select>
-        
+
     <insert id="insertStoreEnv" parameterType="StoreEnv">
         insert into cw_store_env
 		<trim prefix="(" suffix=")" suffixOverrides=",">

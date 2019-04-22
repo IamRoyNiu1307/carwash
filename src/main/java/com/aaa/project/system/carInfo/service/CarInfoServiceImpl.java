@@ -107,4 +107,19 @@ public class CarInfoServiceImpl implements ICarInfoService
 		carInfoMapper.cleanDefaultCarInfo(consumerAccount);
 	}
 
+	/**
+	 * 获取用户默认车辆信息
+	 * @param consumerAccount 用户账号
+	 * @return 默认车辆信息
+	 */
+	@Override
+	public CarInfo selectDefaultCarInfoByAccount(String consumerAccount) {
+		CarInfo carInfo = carInfoMapper.selectDefaultCarInfoByAccount(consumerAccount);
+		Map map = ReGeo.reGeo(carInfo.getCarAddrLng(), carInfo.getCarAddrLat());
+		if(map.get("formattedAddress")!=null){
+			carInfo.setCarAddr(map.get("formattedAddress").toString());
+		}
+
+		return carInfo;
+	}
 }

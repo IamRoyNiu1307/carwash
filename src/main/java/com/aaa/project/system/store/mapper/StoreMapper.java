@@ -67,4 +67,11 @@ public interface StoreMapper {
      */
     public List<Store> selectStoreByCityId(String cityId);
 
+    /**
+     * 根据storeId查询门店
+     * @param storeId 门店编号
+     * @return
+     */
+    Store selectByStoreId(String storeId);
+
 }

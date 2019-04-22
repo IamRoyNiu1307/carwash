@@ -50,5 +50,11 @@ public interface IStoreEnvService
      * @return 结果
      */
 	public int deleteStoreEnvByIds(String ids);
-	
+
+	/**
+	 * 查询门店环境照片
+	 * @param storeId 门店编号
+	 * @return 环境list
+	 */
+	List<StoreEnv> selectStoreEnvByStoreId(String storeId);
 }

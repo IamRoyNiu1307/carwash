@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="storeId"    column="store_id"    />
         <result property="statusId"    column="status_id"    />
         <result property="payStatusId"    column="pay_status_id"    />
+        <result property="payDate"    column="pay_date"    />
         <result property="createDate"    column="create_date"    />
         <result property="finishDate"    column="finish_date"    />
         <result property="carId"    column="car_id"    />
@@ -26,10 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="statusName" column="status_id" select="com.aaa.project.system.status.mapper.StatusMapper.selectStatusNameById">
         </association>
         <association property="typeName" column="type_id" select="com.aaa.project.system.model.mapper.ModelMapper.selectModelNameById" />
+        <association property="store" column="store_id" select="com.aaa.project.system.store.mapper.StoreMapper.selectByStoreId" />
     </resultMap>
 	
 	<sql id="selectOrderVo">
-        select id, order_id, consumer_account, store_id, status_id, pay_status_id, create_date, finish_date, car_id, car_address, key_info_id, type_id, user_account, order_comment, appointment_time, time_quantum, expect_cost_id from cw_order
+        select id, order_id, consumer_account, store_id, status_id, pay_status_id,pay_date, create_date, finish_date, car_id, car_address, key_info_id, type_id, user_account, order_comment, appointment_time, time_quantum, expect_cost_id from cw_order
     </sql>
 	
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
@@ -41,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="storeId != null  and storeId != '' "> and store_id = #{storeId}</if>
              <if test="statusId != null "> and status_id = #{statusId}</if>
              <if test="payStatusId != null "> and pay_status_id = #{payStatusId}</if>
+             <if test="payDate != null "> and pay_date = #{payDate}</if>
              <if test="createDate != null "> and create_date = #{createDate}</if>
              <if test="finishDate != null "> and finish_date = #{finishDate}</if>
              <if test="carId != null "> and car_id = #{carId}</if>
@@ -78,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="storeId != null  and storeId != ''  ">store_id,</if>
 			<if test="statusId != null  ">status_id,</if>
 			<if test="payStatusId != null  ">pay_status_id,</if>
+            <if test="payDate != null  ">pay_date,</if>
 			<if test="createDate != null  ">create_date,</if>
 			<if test="finishDate != null  ">finish_date,</if>
 			<if test="carId != null  ">car_id,</if>
@@ -97,6 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="storeId != null  and storeId != ''  ">#{storeId},</if>
 			<if test="statusId != null  ">#{statusId},</if>
 			<if test="payStatusId != null  ">#{payStatusId},</if>
+            <if test="payDate != null  ">#{payDate},</if>
 			<if test="createDate != null  ">#{createDate},</if>
 			<if test="finishDate != null  ">#{finishDate},</if>
 			<if test="carId != null  ">#{carId},</if>
@@ -119,6 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="storeId != null  and storeId != ''  ">store_id = #{storeId},</if>
             <if test="statusId != null  ">status_id = #{statusId},</if>
             <if test="payStatusId != null  ">pay_status_id = #{payStatusId},</if>
+            <if test="payDate != null  ">pay_date = #{payDate},</if>
             <if test="createDate != null  ">create_date = #{createDate},</if>
             <if test="finishDate != null  ">finish_date = #{finishDate},</if>
             <if test="carId != null  ">car_id = #{carId},</if>

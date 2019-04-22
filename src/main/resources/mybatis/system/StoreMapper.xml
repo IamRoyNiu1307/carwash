@@ -52,9 +52,14 @@
         where id= #{id}
     </select>
 
-    <select id="selectStoreByCityId" parameterType="string" resultMap="StoreResult">
+    <select id="selectStoreByCityId" parameterType="String" resultMap="StoreResult">
         <include refid="selectStoreVo"/>
         where cityid = #{cityId}
+    </select>
+
+    <select id="selectByStoreId" parameterType="String" resultMap="StoreResult">
+        <include refid="selectStoreVo"/>
+        where store_id = #{storeId}
     </select>
 
     <insert id="insertStore" parameterType="Store">

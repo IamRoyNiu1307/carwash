@@ -31,6 +31,10 @@
 							</li>
 
 							<li>
+								<span class="textSpan">付款时间：</span><input type="text" name="payDate"/>
+							</li>
+
+							<li>
 								<span class="textSpan">下单时间：</span><input type="text" name="createDate"/>
 							</li>
 
@@ -149,6 +153,11 @@
 				{
 					field : 'payStatusId', 
 					title : '付款状态编号',
+					sortable: true
+				},
+				{
+					field : 'payDate',
+					title : '付款时间',
 					sortable: true
 				},
 				{

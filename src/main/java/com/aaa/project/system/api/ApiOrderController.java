@@ -111,15 +111,15 @@ public class ApiOrderController {
 
     /**
      * 根据账户和订单状态ID查询所有订单或者根据账户查询所有订单
-     * @param consumerAcount 用户账户
+     * @param consumerAccount 用户账户
      * @param statusId  订单状态ID
      * @return 订单列表
      */
     @RequestMapping("/getOrderList")
-    public AjaxResult getOrderList(@RequestParam(name = "consumerAcount",required = true)String consumerAcount,
+    public AjaxResult getOrderList(@RequestParam(name = "account",required = true)String consumerAccount,
                                    @RequestParam(name = "statusId",required = false)Integer statusId){
         AjaxResult ajaxResult = new AjaxResult();
-        List<Order> orders = orderService.selectOrderListByConsumerAccountAndStatusId(consumerAcount, statusId);
+        List<Order> orders = orderService.selectOrderListByConsumerAccountAndStatusId(consumerAccount, statusId);
         ajaxResult.put("orderList",orders);
         return ajaxResult;
     }

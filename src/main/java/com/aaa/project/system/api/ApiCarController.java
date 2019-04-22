@@ -91,4 +91,18 @@ public class ApiCarController {
         return ajaxResult;
 
     }
+
+    /**
+     * 获取用户默认车辆
+     * @param consumerAccount 用户账号
+     * @return 默认车辆
+     */
+    @RequestMapping("/getDefaultCar")
+    public AjaxResult getDefaultCar(@RequestParam(value = "account")String consumerAccount){
+        AjaxResult ajaxResult = new AjaxResult();
+        CarInfo carInfo = carInfoService.selectDefaultCarInfoByAccount(consumerAccount);
+        ajaxResult.put("code",0);
+        ajaxResult.put("carInfo",carInfo);
+        return ajaxResult;
+    }
 }

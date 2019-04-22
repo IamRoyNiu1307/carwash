@@ -64,5 +64,7 @@ public interface StoreEnvMapper
 	 * @param storeId
 	 * @return
 	 */
-	StoreEnv selectStoreEnvByStoreId(String storeId);
+	List<StoreEnv> selectStoreEnvByStoreId(String storeId);
+
+
 }

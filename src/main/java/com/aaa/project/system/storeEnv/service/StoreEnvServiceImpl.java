@@ -79,5 +79,14 @@ public class StoreEnvServiceImpl implements IStoreEnvService
 	{
 		return storeEnvMapper.deleteStoreEnvByIds(Convert.toStrArray(ids));
 	}
-	
+
+	/**
+	 * 查询门店环境照片
+	 * @param storeId 门店编号
+	 * @return 环境list
+	 */
+	@Override
+	public List<StoreEnv> selectStoreEnvByStoreId(String storeId) {
+		return storeEnvMapper.selectStoreEnvByStoreId(storeId);
+	}
 }

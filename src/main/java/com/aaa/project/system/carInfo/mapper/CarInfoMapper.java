@@ -66,6 +66,17 @@ public interface CarInfoMapper
      */
 	public int deleteCarInfoByIds(String[] ids);
 
+	/**
+	 * 清除默认车辆
+	 * @param consumerAccount 用户账号
+	 */
 	public void cleanDefaultCarInfo(String consumerAccount);
+
+	/**
+	 * 获取默认车辆
+	 * @param consumerAccount 用户账号
+	 * @return 默认车辆
+	 */
+	public CarInfo selectDefaultCarInfoByAccount(String consumerAccount);
 	
 }
