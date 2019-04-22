@@ -65,5 +65,7 @@ public interface CarInfoMapper
      * @return 结果
      */
 	public int deleteCarInfoByIds(String[] ids);
+
+	public void cleanDefaultCarInfo(String consumerAccount);
 	
 }

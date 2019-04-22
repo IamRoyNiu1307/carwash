@@ -1,5 +1,6 @@
 package com.aaa.project.system.storeService.domain;
 
+import com.aaa.project.system.status.domain.Status;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -29,7 +30,28 @@ public class StoreService extends BaseEntity
 	/** 购买次数 */
 	private Integer numberPurchased;
 
-	public void setId(Integer id) 
+	/** 业务状态 */
+	private Status status;
+
+	private String statusName;
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -93,15 +115,17 @@ public class StoreService extends BaseEntity
 		return numberPurchased;
 	}
 
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("storeId", getStoreId())
-            .append("serviceName", getServiceName())
-            .append("description", getDescription())
-            .append("statusId", getStatusId())
-            .append("cost", getCost())
-            .append("numberPurchased", getNumberPurchased())
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return "StoreService{" +
+				"id=" + id +
+				", storeId='" + storeId + '\'' +
+				", serviceName='" + serviceName + '\'' +
+				", description='" + description + '\'' +
+				", statusId=" + statusId +
+				", cost=" + cost +
+				", numberPurchased=" + numberPurchased +
+				", status=" + status +
+				'}';
+	}
 }

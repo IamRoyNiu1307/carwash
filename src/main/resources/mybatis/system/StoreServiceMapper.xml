@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="statusId"    column="status_id"    />
         <result property="cost"    column="cost"    />
         <result property="numberPurchased"    column="number_purchased"    />
+        <association property="status" column="status_id" select="com.aaa.project.system.status.mapper.StatusMapper.selectStatusById" />
     </resultMap>
 	
 	<sql id="selectStoreServiceVo">

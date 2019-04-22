@@ -101,5 +101,10 @@ public class CarInfoServiceImpl implements ICarInfoService
 	{
 		return carInfoMapper.deleteCarInfoByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public void cleanDefaultCarInfo(String consumerAccount) {
+		carInfoMapper.cleanDefaultCarInfo(consumerAccount);
+	}
+
 }

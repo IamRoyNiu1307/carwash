@@ -27,12 +27,11 @@ public class ApiCarController {
 
     /**
      * 新增或修改车辆信息
-     * @param carInfo
-     * @return
+     * @param carInfo 车辆信息对象
+     * @return 结果
      */
     @RequestMapping(value = "/setCarInfo", method = RequestMethod.POST)
     public AjaxResult setCarInfo(@RequestBody CarInfo carInfo) {
-
         AjaxResult ajaxResult = new AjaxResult();
         if (carInfo.getId() == null) {
             carInfoService.insertCarInfo(carInfo);

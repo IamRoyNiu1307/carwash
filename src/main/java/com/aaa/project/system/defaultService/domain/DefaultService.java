@@ -21,7 +21,7 @@ public class DefaultService extends BaseEntity
 	/** 详细介绍 */
 	private String description;
 
-	public void setId(Integer id) 
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
