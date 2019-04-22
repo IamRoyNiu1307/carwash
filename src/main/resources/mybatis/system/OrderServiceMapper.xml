@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.orderService.mapper.OrderServiceMapper">
+    
+    <resultMap type="OrderService" id="OrderServiceResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="serviceId"    column="service_id"    />
+    </resultMap>
+	
+	<sql id="selectOrderServiceVo">
+        select id, order_id, service_id from cw_order_service
+    </sql>
+	
+    <select id="selectOrderServiceList" parameterType="OrderService" resultMap="OrderServiceResult">
+        <include refid="selectOrderServiceVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="orderId != null  and orderId != '' "> and order_id = #{orderId}</if>
+             <if test="serviceId != null "> and service_id = #{serviceId}</if>
+         </where>
+    </select>
+    
+    <select id="selectOrderServiceById" parameterType="Integer" resultMap="OrderServiceResult">
+        <include refid="selectOrderServiceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrderService" parameterType="OrderService">
+        insert into cw_order_service
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="orderId != null  and orderId != ''  ">order_id,</if>
+			<if test="serviceId != null  ">service_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="orderId != null  and orderId != ''  ">#{orderId},</if>
+			<if test="serviceId != null  ">#{serviceId},</if>
+         </trim>
+    </insert>
+    <insert id="insertOrder" parameterType="OrderService">
+        insert into cw_order_service
+        (order_id,service_id)
+        values <foreach collection="list" item="each" separator=",">
+        (
+        #{orderId,jdbcType=VARCHAR}, #{each,jdbcType=INTEGER}
+        )
+    </foreach>
+    </insert>
+	 
+    <update id="updateOrderService" parameterType="OrderService">
+        update cw_order_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null  and orderId != ''  ">order_id = #{orderId},</if>
+            <if test="serviceId != null  ">service_id = #{serviceId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteOrderServiceById" parameterType="Integer">
+        delete from cw_order_service where id = #{id}
+    </delete>
+	
+    <delete id="deleteOrderServiceByIds" parameterType="String">
+        delete from cw_order_service where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

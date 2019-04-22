@@ -57,4 +57,13 @@ public class MyTest {
         System.out.println(id);
 
     }
+    @Test
+    public void toArray(){
+        String a="[1,2,3]";
+        String b = a.substring(1,a.length()-1);
+        String[] list=b.split(",");
+        for(int i=0;i<list.length;i++){
+            System.out.println(list[i]);
+        }
+    }
 }

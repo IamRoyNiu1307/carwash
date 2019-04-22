@@ -9,11 +9,13 @@ import com.aaa.project.system.carInfo.domain.CarInfo;
 import com.aaa.project.system.carInfo.service.ICarInfoService;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.service.IOrderService;
+import com.aaa.project.system.orderService.service.IOrderServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class ApiOrderController {
     private IOrderService orderService;
     @Autowired
     private ICarInfoService carInfoService;
+    @Autowired
+    private IOrderServiceService orderServiceService;
 
 
     /**
@@ -44,19 +48,21 @@ public class ApiOrderController {
      */
     @RequestMapping("/createOrder")
     public AjaxResult createOrder(@RequestParam(name="consumerAccount",required = true) String consumerAccount,
-                                  @RequestParam(name="serviceIdList",required = true)int serviceIdList,
+                                  @RequestParam(name="serviceIdList",required = true)String serviceIdList,
                                   @RequestParam(name="startTime",required =true )String startTime,
                                   @RequestParam(name="startHour",required =true )String startHour,
                                   @RequestParam(name="endHour",required = true)String endHour,
                                   @RequestParam(name="expectCostId",required = true)int expectCostId,
                                   @RequestParam(name="orderComment",required = false)String orderComment,
-                                  @RequestParam(name = "storeId",required = false) String storeId){
+                                  @RequestParam(name = "storeId",required = false) String storeId,
+                                  @RequestParam(name="carId",required = true)int carId){
         Order order = new Order();
         //获取车辆信息
-        CarInfo carInfo = carInfoService.selectCarInfoByConsumerAccount(consumerAccount);
+        CarInfo carInfo = carInfoService.selectCarInfoById(carId);
 
         //订单编号
-        order.setOrderId(IDUtil.createID());
+        String orderId = IDUtil.createID();
+        order.setOrderId(orderId);
         //车辆编号
         order.setCarId(carInfo.getId());
         //车辆地址
@@ -66,11 +72,13 @@ public class ApiOrderController {
         order.setConsumerAccount(consumerAccount);
         //订单状态编号
         order.setStatusId(storeId==null? STATUS_ORDER_CREATED : STATUS_ORDER_UNPAY );
+        //车辆编号
+        order.setCarId(carId);
         //门店编号
         order.setStoreId(storeId);
         //下单时间
         order.setCreateDate(new Date());
-        //模式编号
+        //模式编号(下单类型：快速下单、指定门店下单)
         order.setTypeId(storeId==null? MODEL_QUICKCREATE : MODEL_SELECTSTORE );
         //预约时间
         order.setAppointmentTime(DateUtil.parse(startTime+" "+TIME_MAP.get(startHour)+":00","yyyy-MM-dd HH:mm"));
@@ -80,8 +88,11 @@ public class ApiOrderController {
         order.setExpectCostId(expectCostId);
         //订单备注
         order.setOrderComment(orderComment);
+        //订单服务
+        String[] serviceList = serviceIdList.substring(1, serviceIdList.length() - 1).split(",");
+        List<String> list = Arrays.asList(serviceList);
+        orderServiceService.insertOrder(orderId,list);
 
-        System.out.println(serviceIdList);
         orderService.insertOrder(order);
         return AjaxResult.success("下单成功");
     }
@@ -89,7 +100,7 @@ public class ApiOrderController {
     /**
      *  根据订单ID修改订单状态取消订单
      * @param orderId 订单ID
-     * @return
+     * @return ajaxresult 成功信息
      */
     @RequestMapping("/cancelOrder")
     public AjaxResult cancelOrder(@RequestParam(name="orderId",required = true)String orderId){
@@ -102,7 +113,7 @@ public class ApiOrderController {
      * 根据账户和订单状态ID查询所有订单或者根据账户查询所有订单
      * @param consumerAcount 用户账户
      * @param statusId  订单状态ID
-     * @return
+     * @return 订单列表
      */
     @RequestMapping("/getOrderList")
     public AjaxResult getOrderList(@RequestParam(name = "consumerAcount",required = true)String consumerAcount,
