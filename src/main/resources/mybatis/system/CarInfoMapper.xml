@@ -14,7 +14,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="carAddrLat"    column="car_addr_lat"    />
         <result property="ownerAccount"    column="owner_account"    />
         <result property="carDefault"    column="car_default"    />
-
         <collection property="carImageList" column="id" select="com.aaa.project.system.carImage.mapper.CarImageMapper.selectCarImageListByCarInfoId" />
     </resultMap>
 	
