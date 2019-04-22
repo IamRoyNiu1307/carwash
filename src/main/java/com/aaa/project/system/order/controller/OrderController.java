@@ -6,6 +6,8 @@ import com.aaa.framework.aspectj.lang.enums.BusinessType;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.system.expectCost.domain.ExpectCost;
+import com.aaa.project.system.expectCost.service.IExpectCostService;
 import com.aaa.project.system.model.domain.Model;
 import com.aaa.project.system.model.service.IModelService;
 import com.aaa.project.system.order.domain.Order;
@@ -39,6 +41,8 @@ public class OrderController extends BaseController
 	private IStatusService statusService;
 	@Autowired
 	private IModelService modelService;
+	@Autowired
+	private IExpectCostService expectCostService;
 	
 	@RequiresPermissions("system:order:view")
 	@GetMapping()
@@ -82,8 +86,10 @@ public class OrderController extends BaseController
 	{
 		List<Status> statusList = statusService.selectAllOrderStatus();
 		List<Model> models = modelService.selectAllModel();
+		List<ExpectCost> expectCosts = expectCostService.selectAllExpect();
 		req.setAttribute("statusList",statusList);
 		req.setAttribute("modelList",models);
+		req.setAttribute("expectCost",expectCosts);
 		return prefix + "/add";
 	}
 	
@@ -108,8 +114,10 @@ public class OrderController extends BaseController
 		Order order = orderService.selectOrderById(id);
 		List<Status> statusList = statusService.selectAllOrderStatus();
 		List<Model> models = modelService.selectAllModel();
+		List<ExpectCost> expectCosts = expectCostService.selectAllExpect();
 		mmap.put("modelList",models);
 		mmap.put("order", order);
+		mmap.put("expectCostList",expectCosts);
 		mmap.put("statusList",statusList);
 	    return prefix + "/edit";
 	}

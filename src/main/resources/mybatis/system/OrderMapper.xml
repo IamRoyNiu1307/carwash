@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </association>
         <association property="typeName" column="type_id" select="com.aaa.project.system.model.mapper.ModelMapper.selectModelNameById" />
         <association property="store" column="store_id" select="com.aaa.project.system.store.mapper.StoreMapper.selectByStoreId" />
+        <association property="expectCostName" column="expect_cost_id" select="com.aaa.project.system.expectCost.mapper.ExpectCostMapper.selectExpectCostNameById" />
     </resultMap>
 	
 	<sql id="selectOrderVo">

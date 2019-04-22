@@ -61,6 +61,10 @@ public class Order extends BaseEntity
 	private String statusName;
 	/** 门店*/
 	private Store store;
+	/** 付款状态名称*/
+	private String payStatusName;
+	/** 预算范围名称*/
+	private String expectCostName;
 
 	public void setId(Integer id) 
 	{
@@ -255,6 +259,22 @@ public class Order extends BaseEntity
 
 	public void setStore(Store store) {
 		this.store = store;
+	}
+
+	public String getPayStatusName() {
+		return payStatusName;
+	}
+
+	public void setPayStatusName(String payStatusName) {
+		this.payStatusName = payStatusName;
+	}
+
+	public String getExpectCostName() {
+		return expectCostName;
+	}
+
+	public void setExpectCostName(String expectCostName) {
+		this.expectCostName = expectCostName;
 	}
 
 	public String toString() {

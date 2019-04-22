@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.expectCost.mapper.ExpectCostMapper">
+    
+    <resultMap type="ExpectCost" id="ExpectCostResult">
+        <result property="id"    column="id"    />
+        <result property="minCharge"    column="min_charge"    />
+        <result property="maxCharge"    column="max_charge"    />
+        <result property="expectName"    column="expect_name"    />
+    </resultMap>
+	
+	<sql id="selectExpectCostVo">
+        select id, min_charge, max_charge, expect_name from cw_expect_cost
+    </sql>
+	
+    <select id="selectExpectCostList" parameterType="ExpectCost" resultMap="ExpectCostResult">
+        <include refid="selectExpectCostVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="minCharge != null "> and min_charge = #{minCharge}</if>
+             <if test="maxCharge != null "> and max_charge = #{maxCharge}</if>
+             <if test="expectName != null  and expectName != '' "> and expect_name = #{expectName}</if>
+         </where>
+    </select>
+
+    <select id="selectExpectCostNameById" parameterType="Integer" resultType="String">
+        select expect_name from cw_expect_cost where id = #{id}
+    </select>
+
+    <select id="selectAllExpect" resultMap="ExpectCostResult">
+        <include refid="selectExpectCostVo"/>
+    </select>
+
+    <select id="selectExpectCostById" parameterType="Integer" resultMap="ExpectCostResult">
+        <include refid="selectExpectCostVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExpectCost" parameterType="ExpectCost">
+        insert into cw_expect_cost
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="minCharge != null  ">min_charge,</if>
+			<if test="maxCharge != null  ">max_charge,</if>
+			<if test="expectName != null  and expectName != ''  ">expect_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="minCharge != null  ">#{minCharge},</if>
+			<if test="maxCharge != null  ">#{maxCharge},</if>
+			<if test="expectName != null  and expectName != ''  ">#{expectName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateExpectCost" parameterType="ExpectCost">
+        update cw_expect_cost
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="minCharge != null  ">min_charge = #{minCharge},</if>
+            <if test="maxCharge != null  ">max_charge = #{maxCharge},</if>
+            <if test="expectName != null  and expectName != ''  ">expect_name = #{expectName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteExpectCostById" parameterType="Integer">
+        delete from cw_expect_cost where id = #{id}
+    </delete>
+	
+    <delete id="deleteExpectCostByIds" parameterType="String">
+        delete from cw_expect_cost where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -100,9 +100,11 @@
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">预算范围编号：</label>
+				<label class="col-sm-3 control-label">预算范围：</label>
 				<div class="col-sm-8">
-					<input id="expectCostId" name="expectCostId" class="form-control" type="text">
+					<select id="expectCostId" name="expectCostId" class="form-control">
+						<option th:if="${expectCost!=null}"th:each="expect:${expectCost}" th:value="${expect.id}" th:text="${expect.expectName}"></option>
+					</select>
 				</div>
 			</div>
 		</form>
