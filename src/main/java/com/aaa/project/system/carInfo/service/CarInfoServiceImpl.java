@@ -1,6 +1,9 @@
 package com.aaa.project.system.carInfo.service;
 
 import java.util.List;
+import java.util.Map;
+
+import com.aaa.common.utils.ReGeo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aaa.project.system.carInfo.mapper.CarInfoMapper;
@@ -39,8 +42,16 @@ public class CarInfoServiceImpl implements ICarInfoService
 	 * @return
 	 */
 	@Override
-	public CarInfo selectCarInfoByConsumerAccount(String consumerAccount) {
-		return carInfoMapper.selectCarInfoByConsumerAccount(consumerAccount);
+	public List<CarInfo> selectCarInfoByConsumerAccount(String consumerAccount) {
+		List<CarInfo> carInfoList = carInfoMapper.selectCarInfoByConsumerAccount(consumerAccount);
+		for(CarInfo each : carInfoList){
+			Map map = ReGeo.reGeo(each.getCarAddrLng(), each.getCarAddrLat());
+			if(map.get("formattedAddress")!=null){
+				each.setCarAddr(map.get("formattedAddress").toString());
+			}
+
+		}
+		return carInfoList;
 	}
 
 	/**

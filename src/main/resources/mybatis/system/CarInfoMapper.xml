@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="carAddrLat"    column="car_addr_lat"    />
         <result property="ownerAccount"    column="owner_account"    />
         <result property="carDefault"    column="car_default"    />
+        <collection property="carImageList" column="id" select="com.aaa.project.system.carImage.mapper.CarImageMapper.selectCarImageListByCarInfoId" />
     </resultMap>
 	
 	<sql id="selectCarInfoVo">
@@ -32,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="carAddrLat != null "> and car_addr_lat = #{carAddrLat}</if>
              <if test="ownerAccount != null  and ownerAccount != '' "> and owner_account = #{ownerAccount}</if>
              <if test="carDefault != null "> and car_default = #{carDefault}</if>
-         </where>
+        </where>
     </select>
     
     <select id="selectCarInfoById" parameterType="Integer" resultMap="CarInfoResult">
@@ -45,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where owner_account = #{owner_account}
     </select>
         
-    <insert id="insertCarInfo" parameterType="CarInfo">
+    <insert id="insertCarInfo" useGeneratedKeys="true" keyProperty="id" parameterType="CarInfo">
         insert into cw_car_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">id,</if>

@@ -1,10 +1,12 @@
 package com.aaa.project.system.carInfo.domain;
 
+import com.aaa.project.system.carImage.domain.CarImage;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 车辆表 cw_car_info
@@ -34,6 +36,10 @@ public class CarInfo extends BaseEntity
 	private String ownerAccount;
 	/** 是否默认 */
 	private Boolean carDefault;
+
+	private List<CarImage> carImageList;
+
+	private String carAddr;
 
 	public void setId(Integer id) 
 	{
@@ -117,7 +123,23 @@ public class CarInfo extends BaseEntity
 		return carDefault;
 	}
 
-    public String toString() {
+	public List<CarImage> getCarImageList() {
+		return carImageList;
+	}
+
+	public void setCarImageList(List<CarImage> carImageList) {
+		this.carImageList = carImageList;
+	}
+
+	public String getCarAddr() {
+		return carAddr;
+	}
+
+	public void setCarAddr(String carAddr) {
+		this.carAddr = carAddr;
+	}
+
+	public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("carLicence", getCarLicence())

@@ -38,9 +38,9 @@ public class ApiStoreController {
      */
     @RequestMapping("/getServices")
     public AjaxResult getServices(@RequestParam(name = "storeId", required = false) String storeId) {
-        List storeServices = storeServiceService.selectStoreServiceByStoreId(storeId);
+        List serviceList = storeServiceService.selectStoreServiceByStoreId(storeId);
         AjaxResult ajaxResult = new AjaxResult();
-        ajaxResult.put("storeList", storeServices);
+        ajaxResult.put("serviceList", serviceList);
         return ajaxResult;
     }
 

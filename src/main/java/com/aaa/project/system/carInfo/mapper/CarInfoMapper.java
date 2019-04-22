@@ -24,7 +24,7 @@ public interface CarInfoMapper
 	 * @param consumerAccount 所属账号
 	 * @return 车辆信息
 	 */
-	public CarInfo selectCarInfoByConsumerAccount(String consumerAccount);
+	public List<CarInfo> selectCarInfoByConsumerAccount(String consumerAccount);
 	
 	/**
      * 查询车辆列表

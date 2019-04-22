@@ -87,7 +87,7 @@ public class StoreServiceServiceImpl implements IStoreServiceService
 
 	@Override
 	public List selectStoreServiceByStoreId(String storeId) {
-		if(storeId==null){
+		if("".equals(storeId)){
 			return defaultServiceMapper.selectDefaultService();
 		}else {
 			return storeServiceMapper.selectStoreServiceByStoreId(storeId);

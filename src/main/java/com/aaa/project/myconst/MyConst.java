@@ -64,8 +64,11 @@ public class MyConst {
         TIME_MAP.put("24时",24);
     }
 
+    //车辆照片上传路径
+    public static final String UPLOAD_CAR_IMAGE = "/Users/roy/project/carwash/src/main/resources/static/fileupload/car/";
     //车辆照片请求路径
     public static final String CAR_IMAGE_DIR = "/car/";
+
 
 
 }
