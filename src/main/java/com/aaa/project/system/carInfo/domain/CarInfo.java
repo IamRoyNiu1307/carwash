@@ -36,9 +36,9 @@ public class CarInfo extends BaseEntity
 	private String ownerAccount;
 	/** 是否默认 */
 	private Boolean carDefault;
-
+	/** 车辆图片 */
 	private List<CarImage> carImageList;
-
+	/** 车位地址 */
 	private String carAddr;
 
 	public void setId(Integer id) 
