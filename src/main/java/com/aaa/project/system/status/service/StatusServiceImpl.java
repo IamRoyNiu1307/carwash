@@ -43,8 +43,17 @@ public class StatusServiceImpl implements IStatusService
 	{
 	    return statusMapper.selectStatusList(status);
 	}
-	
-    /**
+
+	/**
+	 * 查询服务的状态列表
+	 * @return 状态集合
+	 */
+	@Override
+	public List<Status> selectServicesStatusList() {
+		return statusMapper.selectServicesStatusList();
+	}
+
+	/**
      * 新增状态
      * 
      * @param status 状态信息

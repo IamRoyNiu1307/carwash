@@ -57,5 +57,10 @@ public interface ICarInfoService
      * @return 结果
      */
 	public int deleteCarInfoByIds(String ids);
-	
+
+	/**
+	 * 清除默认车辆信息
+	 * @param consumerAccount 账号
+	 */
+	public void cleanDefaultCarInfo(String consumerAccount);
 }

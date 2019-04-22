@@ -26,6 +26,12 @@ public interface StatusMapper
      * @return 状态集合
      */
 	public List<Status> selectStatusList(Status status);
+
+	/**
+	 * 查询服务的状态列表
+	 * @return 状态集合
+	 */
+	public List<Status> selectServicesStatusList();
 	
 	/**
      * 新增状态

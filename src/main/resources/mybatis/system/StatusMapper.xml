@@ -20,6 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="statusName != null  and statusName != '' "> and status_name = #{statusName}</if>
          </where>
     </select>
+
+    <select id="selectServicesStatusList" resultMap="StatusResult">
+        <include refid="selectStatusVo" />
+        where id between 400 and 499;
+    </select>
     
     <select id="selectStatusById" parameterType="Integer" resultMap="StatusResult">
         <include refid="selectStatusVo"/>

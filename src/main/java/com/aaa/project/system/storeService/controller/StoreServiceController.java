@@ -1,6 +1,9 @@
 package com.aaa.project.system.storeService.controller;
 
 import java.util.List;
+
+import com.aaa.project.system.status.domain.Status;
+import com.aaa.project.system.status.service.IStatusService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,8 @@ import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.common.utils.poi.ExcelUtil;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 业务 信息操作处理
  * 
@@ -33,11 +38,14 @@ public class StoreServiceController extends BaseController
 	
 	@Autowired
 	private IStoreServiceService storeServiceService;
-	
+	@Autowired
+	private IStatusService statusService;
+
 	@RequiresPermissions("system:storeService:view")
 	@GetMapping()
-	public String storeService()
+	public String storeService(ModelMap mmap)
 	{
+
 	    return prefix + "/storeService";
 	}
 	
@@ -72,11 +80,13 @@ public class StoreServiceController extends BaseController
 	 * 新增业务
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(HttpServletRequest req)
 	{
-	    return prefix + "/add";
+	    List<Status> statusList = statusService.selectServicesStatusList();
+	    req.setAttribute("statusList",statusList);
+		return prefix + "/add";
 	}
-	
+
 	/**
 	 * 新增保存业务
 	 */
@@ -85,7 +95,7 @@ public class StoreServiceController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(StoreService storeService)
-	{		
+	{
 		return toAjax(storeServiceService.insertStoreService(storeService));
 	}
 
@@ -93,10 +103,12 @@ public class StoreServiceController extends BaseController
 	 * 修改业务
 	 */
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+	public String edit(@PathVariable("id") Integer id, ModelMap mmap, HttpServletRequest req)
 	{
 		StoreService storeService = storeServiceService.selectStoreServiceById(id);
 		mmap.put("storeService", storeService);
+		List<Status> list = statusService.selectServicesStatusList();
+		req.setAttribute("list",list);
 	    return prefix + "/edit";
 	}
 	

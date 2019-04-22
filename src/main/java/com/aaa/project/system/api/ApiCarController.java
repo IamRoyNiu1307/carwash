@@ -4,6 +4,7 @@ import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.carImage.service.ICarImageService;
 import com.aaa.project.system.carInfo.domain.CarInfo;
+import com.aaa.project.system.carInfo.service.ICarInfoService;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,19 +21,26 @@ public class ApiCarController {
 
     @Autowired
     private ICarImageService carImageService;
+    @Autowired
+    private ICarInfoService carInfoService;
 
     /**
      * 新增或修改车辆信息
-     * @param carInfo
-     * @return
+     * @param carInfo 车辆信息对象
+     * @return 结果
      */
     @RequestMapping(value = "/setCarInfo", method = RequestMethod.POST)
     public AjaxResult setCarInfo(@RequestBody CarInfo carInfo) {
         AjaxResult ajaxResult = new AjaxResult();
-        if (carInfo.getId() != null) {
-            ajaxResult.put("carInfo", carInfo);
+        if (carInfo.getCarDefault()) {
+            carInfoService.cleanDefaultCarInfo(carInfo.getOwnerAccount());
         }
-        return ajaxResult;
+        if (carInfo.getId() != null) {
+            carInfoService.updateCarInfo(carInfo);
+        }
+        else
+            carInfoService.insertCarInfo(carInfo);
+        return ajaxResult.success(carInfo.getId() == null ? "添加成功" : "修改成功");
     }
 
     /**
