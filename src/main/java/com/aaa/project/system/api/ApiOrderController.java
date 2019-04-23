@@ -9,6 +9,8 @@ import com.aaa.project.system.carInfo.domain.CarInfo;
 import com.aaa.project.system.carInfo.service.ICarInfoService;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.service.IOrderService;
+import com.aaa.project.system.orderAmount.domain.OrderAmount;
+import com.aaa.project.system.orderAmount.service.IOrderAmountService;
 import com.aaa.project.system.orderService.domain.OrderService;
 import com.aaa.project.system.orderService.service.IOrderServiceService;
 import com.aaa.project.system.storeService.service.IStoreServiceService;
@@ -37,6 +39,8 @@ public class ApiOrderController {
     private IOrderServiceService orderServiceService;
     @Autowired
     private IStoreServiceService storeServiceService;
+    @Autowired
+    private IOrderAmountService orderAmountService;
 
 
     /**
@@ -115,7 +119,11 @@ public class ApiOrderController {
         for (int i = 0; i < orderServices.size(); i++) {
             amount += storeServiceService.selectCost(storeId, orderServices.get(i).getServiceId());
         }
-        System.out.println(amount);
+        OrderAmount orderAmount = new OrderAmount();
+        orderAmount.setOrderId(orderId);
+        orderAmount.setTotalAmount(amount);
+        orderAmount.setFinalAmount(amount);
+        orderAmountService.insertOrderAmount(orderAmount);
         return AjaxResult.success();
     }
 
