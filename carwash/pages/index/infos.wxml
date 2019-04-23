@@ -1,0 +1,56 @@
+<!--pages/index/infos.wxml-->
+
+<!-- 开发 -->
+<!-- <swiper indicator-dots="true" interval="3000" duration="500">
+  <block wx:for="{{info.businessadslist}}" wx:key="id">
+    <swiper-item>
+      <image src="{{item.imgs}}" class="slide-image" mode="widthFix" bindtap="previewImage" id="{{item.imgs}}" />
+    </swiper-item>
+  </block>
+</swiper> -->
+
+<!-- 测试样式 -->
+<swiper indicator-dots="true" interval="3000" duration="500">
+    <swiper-item wx:for="{{envList}}">
+      <image src="{{uploadFile+item.imagePath}}" class="slide-image" mode="widthFix" bindtap="previewImage" id="{{item.id}}" />
+    </swiper-item>
+    
+</swiper>
+
+<view class="info">
+
+  <view class="info_name">{{storeName}}</view>
+  <view class="info_phone clear">
+    <image src="/image/img_list_iphone.png" mode="widthFix" />{{contactsPhone}}
+    <image src="/image/icon_star{{info.star > 4 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+    <image src="/image/icon_star{{info.star > 3 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+    <image src="/image/icon_star{{info.star > 2 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+    <image src="/image/icon_star{{info.star > 1 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+    <image src="/image/icon_star{{info.star > 0 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+  </view>
+  <view class="info_addr">
+    <image src="/image/img_list_adress.png" mode="widthFix" />
+    {{storeStreet}}
+  </view>
+
+</view>
+<view class="activity">
+  店铺活动:
+  <text>满50减10元  </text>
+  <text>满100减20元  </text>
+</view>
+<view class="times">
+  营业时间:
+  <text>8:00-17:00</text>
+</view>
+
+<view class="button">
+
+  <navigator url="/pages/quickcreate/quickcreate?storeId={{storeId}}" class="button-item">
+    <image src="/image/icon_book_service.png" mode="widthFix" />预约服务
+  </navigator>
+  <!-- <navigator url="/pages/order/preview?type=2&id={{info.business_id}}" class="button-item">
+    <image src="/image/icon_people_service.png" mode="widthFix" />人工服务
+  </navigator> -->
+
+</view>
