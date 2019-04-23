@@ -18,7 +18,14 @@ public interface UserAccountMapper
      * @return 用户信息
      */
 	public UserAccount selectUserAccountById(Integer id);
-	
+
+	/**
+	 *
+	 * @param userId
+	 * @return
+	 */
+	public UserAccount selectUserAccountByUserId(Integer userId);
+
 	/**
      * 查询用户列表
      * 

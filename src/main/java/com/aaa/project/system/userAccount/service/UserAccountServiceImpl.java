@@ -31,7 +31,12 @@ public class UserAccountServiceImpl implements IUserAccountService
 	{
 	    return userAccountMapper.selectUserAccountById(id);
 	}
-	
+
+	@Override
+	public UserAccount selectUserAccountByUserId(Integer userId) {
+		return userAccountMapper.selectUserAccountByUserId(userId);
+	}
+
 	/**
      * 查询用户列表
      * 

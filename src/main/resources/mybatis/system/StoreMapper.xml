@@ -62,6 +62,11 @@
         where store_id = #{storeId}
     </select>
 
+    <select id="selectStoreByStatusId" resultMap="StoreResult">
+        <include refid="selectStoreVo"/>
+        where status_id between 101 and 104;
+    </select>
+
     <insert id="insertStore" parameterType="Store">
         insert into cw_store
         <trim prefix="(" suffix=")" suffixOverrides=",">

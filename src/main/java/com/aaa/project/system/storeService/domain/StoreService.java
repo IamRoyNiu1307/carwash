@@ -2,6 +2,7 @@ package com.aaa.project.system.storeService.domain;
 
 import com.aaa.project.system.defaultService.domain.DefaultService;
 import com.aaa.project.system.status.domain.Status;
+import com.aaa.project.system.store.domain.Store;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -34,14 +35,14 @@ public class StoreService extends BaseEntity
 	/** 业务状态 */
 	private Status status;
 
-	private String statusName;
+	private Store store;
 
-	public String getStatusName() {
-		return statusName;
+	public Store getStore() {
+		return store;
 	}
 
-	public void setStatusName(String statusName) {
-		this.statusName = statusName;
+	public void setStore(Store store) {
+		this.store = store;
 	}
 
 	public Status getStatus() {
@@ -126,7 +127,7 @@ public class StoreService extends BaseEntity
 				", cost=" + cost +
 				", defaultServiceId=" + defaultServiceId +
 				", status=" + status +
-				", statusName='" + statusName + '\'' +
-				"} " + super.toString();
+				", store=" + store +
+				'}';
 	}
 }

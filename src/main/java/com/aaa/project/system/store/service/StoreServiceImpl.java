@@ -51,6 +51,11 @@ public class StoreServiceImpl implements IStoreService {
         return storeMapper.selectStoreList(store);
     }
 
+    @Override
+    public List<Store> selectStoreByStatusId() {
+        return storeMapper.selectStoreByStatusId();
+    }
+
     /**
      * 新增门店
      *
@@ -82,6 +87,11 @@ public class StoreServiceImpl implements IStoreService {
     @Override
     public int deleteStoreByIds(String ids) {
         return storeMapper.deleteStoreByIds(Convert.toStrArray(ids));
+    }
+
+    @Override
+    public Store selectByStoreId(String storeId) {
+        return storeMapper.selectByStoreId(storeId);
     }
 
     /**

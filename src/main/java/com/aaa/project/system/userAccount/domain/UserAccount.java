@@ -16,58 +16,34 @@ public class UserAccount extends BaseEntity
 	
 	/** 编号 */
 	private Integer id;
-	/** 用户账号 */
-	private String userAccount;
-	/** 用户密码 */
-	private String userPassword;
-	/** 角色编号 */
-	private Integer roleId;
+	/** 用户编号 */
+	private Long userId;
 	/** openid */
 	private String openid;
-	/** 真实姓名 */
-	private String realName;
-	/** 联系电话 */
-	private String phone;
 	/** 驾照A面 */
 	private String drivingLicence1;
 	/** 驾照B面 */
 	private String drivingLicence2;
+	/** 所属门店编号 */
+	private String storeId;
 
 	public void setId(Integer id) 
 	{
 		this.id = id;
 	}
 
-	public Integer getId() 
+	public Integer getId()
 	{
 		return id;
 	}
-	public void setUserAccount(String userAccount) 
+	public void setUserId(Long userId)
 	{
-		this.userAccount = userAccount;
+		this.userId = userId;
 	}
 
-	public String getUserAccount() 
+	public Long getUserId()
 	{
-		return userAccount;
-	}
-	public void setUserPassword(String userPassword) 
-	{
-		this.userPassword = userPassword;
-	}
-
-	public String getUserPassword() 
-	{
-		return userPassword;
-	}
-	public void setRoleId(Integer roleId) 
-	{
-		this.roleId = roleId;
-	}
-
-	public Integer getRoleId() 
-	{
-		return roleId;
+		return userId;
 	}
 	public void setOpenid(String openid) 
 	{
@@ -77,24 +53,6 @@ public class UserAccount extends BaseEntity
 	public String getOpenid() 
 	{
 		return openid;
-	}
-	public void setRealName(String realName) 
-	{
-		this.realName = realName;
-	}
-
-	public String getRealName() 
-	{
-		return realName;
-	}
-	public void setPhone(String phone) 
-	{
-		this.phone = phone;
-	}
-
-	public String getPhone() 
-	{
-		return phone;
 	}
 	public void setDrivingLicence1(String drivingLicence1) 
 	{
@@ -114,18 +72,24 @@ public class UserAccount extends BaseEntity
 	{
 		return drivingLicence2;
 	}
+	public void setStoreId(String storeId)
+	{
+		this.storeId = storeId;
+	}
+
+	public String getStoreId()
+	{
+		return storeId;
+	}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("userAccount", getUserAccount())
-            .append("userPassword", getUserPassword())
-            .append("roleId", getRoleId())
+            .append("userId", getUserId())
             .append("openid", getOpenid())
-            .append("realName", getRealName())
-            .append("phone", getPhone())
             .append("drivingLicence1", getDrivingLicence1())
             .append("drivingLicence2", getDrivingLicence2())
+            .append("storeId", getStoreId())
             .toString();
     }
 }
