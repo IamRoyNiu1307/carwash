@@ -105,8 +105,10 @@ public class ApiOrderController {
     @RequestMapping("/cancelOrder")
     public AjaxResult cancelOrder(@RequestParam(name="orderId",required = true)String orderId){
         Date finishDate=new Date();
-        orderService.cancelOrderByOrderId(orderId,finishDate);
-        return AjaxResult.success();
+        float finalAmount = orderService.cancelOrderByOrderId(orderId, finishDate);
+        AjaxResult ajaxResult = new AjaxResult();
+        ajaxResult.put("payAmount",finalAmount);
+        return ajaxResult;
     }
 
     /**

@@ -1,8 +1,11 @@
 package com.aaa.project.system.order.service;
 
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import com.aaa.common.support.Convert;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.mapper.OrderMapper;
+import com.aaa.project.system.orderAmount.mapper.OrderAmountMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,8 @@ public class OrderServiceImpl implements IOrderService
 {
 	@Autowired
 	private OrderMapper orderMapper;
+	@Autowired
+	private OrderAmountMapper orderAmountMapper;
 
 	/**
      * 查询订单信息
@@ -89,8 +94,16 @@ public class OrderServiceImpl implements IOrderService
 	 * @param finishDate 订单完成时间
 	 */
 	@Override
-	public void cancelOrderByOrderId(@Param("orderId") String orderId, @Param("finishDate") Date finishDate){
-		orderMapper.cancelOrderByOrderId(orderId,finishDate);
+	public float cancelOrderByOrderId(@Param("orderId") String orderId, @Param("finishDate") Date finishDate){
+
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		if(DateUtil.between(order.getPayDate(),finishDate,DateUnit.MINUTE)<=5){
+			orderMapper.cancelOrderByOrderId(orderId,finishDate);
+			return 0;
+		}else {
+			float finalAmout = orderAmountMapper.selectFinalAmountByOrderId(orderId);
+			return finalAmout*2;
+		}
 	};
 
 	/**

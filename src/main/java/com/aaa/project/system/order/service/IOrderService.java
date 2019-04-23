@@ -61,7 +61,7 @@ public interface IOrderService
 	 * @param finishDate 订单完成时间
 	 */
 
-	public void cancelOrderByOrderId(@Param("orderId") String orderId,@Param("finishDate") Date finishDate);
+	public float cancelOrderByOrderId(@Param("orderId") String orderId,@Param("finishDate") Date finishDate);
 
     /**
      * 根据账户和订单状态ID查询所有订单或者根据账户查询所有订单
