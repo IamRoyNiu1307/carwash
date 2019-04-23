@@ -11,27 +11,35 @@
 					<div class="select-list">
 						<ul id="searchUl">
 							<li>
-								<span class="textSpan">门店编号：</span><input type="text" name="storeId"/>
+								<span class="textSpan">用户账号：</span><input type="text" name="userAccount"/>
 							</li>
 
 							<li>
-								<span class="textSpan">业务名称：</span><input type="text" name="serviceName"/>
+								<span class="textSpan">用户密码：</span><input type="text" name="userPassword"/>
 							</li>
 
 							<li>
-								<span class="textSpan">详细描述：</span><input type="text" name="description"/>
+								<span class="textSpan">角色编号：</span><input type="text" name="roleId"/>
 							</li>
 
 							<li>
-								<span class="textSpan">业务状态：</span><input type="text" name="statusId"/>
+								<span class="textSpan">openid：</span><input type="text" name="openid"/>
 							</li>
 
 							<li>
-								<span class="textSpan">业务费用：</span><input type="text" name="cost"/>
+								<span class="textSpan">真实姓名：</span><input type="text" name="realName"/>
 							</li>
 
 							<li>
-								<span class="textSpan">默认业务编号：</span><input type="text" name="defaultServiceId"/>
+								<span class="textSpan">联系电话：</span><input type="text" name="phone"/>
+							</li>
+
+							<li>
+								<span class="textSpan">驾照A面：</span><input type="text" name="drivingLicence1"/>
+							</li>
+
+							<li>
+								<span class="textSpan">驾照B面：</span><input type="text" name="drivingLicence2"/>
 							</li>
 
 							<li>
@@ -44,16 +52,16 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:storeService:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:userAccount:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:storeService:edit">
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:userAccount:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:storeService:remove">
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:userAccount:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:storeService:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:userAccount:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
 			</div>
@@ -64,9 +72,9 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:storeService:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:storeService:remove')}]];
-        var prefix = ctx + "system/storeService";
+        var editFlag = [[${@permission.hasPermi('system:userAccount:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:userAccount:remove')}]];
+        var prefix = ctx + "system/userAccount";
 
         $(function() {
             var options = {
@@ -75,7 +83,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "业务",
+                modalName: "用户",
 				search: false,
 		        showExport: true,
                 columns: [{
@@ -87,33 +95,43 @@
 					visible: false
 				},
 				{
-					field : 'storeId', 
-					title : '门店编号',
+					field : 'userAccount', 
+					title : '用户账号',
 					sortable: true
 				},
 				{
-					field : 'serviceName', 
-					title : '业务名称',
+					field : 'userPassword', 
+					title : '用户密码',
 					sortable: true
 				},
 				{
-					field : 'description', 
-					title : '详细描述',
+					field : 'roleId', 
+					title : '角色编号',
 					sortable: true
 				},
 				{
-					field : 'status.statusName',
-					title : '业务状态',
+					field : 'openid', 
+					title : 'openid',
 					sortable: true
 				},
 				{
-					field : 'cost', 
-					title : '业务费用',
+					field : 'realName', 
+					title : '真实姓名',
 					sortable: true
 				},
 				{
-					field : 'defaultServiceId',
-					title : '默认业务编号',
+					field : 'phone', 
+					title : '联系电话',
+					sortable: true
+				},
+				{
+					field : 'drivingLicence1', 
+					title : '驾照A面',
+					sortable: true
+				},
+				{
+					field : 'drivingLicence2', 
+					title : '驾照B面',
 					sortable: true
 				},
 		        {
