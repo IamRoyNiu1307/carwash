@@ -36,7 +36,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectStoreServiceVo"/>
         where id = #{id}
     </select>
-
+    <select id="selectCost" resultType="float">
+        select cost from cw_store_service where store_id=#{storeId} and default_service_id=#{defaultServiceId}
+    </select>
     <select id="selectStoreServiceByStoreId" parameterType="string" resultMap="StoreServiceResult">
         <include refid="selectStoreServiceVo"/>
         where store_id = #{store_id}

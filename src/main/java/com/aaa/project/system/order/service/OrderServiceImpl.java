@@ -6,6 +6,7 @@ import com.aaa.common.support.Convert;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.mapper.OrderMapper;
 import com.aaa.project.system.orderAmount.mapper.OrderAmountMapper;
+import com.aaa.project.system.orderService.domain.OrderService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,17 @@ public class OrderServiceImpl implements IOrderService
 	    return orderMapper.selectOrderList(order);
 	}
 
-    /**
+	/**
+	 *
+	 * @param orderId 订单id
+	 * @return orderservice
+	 */
+	@Override
+	public List<OrderService> selectOrderService(String orderId) {
+		return orderMapper.selectOrderService(orderId);
+	}
+
+	/**
      * 新增订单
      *
      * @param order 订单信息
