@@ -34,13 +34,14 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 业务 信息操作处理
- *
+ * 
  * @author aaa
  * @date 2019-04-19
  */
 @Controller
 @RequestMapping("/system/storeService")
-public class StoreServiceController extends BaseController {
+public class StoreServiceController extends BaseController
+{
     private String prefix = "system/storeService";
 
     @Autowired
@@ -108,49 +109,53 @@ public class StoreServiceController extends BaseController {
         //}
     }
 
-    /**
-     * 新增保存业务
-     */
-    @RequiresPermissions("system:storeService:add")
-    @Log(title = "业务", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(StoreService storeService) {
-        return toAjax(storeServiceService.insertStoreService(storeService));
-    }
+	/**
+	 * 新增保存业务
+	 */
+	@RequiresPermissions("system:storeService:add")
+	@Log(title = "业务", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(StoreService storeService)
+	{
+		return toAjax(storeServiceService.insertStoreService(storeService));
+	}
 
-    /**
-     * 修改业务
-     */
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap, HttpServletRequest req) {
-        StoreService storeService = storeServiceService.selectStoreServiceById(id);
-        mmap.put("storeService", storeService);
-        List<Status> list = statusService.selectServicesStatusList();
-        req.setAttribute("list", list);
-        return prefix + "/edit";
-    }
-
-    /**
-     * 修改保存业务
-     */
-    @RequiresPermissions("system:storeService:edit")
-    @Log(title = "业务", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(StoreService storeService) {
-        return toAjax(storeServiceService.updateStoreService(storeService));
-    }
-
-    /**
-     * 删除业务
-     */
-    @RequiresPermissions("system:storeService:remove")
-    @Log(title = "业务", businessType = BusinessType.DELETE)
-    @PostMapping("/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids) {
-        return toAjax(storeServiceService.deleteStoreServiceByIds(ids));
-    }
-
+	/**
+	 * 修改业务
+	 */
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Integer id, ModelMap mmap, HttpServletRequest req)
+	{
+		StoreService storeService = storeServiceService.selectStoreServiceById(id);
+		mmap.put("storeService", storeService);
+		List<Status> list = statusService.selectServicesStatusList();
+		req.setAttribute("list",list);
+	    return prefix + "/edit";
+	}
+	
+	/**
+	 * 修改保存业务
+	 */
+	@RequiresPermissions("system:storeService:edit")
+	@Log(title = "业务", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(StoreService storeService)
+	{		
+		return toAjax(storeServiceService.updateStoreService(storeService));
+	}
+	
+	/**
+	 * 删除业务
+	 */
+	@RequiresPermissions("system:storeService:remove")
+	@Log(title = "业务", businessType = BusinessType.DELETE)
+	@PostMapping( "/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids)
+	{		
+		return toAjax(storeServiceService.deleteStoreServiceByIds(ids));
+	}
+	
 }
