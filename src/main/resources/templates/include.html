@@ -1,4 +1,4 @@
-<head th:fragment="header">
+<head th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title></title>
@@ -14,6 +14,7 @@
 	<link th:href="@{/css/style.css}" rel="stylesheet"/>
 	<link th:href="@{/ajax/libs/select/select2.css}" rel="stylesheet"/>
 	<link th:href="@{/aaa/css/dd-ui.css}" rel="stylesheet"/>
+	<link th:href="@{/css/city-picker.css}" rel="stylesheet"/>
 	<style>
 		.textSpan{
 			/*text-align: right;*/
@@ -25,10 +26,10 @@
 		}
 	</style>
 </head>
-<div th:fragment="footer">
+<div th:fragment="footer" xmlns:th="http://www.w3.org/1999/xhtml" >
 	<script th:src="@{/js/jquery.min.js}"></script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
-	
+
 	<!-- bootstrap-table 表格插件 -->
 	<script th:src="@{/ajax/libs/bootstrap-table/bootstrap-table.min.js}"></script>
 	<script th:src="@{/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
@@ -52,4 +53,8 @@
 	<script th:src="@{/aaa/js/dd-ui.js?v=3.1.0}"></script>
 	<script src="http://tajs.qq.com/stats?sId=62048022"></script>
 	<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+    <!--省市区三级联动-->
+	<script th:src="@{/js/city-picker.data.js}"></script>
+	<script th:src="@{/js/city-picker.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
 </div>

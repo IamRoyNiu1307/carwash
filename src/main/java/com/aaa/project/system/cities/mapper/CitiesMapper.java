@@ -68,4 +68,5 @@ public interface CitiesMapper {
 
     public Cities selectCityInfoByCity(String cityName);
 
+
 }
