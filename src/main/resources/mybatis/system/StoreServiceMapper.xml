@@ -11,12 +11,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="description"    column="description"    />
         <result property="statusId"    column="status_id"    />
         <result property="cost"    column="cost"    />
-        <result property="numberPurchased"    column="number_purchased"    />
+        <result property="defaultServiceId"    column="default_service_id"    />
         <association property="status" column="status_id" select="com.aaa.project.system.status.mapper.StatusMapper.selectStatusById" />
     </resultMap>
 	
 	<sql id="selectStoreServiceVo">
-        select id, store_id, service_name, description, status_id, cost, number_purchased from cw_store_service
+        select id, store_id, service_name, description, status_id, cost, default_service_id from cw_store_service
     </sql>
 	
     <select id="selectStoreServiceList" parameterType="StoreService" resultMap="StoreServiceResult">
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="description != null  and description != '' "> and description = #{description}</if>
              <if test="statusId != null "> and status_id = #{statusId}</if>
              <if test="cost != null "> and cost = #{cost}</if>
-             <if test="numberPurchased != null "> and number_purchased = #{numberPurchased}</if>
+             <if test="defaultServiceId != null "> and default_service_id = #{defaultServiceId}</if>
          </where>
     </select>
     
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="description != null  and description != ''  ">description,</if>
 			<if test="statusId != null  ">status_id,</if>
 			<if test="cost != null  ">cost,</if>
-			<if test="numberPurchased != null  ">number_purchased,</if>
+			<if test="defaultServiceId != null  ">default_service_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="description != null  and description != ''  ">#{description},</if>
 			<if test="statusId != null  ">#{statusId},</if>
 			<if test="cost != null  ">#{cost},</if>
-			<if test="numberPurchased != null  ">#{numberPurchased},</if>
+			<if test="defaultServiceId != null  ">#{defaultServiceId},</if>
          </trim>
     </insert>
 	 
@@ -72,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="description != null  and description != ''  ">description = #{description},</if>
             <if test="statusId != null  ">status_id = #{statusId},</if>
             <if test="cost != null  ">cost = #{cost},</if>
-            <if test="numberPurchased != null  ">number_purchased = #{numberPurchased},</if>
+            <if test="defaultServiceId != null  ">default_service_id = #{defaultServiceId},</if>
         </trim>
         where id = #{id}
     </update>

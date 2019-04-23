@@ -1,5 +1,6 @@
 package com.aaa.project.system.storeService.domain;
 
+import com.aaa.project.system.defaultService.domain.DefaultService;
 import com.aaa.project.system.status.domain.Status;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -28,7 +29,7 @@ public class StoreService extends BaseEntity
 	/** 业务费用 */
 	private Float cost;
 	/** 购买次数 */
-	private Integer numberPurchased;
+	private Integer defaultServiceId;
 
 	/** 业务状态 */
 	private Status status;
@@ -105,14 +106,13 @@ public class StoreService extends BaseEntity
 	{
 		return cost;
 	}
-	public void setNumberPurchased(Integer numberPurchased) 
-	{
-		this.numberPurchased = numberPurchased;
+
+	public Integer getDefaultServiceId() {
+		return defaultServiceId;
 	}
 
-	public Integer getNumberPurchased() 
-	{
-		return numberPurchased;
+	public void setDefaultServiceId(Integer defaultServiceId) {
+		this.defaultServiceId = defaultServiceId;
 	}
 
 	@Override
@@ -124,8 +124,9 @@ public class StoreService extends BaseEntity
 				", description='" + description + '\'' +
 				", statusId=" + statusId +
 				", cost=" + cost +
-				", numberPurchased=" + numberPurchased +
+				", defaultServiceId=" + defaultServiceId +
 				", status=" + status +
-				'}';
+				", statusName='" + statusName + '\'' +
+				"} " + super.toString();
 	}
 }
