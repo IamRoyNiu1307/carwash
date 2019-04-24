@@ -1,6 +1,7 @@
 package com.aaa.project.system.order.mapper;
 
 import com.aaa.project.system.order.domain.Order;
+import com.aaa.project.system.orderService.domain.OrderService;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -29,6 +30,14 @@ public interface OrderMapper
      * @return 订单集合
      */
 	public List<Order> selectOrderList(Order order);
+
+	/**
+	 * 查询订单服务关系列表
+	 *
+	 * @param orderId 订单id
+	 * @return 订单服务关系集合
+	 */
+	public List<OrderService> selectOrderService(String orderId);
 
 	/**
      * 新增订单

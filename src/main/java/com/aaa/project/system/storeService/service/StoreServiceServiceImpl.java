@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.aaa.project.system.defaultService.domain.DefaultService;
 import com.aaa.project.system.defaultService.mapper.DefaultServiceMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aaa.project.system.storeService.mapper.StoreServiceMapper;
@@ -48,8 +49,19 @@ public class StoreServiceServiceImpl implements IStoreServiceService
 	{
 	    return storeServiceMapper.selectStoreServiceList(storeService);
 	}
-	
-    /**
+
+	/**
+	 *
+	 * @param storeId 店铺id
+	 * @param defaultServiceId 服务id
+	 * @return 花费
+	 */
+	@Override
+	public float selectCost(@Param("storeId") String storeId,@Param("defaultServiceId") Integer defaultServiceId) {
+		return storeServiceMapper.selectCost(storeId,defaultServiceId);
+	}
+
+	/**
      * 新增业务
      * 
      * @param storeService 业务信息

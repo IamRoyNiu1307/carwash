@@ -29,7 +29,13 @@ public interface OrderServiceMapper
      * @return 订单服务关系集合
      */
 	public List<OrderService> selectOrderServiceList(OrderService orderService);
-	
+
+	/**
+	 *
+	 * @param orderId 订单id
+	 * @return 订单服务
+	 */
+	public List<OrderService> selectOrderService(String orderId);
 	/**
      * 新增订单服务关系
      * 

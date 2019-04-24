@@ -1,7 +1,9 @@
 package com.aaa.project.system.storeService.mapper;
 
 import com.aaa.project.system.storeService.domain.StoreService;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 业务 数据层
@@ -26,7 +28,15 @@ public interface StoreServiceMapper
      * @return 业务集合
      */
 	public List<StoreService> selectStoreServiceList(StoreService storeService);
-	
+
+	/**
+	 * 查询价钱
+	 * @param storeId 店铺id
+	 * @param defaultServiceId 服务id
+	 * @return 花费
+	 */
+	public float selectCost(@Param("storeId") String storeId, @Param("defaultServiceId") Integer defaultServiceId);
+
 	/**
      * 新增业务
      * 

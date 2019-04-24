@@ -1,7 +1,13 @@
 package com.aaa.project.system.store.service;
 
+import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.project.system.store.domain.Store;
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -36,12 +42,12 @@ public interface IStoreService {
     public List<Store> selectStoreByStatusId();
 
     /**
-     * 新增门店
-     *
-     * @param store 门店信息
-     * @return 结果
+     *  新增门店
+     * @param store  门店信息
+     * @param file 门店图标
+     * @return
      */
-    public int insertStore(Store store);
+    public int insertStore(Store store , MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException;
 
     /**
      * 修改门店

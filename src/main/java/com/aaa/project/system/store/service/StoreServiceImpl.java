@@ -1,18 +1,24 @@
 package com.aaa.project.system.store.service;
 
+import java.io.IOException;
 import java.util.*;
 
+import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.common.utils.Distance;
 import com.aaa.common.utils.ReGeo;
 import com.aaa.project.system.cities.domain.Cities;
 import com.aaa.project.system.cities.mapper.CitiesMapper;
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aaa.project.system.store.mapper.StoreMapper;
 import com.aaa.project.system.store.domain.Store;
 import com.aaa.common.support.Convert;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import static com.aaa.project.myconst.MyConst.DISTANCE_TYPE_STRAIGHT;
+import static com.aaa.common.utils.file.FileUploadUtils.upload;
+import static com.aaa.project.myconst.MyConst.*;
 
 
 /**
@@ -63,7 +69,17 @@ public class StoreServiceImpl implements IStoreService {
      * @return 结果
      */
     @Override
-    public int insertStore(Store store) {
+    public int insertStore(Store store, MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
+        //得到文件路径
+        String url = STORE_ICON_IMAGE_DIR+upload(UPLOAD_STORE_ICON, file, ".jpg");
+        //处理门店信息将 province 和city 变为 code
+        System.out.println(url);
+        Cities cities = citiesMapper.selectCityInfoByCity(store.getCityid());
+        //重新设值
+        store.setCityid(cities.getCityid());
+        store.setProvinceid(cities.getProvinceid());
+        //设置路径值
+        store.setFaviconPath(url);
         return storeMapper.insertStore(store);
     }
 

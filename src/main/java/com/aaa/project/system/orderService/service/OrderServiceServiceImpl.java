@@ -43,8 +43,18 @@ public class OrderServiceServiceImpl implements IOrderServiceService
 	{
 	    return orderServiceMapper.selectOrderServiceList(orderService);
 	}
-	
-    /**
+
+	/**
+	 *
+	 * @param orderId 订单id
+	 * @return orderService
+	 */
+	@Override
+	public List<OrderService> selectOrderService(String orderId) {
+		return orderServiceMapper.selectOrderService(orderId);
+	}
+
+	/**
      * 新增订单服务关系
      * 
      * @param orderService 订单服务关系信息

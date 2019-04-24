@@ -1,106 +1,277 @@
 <!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-store-add">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">门店编号：</label>
-				<div class="col-sm-8">
-					<input id="storeId" name="storeId" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">门店名：</label>
-				<div class="col-sm-8">
-					<input id="storeName" name="storeName" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建人账号：</label>
-				<div class="col-sm-8">
-					<input id="ownerAccount" name="ownerAccount" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">所在省份：</label>
-				<div class="col-sm-8">
-					<input id="provinceid" name="provinceid" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">所在城市：</label>
-				<div class="col-sm-8">
-					<input id="cityid" name="cityid" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">所在街道：</label>
-				<div class="col-sm-8">
-					<input id="street" name="street" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">经度：</label>
-				<div class="col-sm-8">
-					<input id="posLng" name="posLng" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">纬度：</label>
-				<div class="col-sm-8">
-					<input id="posLat" name="posLat" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">联系人：</label>
-				<div class="col-sm-8">
-					<input id="contacts" name="contacts" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">联系电话：</label>
-				<div class="col-sm-8">
-					<input id="contactsPhone" name="contactsPhone" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">门店状态编号：</label>
-				<div class="col-sm-8">
-					<input id="statusId" name="statusId" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">简介：</label>
-				<div class="col-sm-8">
-					<input id="introduction" name="introduction" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">图标路径：</label>
-				<div class="col-sm-8">
-					<input id="faviconPath" name="faviconPath" class="form-control" type="text">
-				</div>
-			</div>
-		</form>
-	</div>
-    <div th:include="include::footer"></div>
-    <script type="text/javascript">
-		var prefix = ctx + "system/store"
-		$("#form-store-add").validate({
-			rules:{
-				xxxx:{
-					required:true,
-				},
-			}
-		});
-		
-		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/add", $('#form-store-add').serialize());
-	        }
-	    }
-	</script>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-store-add" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">门店编号：</label>
+            <div class="col-sm-8">
+                <input id="storeId" name="storeId" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">门店名：</label>
+            <div class="col-sm-8">
+                <input id="storeName" name="storeName" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">创建人账号：</label>
+            <div class="col-sm-8">
+                <input id="ownerAccount" name="ownerAccount" class="form-control" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">所在地址：</label>
+            <div class="col-sm-8">
+                <input id="city" name="city_name" class="form-control" readonly type="text">
+                <input id="provinceId" name="provinceId" class="form-control" type="hidden">
+                <input id="cityId" name="cityId" class="form-control" type="hidden">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">详细街道：</label>
+            <div class="col-sm-8">
+                <input id="street" name="street" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">地址位置：</label>
+            <div class="col-sm-8">
+                <div id="GaoDeMap_AddStoreMap" style="height: 450px"></div>
+                <input id="posLng" name="posLng" class="form-control" type="hidden">
+                <input id="posLat" name="posLat" class="form-control" type="hidden">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">联系人：</label>
+            <div class="col-sm-8">
+                <input id="contacts" name="contacts" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">联系电话：</label>
+            <div class="col-sm-8">
+                <input id="contactsPhone" name="contactsPhone" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">门店状态编号：</label>
+            <div class="col-sm-8">
+                <select id="statusId" name="statusId" class="form-control">
+                    <option value="100" selected>待审核</option>
+                    <option value="101">营业中</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">简介：</label>
+            <div class="col-sm-8">
+                <input id="introduction" name="introduction" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">图标路径：</label>
+            <div class="col-sm-8">
+                <input id="filePath" name="filePath" class="form-control" type="file">
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script src="https://webapi.amap.com/maps?v=1.4.14&key=93eca7a40a6e55c94642233debebe5f9"></script>
+
+<script type="text/javascript">
+    //设置地图显示
+    var map = new AMap.Map('GaoDeMap_AddStoreMap', {
+        resizeEnable: true, //是否监控地图容器尺寸变化
+        zoom: 11, //初始化地图层级
+        center: [116.397428, 39.90923] //初始化地图中心点
+    });
+
+    $(function () {
+
+        $('#city').citypicker({
+            province: '河南省',
+            city: '郑州市',
+            district: '金水区'
+        });
+    })
+
+    //设置地图显示结束
+    //添加标记点显示坐标信息
+    //判断city被点击
+    $("#city").change(function () {
+
+    });
+
+    //判断街道是否为空
+    $("#street").blur(function () {
+        var street = $("#street").val();
+        if (street == "") {
+            //  alert("street is null");
+        } else {
+            //组合详细地址
+            var cityaddress;
+            var cityStr = new Array();
+            cityStr = $("#city").val().split('/');
+            for (var i = 0; i < cityStr.length; i++) {
+                cityaddress = cityaddress + cityStr[i];
+            }
+            $("#cityId").val(cityStr[1]);
+            $("#provinceId").val(cityStr[0]);
+            var address = cityaddress + street;
+            //得到目标点并且标记设置为中心点
+            getPosLngAndPosLat(address);
+        }
+    });
+
+
+    //逆地理解析获取posLng和posLat
+    function getPosLngAndPosLat(address) {
+        AMap.plugin('AMap.Autocomplete', function () {
+            // 实例化Autocomplete
+            var autoOptions = {
+                city: '全国'
+            }
+            var autoComplete = new AMap.Autocomplete(autoOptions);
+            autoComplete.search(address, function (status, result) {
+                // 搜索成功时，result即是对应的匹配数据
+                //添加标记物
+                addMarker(result.tips[0].location.lng, result.tips[0].location.lat);
+            });
+        });
+
+    }
+
+    //添加标记物
+    function addMarker(posLng, posLat) {
+        $("#posLng").val(posLng);
+        $("#posLat").val(posLat);
+
+        //创建标记物
+        var marker = new AMap.Marker({
+            position: new AMap.LngLat(posLng, posLat),
+            icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
+            draggable: true,
+            cursor: 'move',
+            // 设置拖拽效果
+            raiseOnDrag: true
+        });
+        //清除所有覆盖物
+        map.clearMap();
+        //添加标记物到地图上
+        map.add(marker);
+        //地图以标记物为中心点
+        map.setZoom(15); //设置地图层级
+        map.setCenter([posLng, posLat]); //设置地图中心点
+        //标记点拖拽监听
+        AMap.event.addListener(marker, 'dragend', function (e) {
+            //设置marker 坐标给posLng和posLat
+            $("#posLng").val(e.lnglat.lng);
+            $("#posLat").val(e.lnglat.lat);
+            var posLng = e.lnglat.lng;
+            var posLat = e.lnglat.lat;
+            //根据坐标解析出地址
+            AMap.plugin('AMap.Geocoder', function () {
+                var geocoder = new AMap.Geocoder({
+                    // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
+                    city: '010'
+                })
+                var lnglat = [posLng, posLat];
+                geocoder.getAddress(lnglat, function (status, result) {
+                    if (status === 'complete' && result.info === 'OK') {
+                        // result为对应的地理位置详细信息
+                        var address = result.regeocode.formattedAddress;
+                        var province = result.regeocode.addressComponent.province;
+                        var city = result.regeocode.addressComponent.city;
+                        var quyu = result.regeocode.addressComponent.district;
+                        $("#cityId").val(city);
+                        $("#provinceId").val(province);
+                        //重置
+                        $("#city").citypicker("reset");
+                        $("#city").citypicker("destroy");
+                        //设置值
+                        $('#city').citypicker({
+                            province: province,
+                            city: city,
+                            district: quyu
+                        });
+                        //清空street内容
+                        $("#street").val("");
+                        //设值
+                        $("#street").val(address);
+                    }
+                });
+            });
+
+        });
+
+    }
+
+
+</script>
+
+<script>
+    var prefix = ctx + "system/store"
+
+    $("#form-store-add").validate({
+        rules: {
+            xxxx: {
+                required: true,
+            },
+        }
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            //  $.operate.save(prefix + "/add", $('#form-store-add').serialize());
+            uploadFile();
+        }
+    }
+
+    function uploadFile() {
+        var formData = new FormData();
+        if ($('#filePath')[0].files[0] == null) {
+            $.modal.alertWarning("请先选择文件路径");
+            return false;
+        }
+        //组合数据
+        formData.append('storeId', $("#storeId").val());
+        formData.append('storeName', $("#storeName").val());
+        formData.append('ownerAccount', $("#ownerAccount").val());
+        formData.append('provinceid', $("#provinceId").val());
+        formData.append('cityid', $("#cityId").val());
+        formData.append('street', $("#street").val());
+        formData.append('posLng', $("#posLng").val());
+        formData.append('posLat', $("#posLat").val());
+        formData.append('contacts', $("#contacts").val());
+        formData.append('contactsPhone', $("#contactsPhone").val());
+        formData.append('statusId', $("#statusId").val());
+        formData.append('introduction', $("#introduction").val());
+
+        formData.append('fileName', $("#fileName").val());
+        formData.append('file', $('#filePath')[0].files[0]);
+        $.ajax({
+            url: prefix + "/add",
+            type: 'post',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (result) {
+                $.operate.successCallback(result);
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
