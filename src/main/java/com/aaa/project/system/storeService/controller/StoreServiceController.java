@@ -102,7 +102,6 @@ public class StoreServiceController extends BaseController
             List<DefaultService> serviceList = defaultServiceService.selectDefaultService();
             req.setAttribute("statusList", statusList);
             req.setAttribute("serviceList", serviceList);
-            req.setAttribute("services", JSON.toJSONString(serviceList));
             return prefix + "/add";
         //}
     }
@@ -128,6 +127,8 @@ public class StoreServiceController extends BaseController
 		StoreService storeService = storeServiceService.selectStoreServiceById(id);
 		mmap.put("storeService", storeService);
 		List<Status> list = statusService.selectServicesStatusList();
+        List<DefaultService> serviceList = defaultServiceService.selectDefaultService();
+        req.setAttribute("serviceList", serviceList);
 		req.setAttribute("list",list);
 	    return prefix + "/edit";
 	}
