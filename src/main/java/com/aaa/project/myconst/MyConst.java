@@ -42,6 +42,8 @@ public class MyConst {
     public static final int STATUS_ORDER_CREATED=200;
     //订单状态：代付款
     public static final int STATUS_ORDER_UNPAY=201;
+    //订单状态：已付款
+    public static final int STATUS_ORDER_PAID=202;
     //短信类型：账号登录、注册
     public static final int TYPE_ACCOUNT = 0;
     //短信类型：获得取件码

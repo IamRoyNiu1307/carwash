@@ -28,7 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="storeId != null  and storeId != '' "> and store_id = #{storeId}</if>
          </where>
     </select>
-    
+    <select id="selectStoreIdByOpenId" parameterType="string" resultType="string">
+        select store_id from cw_user_account where openid=#{#openid}
+    </select>
     <select id="selectUserAccountById" parameterType="Integer" resultMap="UserAccountResult">
         <include refid="selectUserAccountVo"/>
         where id = #{id}

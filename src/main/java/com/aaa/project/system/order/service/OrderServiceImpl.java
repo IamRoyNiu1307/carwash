@@ -53,6 +53,18 @@ public class OrderServiceImpl implements IOrderService
 	}
 
 	/**
+	 * 查询订单信息
+	 *
+	 * @param statusId 订单状态
+	 * @param userAccount	洗车员手机号
+	 * @return 订单信息
+	 */
+	@Override
+	public Order selectOrderToUser(int statusId, String userAccount) {
+		return orderMapper.selectOrderToUser(statusId,userAccount);
+	}
+
+	/**
 	 *
 	 * @param orderId 订单id
 	 * @return orderservice
