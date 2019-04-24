@@ -34,20 +34,22 @@ public interface IStoreService {
      */
     public List<Store> selectStoreList(Store store);
 
+
     /**
-     *
      * 查询可增加业务的门店
+     *
      * @return 门店列表
      */
     public List<Store> selectStoreByStatusId();
 
     /**
-     *  新增门店
-     * @param store  门店信息
-     * @param file 门店图标
+     * 新增门店
+     *
+     * @param store 门店信息
+     * @param file  门店图标
      * @return
      */
-    public int insertStore(Store store , MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException;
+    public int insertStore(Store store, MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException;
 
     /**
      * 修改门店
@@ -67,6 +69,7 @@ public interface IStoreService {
 
     /**
      * 根据storeId查询门店
+     *
      * @param storeId 门店编号
      * @return
      */
@@ -77,8 +80,17 @@ public interface IStoreService {
      *
      * @param posLng
      * @param posLat
-     * @return
+     * @return 结果
      */
     public List<Map<String, Object>> searchAroundStore(String posLng, String posLat);
+
+    /**
+     * 根据id更新门店信息
+     *
+     * @param ids
+     * @return 结果
+     */
+    int updateStoreById(String ids);
+
 
 }

@@ -28,8 +28,8 @@ public interface StoreMapper {
     public List<Store> selectStoreList(Store store);
 
     /**
-     *
      * 查询可增加业务的门店
+     *
      * @return 门店列表
      */
     public List<Store> selectStoreByStatusId();
@@ -76,6 +76,7 @@ public interface StoreMapper {
 
     /**
      * 根据storeId查询门店
+     *
      * @param storeId 门店编号
      * @return
      */
