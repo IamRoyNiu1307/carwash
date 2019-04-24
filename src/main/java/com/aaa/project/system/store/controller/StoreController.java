@@ -1,11 +1,10 @@
 package com.aaa.project.system.store.controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 
 import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
-import org.apache.ibatis.annotations.Param;
+import com.aaa.project.system.store.service.IStoreService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import com.aaa.framework.aspectj.lang.annotation.Log;
 import com.aaa.framework.aspectj.lang.enums.BusinessType;
 import com.aaa.project.system.store.domain.Store;
-import com.aaa.project.system.store.service.IStoreService;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.common.utils.poi.ExcelUtil;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  * 门店 信息操作处理
@@ -83,7 +80,7 @@ public class StoreController extends BaseController {
     @Log(title = "门店", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Store store,@RequestParam("file") MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
+    public AjaxResult addSave(Store store, @RequestParam("file") MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
         System.out.println(store);
         return toAjax(storeService.insertStore(store, file));
     }

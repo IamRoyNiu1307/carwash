@@ -6,20 +6,15 @@ import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.consumerAccount.domain.ConsumerAccount;
 import com.aaa.project.system.consumerAccount.service.IConsumerAccountService;
 import com.alibaba.fastjson.JSONObject;
-import com.zhenzi.sms.ZhenziSmsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Random;
 
-import static com.aaa.project.myconst.MyConst.TODO_LOGIN;
-import static com.aaa.project.myconst.MyConst.TODO_REGISTER;
-import static com.aaa.project.myconst.MyConst.TYPE_ACCOUNT;
+import static com.aaa.project.myconst.MyConst.*;
 
 /**
  * 顾客接口
