@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectUserAccountVo"/>
         where user_id = #{userId}
     </select>
-        
+
     <insert id="insertUserAccount" parameterType="UserAccount">
         insert into cw_user_account
 		<trim prefix="(" suffix=")" suffixOverrides=",">

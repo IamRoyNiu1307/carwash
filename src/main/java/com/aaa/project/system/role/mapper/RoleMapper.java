@@ -1,7 +1,8 @@
 package com.aaa.project.system.role.mapper;
 
-import java.util.List;
 import com.aaa.project.system.role.domain.Role;
+
+import java.util.List;
 
 /**
  * 角色表 数据层
@@ -81,4 +82,17 @@ public interface RoleMapper
      * @return 角色信息
      */
     public Role checkRoleKeyUnique(String roleKey);
+
+    /**
+     * 根据角色id查询角色名称
+     * @param roleId 角色id
+     * @return 角色名称
+     */
+    public String selectRoleNameByRoleId(Long roleId);
+
+    /**
+     * 查询所有角色
+     * @return 角色集合
+     */
+    public List<Role> selectAllRole();
 }

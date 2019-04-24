@@ -1,12 +1,5 @@
 package com.aaa.project.system.role.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.aaa.common.constant.UserConstants;
 import com.aaa.common.exception.BusinessException;
 import com.aaa.common.support.Convert;
@@ -20,6 +13,10 @@ import com.aaa.project.system.role.mapper.RoleDeptMapper;
 import com.aaa.project.system.role.mapper.RoleMapper;
 import com.aaa.project.system.role.mapper.RoleMenuMapper;
 import com.aaa.project.system.user.mapper.UserRoleMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 /**
  * 角色 业务层处理
@@ -303,4 +300,19 @@ public class RoleServiceImpl implements IRoleService
     {
         return userRoleMapper.countUserRoleByRoleId(roleId);
     }
+
+    /**
+     * 根据角色id查询角色名称
+     * @param roleId 角色id
+     * @return 角色名称
+     */
+    @Override
+    public String selectRoleNameByRoleId(Long roleId){return roleMapper.selectRoleNameByRoleId(roleId);};
+
+    /**
+     * 查询所有角色
+     * @return 角色集合
+     */
+    @Override
+    public List<Role> selectAllRole(){return roleMapper.selectAllRole();};
 }

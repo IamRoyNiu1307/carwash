@@ -82,7 +82,7 @@ public class UserAccount extends BaseEntity
 		return storeId;
 	}
 
-    public String toString() {
+	public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("userId", getUserId())

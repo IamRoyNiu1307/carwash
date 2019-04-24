@@ -1,8 +1,9 @@
 package com.aaa.project.system.role.service;
 
+import com.aaa.project.system.role.domain.Role;
+
 import java.util.List;
 import java.util.Set;
-import com.aaa.project.system.role.domain.Role;
 
 /**
  * 角色业务层
@@ -114,4 +115,17 @@ public interface IRoleService
      * @return 结果
      */
     public int countUserRoleByRoleId(Long roleId);
+
+    /**
+     * 根据角色id查询角色名称
+     * @param roleId 角色id
+     * @return 角色名称
+     */
+    public String selectRoleNameByRoleId(Long roleId);
+
+    /**
+     * 查询所有角色
+     * @return 角色集合
+     */
+    public List<Role> selectAllRole();
 }
