@@ -138,4 +138,11 @@ public interface IUserService
      * @return 结果
      */
     public String selectUserPostGroup(Long userId);
+
+    /**
+     * 通过用户ID查询角色ID
+     * @param userId 用户ID
+     * @return 角色ID
+     */
+    public Long selectRoleIdByUserId(Long userId);
 }

@@ -67,6 +67,10 @@
         where status_id between 101 and 104;
     </select>
 
+    <select id="selectStoreNameByStoreId" parameterType="String" resultType="String">
+        select store_name from cw_store where store_id =#{storeId}
+    </select>
+
     <insert id="insertStore" parameterType="Store">
         insert into cw_store
         <trim prefix="(" suffix=")" suffixOverrides=",">

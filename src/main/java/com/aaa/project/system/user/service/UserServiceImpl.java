@@ -1,9 +1,5 @@
 package com.aaa.project.system.user.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.aaa.common.constant.UserConstants;
 import com.aaa.common.exception.BusinessException;
 import com.aaa.common.support.Convert;
@@ -21,6 +17,11 @@ import com.aaa.project.system.user.domain.UserRole;
 import com.aaa.project.system.user.mapper.UserMapper;
 import com.aaa.project.system.user.mapper.UserPostMapper;
 import com.aaa.project.system.user.mapper.UserRoleMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 用户 业务层处理
@@ -247,13 +248,14 @@ public class UserServiceImpl implements IUserService
     {
         // 新增用户与岗位管理
         List<UserPost> list = new ArrayList<UserPost>();
+        if(user.getPostIds()!=null){
         for (Long postId : user.getPostIds())
         {
             UserPost up = new UserPost();
             up.setUserId(user.getUserId());
             up.setPostId(postId);
             list.add(up);
-        }
+        }}
         if (list.size() > 0)
         {
             userPostMapper.batchUserPost(list);
@@ -356,4 +358,11 @@ public class UserServiceImpl implements IUserService
         }
         return idsStr.toString();
     }
+    /**
+     * 通过用户ID查询角色ID
+     * @param userId 用户ID
+     * @return 角色ID
+     */
+    @Override
+    public Long selectRoleIdByUserId(Long userId){ return userRoleMapper.selectRoleIdByUserId(userId);};
 }

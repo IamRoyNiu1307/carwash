@@ -1,21 +1,20 @@
 package com.aaa.project.system.store.service;
 
-import java.io.IOException;
-import java.util.*;
-
 import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
+import com.aaa.common.support.Convert;
 import com.aaa.common.utils.Distance;
 import com.aaa.common.utils.ReGeo;
 import com.aaa.project.system.cities.domain.Cities;
 import com.aaa.project.system.cities.mapper.CitiesMapper;
+import com.aaa.project.system.store.domain.Store;
+import com.aaa.project.system.store.mapper.StoreMapper;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aaa.project.system.store.mapper.StoreMapper;
-import com.aaa.project.system.store.domain.Store;
-import com.aaa.common.support.Convert;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.IOException;
+import java.util.*;
 
 import static com.aaa.common.utils.file.FileUploadUtils.upload;
 import static com.aaa.project.myconst.MyConst.*;
@@ -150,5 +149,13 @@ public class StoreServiceImpl implements IStoreService {
         });
         return data;
     }
+
+    /**
+     * 根据storeId查询门店名称
+     * @param storeId 门店编号
+     * @return 门店名称
+     */
+    @Override
+    public String selectStoreNameByStoreId(String storeId){return storeMapper.selectStoreNameByStoreId(storeId);};
 
 }

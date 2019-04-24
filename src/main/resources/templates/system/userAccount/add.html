@@ -6,7 +6,7 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-userAccount-add">
 			<div class="form-group">
-				<label class="col-sm-3 control-label">用户名称：</label>
+				<label class="col-sm-3 control-label">姓名：</label>
 				<div class="col-sm-8">
 					<input class="form-control" type="text" name="userName" id="userName">
 				</div>
@@ -32,8 +32,9 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">性别：</label>
 				<div class="col-sm-8">
-					<select id="sex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}">
-						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					<select id="sex" class="form-control m-b">
+						<option value="0">男</option>
+						<option value="1">女</option>
 					</select>
 				</div>
 			</div>
@@ -52,19 +53,21 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">驾照A面：</label>
 				<div class="col-sm-8">
-					<input id="drivingLicence1" name="drivingLicence1" class="form-control" type="text">
+					<input id="drivingLicence1" name="drivingLicence1" class="form-control" type="file" accept="image/*">
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">驾照B面：</label>
 				<div class="col-sm-8">
-					<input id="drivingLicence2" name="drivingLicence2" class="form-control" type="text">
+					<input id="drivingLicence2" name="drivingLicence2" class="form-control" type="file" accept="image/*">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">所属门店编号：</label>
+				<label class="col-sm-3 control-label">所属门店：</label>
 				<div class="col-sm-8">
-					<input id="storeId" name="storeId" class="form-control" type="text">
+					<select id="storeId" name="storeId" class="form-control">
+						<option th:if="${stores!=null}"th:each="store:${stores}" th:value="${store.storeId}" th:text="${store.storeName}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
@@ -83,17 +86,104 @@
 		var prefix = ctx + "system/userAccount"
 		$("#form-userAccount-add").validate({
 			rules:{
-				xxxx:{
-					required:true,
-				},
+                loginName:{
+                    required:true,
+                    minlength: 2,
+                    maxlength: 20,
+                    remote: {
+                        url: ctx + "system/userAccount/checkLoginNameUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            name : function() {
+                                return $.common.trim($("#loginName").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                },
+                userName:{
+                    required:true,
+                },
+                password:{
+                    required:true,
+                    minlength: 5,
+                    maxlength: 20
+                },
+                phonenumber:{
+                    required:true,
+                    isPhone:true,
+                    remote: {
+                        url: ctx + "system/user/checkPhoneUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            name: function () {
+                                return $.common.trim($("#phonenumber").val());
+                            }
+                        },
+                        dataFilter: function (data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                },
+                messages: {
+                    "loginName": {
+                        remote: "用户已经存在"
+                    },
+                    "phonenumber":{
+                        remote: "手机号码已经存在"
+                    }
+                }
 			}
 		});
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/add", $('#form-userAccount-add').serialize());
+//$.operate.save(prefix + "/add", $('#form-userAccount-add').serialize());
+				add();
 	        }
 	    }
+        function add() {
+		    var userName = $("#userName").val();
+            var loginName = $("input[name='loginName']").val();
+            var password = $("input[name='password']").val();
+            var phonenumber = $("input[name='phonenumber']").val();
+            var sex = $("#sex option:selected").val();
+            var status = $("input[name='status']").is(':checked') == true ? 0 : 1;
+            var roleIds = $.form.selectCheckeds("role");
+            var drivingLicence1 = $("#drivingLicence1")[0].files[0];
+            var drivingLicence2 = $("#drivingLicence2")[0].files[0];
+            var storeId=$("#storeId").val();
+            var formData= new FormData();
+            formData.append("userName",userName);
+            formData.append("loginName",loginName);
+            formData.append("password",password);
+            formData.append("phonenumber",phonenumber);
+            formData.append("sex",sex);
+            formData.append("status",status);
+            formData.append("roleIds",roleIds);
+            formData.append("drivingLicence1",drivingLicence1);
+            formData.append("drivingLicence2",drivingLicence2);
+            formData.append("storeId",storeId);
+            $.ajax({
+                cache : true,
+                type : "POST",
+                url : ctx + "system/userAccount/add",
+                data : formData,
+                async : false,
+                processData: false,
+                contentType: false,
+                error : function(request) {
+                    $.modal.alertError("系统错误");
+                },
+                success : function(data) {
+                    $.operate.successCallback(data);
+                }
+            });
+        }
 	</script>
 </body>
 </html>

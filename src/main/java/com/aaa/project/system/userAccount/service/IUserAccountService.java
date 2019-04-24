@@ -1,6 +1,11 @@
 package com.aaa.project.system.userAccount.service;
 
+import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.project.system.userAccount.domain.UserAccount;
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -40,7 +45,7 @@ public interface IUserAccountService
      * @param userAccount 用户信息
      * @return 结果
      */
-	public int insertUserAccount(UserAccount userAccount);
+	public int insertUserAccount(UserAccount userAccount, MultipartFile drivingLicence1,MultipartFile drivingLicence2)throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException;
 	
 	/**
      * 修改用户

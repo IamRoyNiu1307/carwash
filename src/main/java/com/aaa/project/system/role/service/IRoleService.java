@@ -128,4 +128,5 @@ public interface IRoleService
      * @return 角色集合
      */
     public List<Role> selectAllRole();
+
 }

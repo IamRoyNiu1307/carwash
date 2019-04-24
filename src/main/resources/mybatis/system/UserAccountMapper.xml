@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="drivingLicence1"    column="driving_licence_1"    />
         <result property="drivingLicence2"    column="driving_licence_2"    />
         <result property="storeId"    column="store_id"    />
+        <association property="storeName" column="store_id" select="com.aaa.project.system.store.mapper.StoreMapper.selectStoreNameByStoreId"></association>
     </resultMap>
 
 	<sql id="selectUserAccountVo">

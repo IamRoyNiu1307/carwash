@@ -26,6 +26,8 @@ public class UserAccount extends BaseEntity
 	private String drivingLicence2;
 	/** 所属门店编号 */
 	private String storeId;
+	/** 所属门店名称*/
+	private String storeName;
 
 	public void setId(Integer id) 
 	{
@@ -80,6 +82,14 @@ public class UserAccount extends BaseEntity
 	public String getStoreId()
 	{
 		return storeId;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 
 	public String toString() {

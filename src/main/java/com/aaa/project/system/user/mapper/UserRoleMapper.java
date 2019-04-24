@@ -1,7 +1,8 @@
 package com.aaa.project.system.user.mapper;
 
-import java.util.List;
 import com.aaa.project.system.user.domain.UserRole;
+
+import java.util.List;
 
 /**
  * 用户表 数据层
@@ -41,4 +42,11 @@ public interface UserRoleMapper
      * @return 结果
      */
     public int batchUserRole(List<UserRole> userRoleList);
+
+    /**
+     * 通过用户ID查询角色ID
+     * @param userId 用户ID
+     * @return 角色ID
+     */
+    public Long selectRoleIdByUserId(Long userId);
 }
