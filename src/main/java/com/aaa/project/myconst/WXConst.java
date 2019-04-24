@@ -6,20 +6,20 @@ package com.aaa.project.myconst;
 public class WXConst {
 
     //微信小程序appid
-    public static String APPID = "wxde6415f50b2d05c3";
+    public static String APPID = "wx8087d8149331d27c";
     //微信小程序appsecret
-    public static String APPSECRET = "";
+    public static String APPSECRET = "e8cb3f526ac67e41dffb8fb4201873da";
     //微信支付主体
-    public static String TITLE = "测试商品";
+    public static String TITLE = "test-wxpay";
     public static String ORDERNO = "3809069092363";
     //微信商户号
-    public static String MCH_ID="";
+    public static String MCH_ID="1532192611";
     //微信支付的商户密钥
-    public static final String KEY = "";
+    public static final String KEY = "D7FF70A194598ED8D95126343D6A3B21";
     //获取微信Openid的请求地址
     public static String WX_GETOPENID_URL = "";
     //支付成功后的服务器回调url
-    public static final String NOTIFY_URL="https://api.weixin.qq.com/sns/jscode2session";
+    public static final String NOTIFY_URL="https://97af941c.ngrok.io/api/wxpay/notice";
     //签名方式
     public static final String SIGNTYPE = "MD5";
     //交易类型

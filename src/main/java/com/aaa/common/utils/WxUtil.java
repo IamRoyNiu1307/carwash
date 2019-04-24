@@ -12,7 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.MessageDigest;
 import java.util.*;
+
+import static com.aaa.common.utils.PayUtil.String2Inputstream;
+import static com.aaa.common.utils.PayUtil.getChildrenText;
 
 public class WxUtil {
 
@@ -59,6 +63,45 @@ public class WxUtil {
         }
         return request.getRemoteAddr();
 
+    }
+
+    /**
+     * 解析xml,返回第一级元素键值对。如果第一级元素有子节点，则此节点的值是子节点的xml数据。
+     *
+     * @param strxml
+     * @return
+     * @throws IOException
+     */
+    public static Map doXMLParse(String strxml) throws Exception {
+        if (null == strxml || "".equals(strxml)) {
+            return null;
+        }
+
+        Map m = new HashMap();
+        InputStream in = String2Inputstream(strxml);
+        SAXBuilder builder = new SAXBuilder();
+        Document doc = builder.build(in);
+        Element root = doc.getRootElement();
+        List list = root.getChildren();
+        Iterator it = list.iterator();
+        while (it.hasNext()) {
+            Element e = (Element) it.next();
+            String k = e.getName();
+            String v = "";
+            List children = e.getChildren();
+            if (children.isEmpty()) {
+                v = e.getTextNormalize();
+            } else {
+                v = getChildrenText(children);
+            }
+
+            m.put(k, v);
+        }
+
+        //关闭流
+        in.close();
+
+        return m;
     }
 
 

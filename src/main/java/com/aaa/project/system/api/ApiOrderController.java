@@ -44,6 +44,7 @@ public class ApiOrderController {
 
 
     /**
+     *
      * @param consumerAccount 顾客账号
      * @param serviceIdList   选择的业务id
      * @param startTime       预约起始日期
@@ -63,6 +64,7 @@ public class ApiOrderController {
                                   @RequestParam(name = "orderComment", required = false) String orderComment,
                                   @RequestParam(name = "storeId", required = false) String storeId,
                                   @RequestParam(name = "carId", required = true) int carId) {
+        AjaxResult ajaxResult = new AjaxResult();
         Order order = new Order();
         //获取车辆信息
         CarInfo carInfo = carInfoService.selectCarInfoById(carId);
@@ -73,12 +75,12 @@ public class ApiOrderController {
         //车辆编号
         order.setCarId(carInfo.getId());
         //车辆地址
-        String address = (String) ReGeo.reGeo(carInfo.getCarAddrLng(), carInfo.getCarAddrLat()).get("formattedAddress");
+        String address =(String) ReGeo.reGeo(carInfo.getCarAddrLng(), carInfo.getCarAddrLat()).get("formattedAddress");
         order.setCarAddress(address);
         //消费者账号
         order.setConsumerAccount(consumerAccount);
         //订单状态编号
-        order.setStatusId(storeId == null ? STATUS_ORDER_CREATED : STATUS_ORDER_UNPAY);
+        order.setStatusId(storeId==null? STATUS_ORDER_CREATED : STATUS_ORDER_UNPAY );
         //车辆编号
         order.setCarId(carId);
         //门店编号
@@ -86,11 +88,11 @@ public class ApiOrderController {
         //下单时间
         order.setCreateDate(new Date());
         //模式编号(下单类型：快速下单、指定门店下单)
-        order.setTypeId(storeId == null ? MODEL_QUICKCREATE : MODEL_SELECTSTORE);
+        order.setTypeId(storeId==null? MODEL_QUICKCREATE : MODEL_SELECTSTORE );
         //预约时间
-        order.setAppointmentTime(DateUtil.parse(startTime + " " + TIME_MAP.get(startHour) + ":00", "yyyy-MM-dd HH:mm"));
+        order.setAppointmentTime(DateUtil.parse(startTime+" "+TIME_MAP.get(startHour)+":00","yyyy-MM-dd HH:mm"));
         //时间段
-        order.setTimeQuantum(TIME_MAP.get(endHour) - TIME_MAP.get(startHour));
+        order.setTimeQuantum(TIME_MAP.get(endHour)-TIME_MAP.get(startHour));
         //预算范围
         order.setExpectCostId(expectCostId);
         //订单备注
@@ -101,7 +103,8 @@ public class ApiOrderController {
         orderServiceService.insertOrder(orderId, list);
         //将订单信息插入订单表中
         orderService.insertOrder(order);
-        return AjaxResult.success("下单成功");
+        ajaxResult.put("code",0);
+        return ajaxResult;
     }
 
     /**
@@ -132,31 +135,31 @@ public class ApiOrderController {
     }
 
     /**
-     * 根据订单ID修改订单状态取消订单
-     *
+     *  根据订单ID修改订单状态取消订单
      * @param orderId 订单ID
      * @return ajaxresult 成功信息
      */
     @RequestMapping("/cancelOrder")
-    public AjaxResult cancelOrder(@RequestParam(name = "orderId", required = true) String orderId) {
-        Date finishDate = new Date();
-        orderService.cancelOrderByOrderId(orderId, finishDate);
-        return AjaxResult.success();
+    public AjaxResult cancelOrder(@RequestParam(name="orderId",required = true)String orderId){
+        Date finishDate=new Date();
+        float finalAmount = orderService.cancelOrderByOrderId(orderId, finishDate);
+        AjaxResult ajaxResult = new AjaxResult();
+        ajaxResult.put("payAmount",finalAmount);
+        return ajaxResult;
     }
 
     /**
      * 根据账户和订单状态ID查询所有订单或者根据账户查询所有订单
-     *
      * @param consumerAccount 用户账户
-     * @param statusId        订单状态ID
+     * @param statusId  订单状态ID
      * @return 订单列表
      */
     @RequestMapping("/getOrderList")
-    public AjaxResult getOrderList(@RequestParam(name = "account", required = true) String consumerAccount,
-                                   @RequestParam(name = "statusId", required = false) Integer statusId) {
+    public AjaxResult getOrderList(@RequestParam(name = "account",required = true)String consumerAccount,
+                                   @RequestParam(name = "statusId",required = false)Integer statusId){
         AjaxResult ajaxResult = new AjaxResult();
         List<Order> orders = orderService.selectOrderListByConsumerAccountAndStatusId(consumerAccount, statusId);
-        ajaxResult.put("orderList", orders);
+        ajaxResult.put("orderList",orders);
         return ajaxResult;
     }
 

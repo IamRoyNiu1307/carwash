@@ -9,7 +9,7 @@ aaa:
   # 文件上传绝对路径
   profile: /Users/roy/project/carwash/src/main/resources/static/fileupload/
   #profile: /Users/roy/project/carwash/src/main/resources/static/fileupload/
-  #profile: D:
+  #profile: D:/profile/
   # 获取ip地址开关
   addressEnabled: true
 

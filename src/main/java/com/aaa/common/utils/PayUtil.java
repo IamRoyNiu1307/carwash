@@ -4,9 +4,7 @@ package com.aaa.common.utils;
 import com.aaa.project.myconst.WXConst;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +22,7 @@ import java.util.*;
 public class PayUtil {
     private static Logger logger = LoggerFactory.getLogger(PayUtil.class);
 
-    public static JSONObject wxPay(String openid, HttpServletRequest request) {
+    public static JSONObject wxPay(String orderId,String openid, HttpServletRequest request) {
         JSONObject json = new JSONObject();
         try {
             //生成的随机字符串
@@ -36,12 +34,12 @@ public class PayUtil {
             String orderNo = WXConst.ORDERNO;
             String money = "1";//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
 
-            Map<String, String> packageParams = new HashMap<String, String>();
+            Map<String, String> packageParams = new HashMap<>();
             packageParams.put("appid", WXConst.APPID);                  //微信分配的小程序ID
             packageParams.put("mch_id", WXConst.MCH_ID);                //微信支付分配的商户号
             packageParams.put("nonce_str", nonce_str);                  //随机字符串，长度要求在32位以内。
-            packageParams.put("body", body);                            //商品简单描述，该字段请按照规范传递
-            packageParams.put("out_trade_no", orderNo);                 //商户订单号
+            packageParams.put("body", WXConst.TITLE);                   //商品简单描述，该字段请按照规范传递
+            packageParams.put("out_trade_no", orderId);                 //商户订单号
             packageParams.put("total_fee", money);                      //支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
             packageParams.put("spbill_create_ip", spbill_create_ip);    //终端IP，支持IPV4和IPV6两种格式的IP地址。调用微信支付API的机器IP
             packageParams.put("notify_url", WXConst.NOTIFY_URL);        //通知地址，异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
@@ -56,6 +54,7 @@ public class PayUtil {
 
             //MD5运算生成签名，这里是第一次签名，用于调用统一下单接口
             String mysign = PayUtil.sign(prestr, WXConst.KEY, "utf-8").toUpperCase();
+
             logger.info("=======================第一次签名：" + mysign + "=====================");
 
 
@@ -66,7 +65,7 @@ public class PayUtil {
                     + "<nonce_str>" + nonce_str + "</nonce_str>"
                     + "<notify_url>" + WXConst.NOTIFY_URL + "</notify_url>"
                     + "<openid>" + openid + "</openid>"
-                    + "<out_trade_no>" + orderNo + "</out_trade_no>"
+                    + "<out_trade_no>" + orderId + "</out_trade_no>"
                     + "<spbill_create_ip>" + spbill_create_ip + "</spbill_create_ip>"
                     + "<total_fee>" + money + "</total_fee>"
                     + "<trade_type>" + WXConst.TRADETYPE + "</trade_type>"
@@ -85,7 +84,7 @@ public class PayUtil {
 
 
             // 将解析结果存储在HashMap中
-            Map map = PayUtil.doXMLParse(result);
+            Map map = WxUtil.doXMLParse(result);
 
 
             String return_code = (String) map.get("return_code");//返回状态码
@@ -103,6 +102,7 @@ public class PayUtil {
 
 
                 String stringSignTemp = "appId=" + WXConst.APPID + "&nonceStr=" + nonce_str + "&package=prepay_id=" + prepay_id + "&signType=" + WXConst.SIGNTYPE + "&timeStamp=" + timeStamp;
+                System.out.println(stringSignTemp);
                 //再次签名，这个签名用于小程序端调用wx.requesetPayment方法
                 String paySign = PayUtil.sign(stringSignTemp, WXConst.KEY, "utf-8").toUpperCase();
                 logger.info("=======================第二次签名：" + paySign + "=====================");
@@ -293,44 +293,7 @@ public class PayUtil {
         return result;
     }
 
-    /**
-     * 解析xml,返回第一级元素键值对。如果第一级元素有子节点，则此节点的值是子节点的xml数据。
-     *
-     * @param strxml
-     * @return
-     * @throws IOException
-     */
-    public static Map doXMLParse(String strxml) throws Exception {
-        if (null == strxml || "".equals(strxml)) {
-            return null;
-        }
 
-        Map m = new HashMap();
-        InputStream in = String2Inputstream(strxml);
-        SAXBuilder builder = new SAXBuilder();
-        Document doc = builder.build(in);
-        Element root = doc.getRootElement();
-        List list = root.getChildren();
-        Iterator it = list.iterator();
-        while (it.hasNext()) {
-            Element e = (Element) it.next();
-            String k = e.getName();
-            String v = "";
-            List children = e.getChildren();
-            if (children.isEmpty()) {
-                v = e.getTextNormalize();
-            } else {
-                v = getChildrenText(children);
-            }
-
-            m.put(k, v);
-        }
-
-//关闭流
-        in.close();
-
-        return m;
-    }
 
     /**
      * 获取子结点的xml
@@ -364,7 +327,7 @@ public class PayUtil {
     }
 
 
-    public static void wxNotify(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public static Map wxNotify(HttpServletRequest request, HttpServletResponse response) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) request.getInputStream()));
         String line = null;
         StringBuilder sb = new StringBuilder();
@@ -378,7 +341,7 @@ public class PayUtil {
         System.out.println("接收到的报文：" + notityXml);
 
 
-        Map map = PayUtil.doXMLParse(notityXml);
+        Map map = WxUtil.doXMLParse(notityXml);
 
 
         String returnCode = (String) map.get("return_code");
@@ -408,6 +371,8 @@ public class PayUtil {
         out.write(resXml.getBytes());
         out.flush();
         out.close();
+
+        return map;
     }
 
 
