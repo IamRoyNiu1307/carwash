@@ -2,8 +2,16 @@ package com.aaa.project.system.storeService.controller;
 
 import java.util.List;
 
+import com.aaa.common.utils.security.ShiroUtils;
+import com.aaa.project.system.defaultService.domain.DefaultService;
+import com.aaa.project.system.defaultService.service.IDefaultServiceService;
 import com.aaa.project.system.status.domain.Status;
 import com.aaa.project.system.status.service.IStatusService;
+import com.aaa.project.system.store.domain.Store;
+import com.aaa.project.system.store.service.IStoreService;
+import com.aaa.project.system.userAccount.domain.UserAccount;
+import com.aaa.project.system.userAccount.service.IUserAccountService;
+import com.alibaba.fastjson.JSON;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,57 +43,71 @@ import javax.servlet.http.HttpServletRequest;
 public class StoreServiceController extends BaseController
 {
     private String prefix = "system/storeService";
-	
-	@Autowired
-	private IStoreServiceService storeServiceService;
-	@Autowired
-	private IStatusService statusService;
 
-	@RequiresPermissions("system:storeService:view")
-	@GetMapping()
-	public String storeService(ModelMap mmap)
-	{
+    @Autowired
+    private IStoreServiceService storeServiceService;
+    @Autowired
+    private IStatusService statusService;
+    @Autowired
+    private IUserAccountService userAccountService;
+    @Autowired
+    private IStoreService storeService;
+    @Autowired
+    private IDefaultServiceService defaultServiceService;
 
-	    return prefix + "/storeService";
-	}
-	
-	/**
-	 * 查询业务列表
-	 */
-	@RequiresPermissions("system:storeService:list")
-	@PostMapping("/list")
-	@ResponseBody
-	public TableDataInfo list(StoreService storeService)
-	{
-		startPage();
+    @RequiresPermissions("system:storeService:view")
+    @GetMapping()
+    public String storeService() {
+        return prefix + "/storeService";
+    }
+
+    /**
+     * 查询业务列表
+     */
+    @RequiresPermissions("system:storeService:list")
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list(StoreService storeService) {
+        Long userId = ShiroUtils.getUserId();
+        System.out.println(userId);
+        startPage();
         List<StoreService> list = storeServiceService.selectStoreServiceList(storeService);
-		return getDataTable(list);
-	}
-	
-	
-	/**
-	 * 导出业务列表
-	 */
-	@RequiresPermissions("system:storeService:export")
+        return getDataTable(list);
+    }
+
+
+    /**
+     * 导出业务列表
+     */
+    @RequiresPermissions("system:storeService:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(StoreService storeService)
-    {
-    	List<StoreService> list = storeServiceService.selectStoreServiceList(storeService);
+    public AjaxResult export(StoreService storeService) {
+        List<StoreService> list = storeServiceService.selectStoreServiceList(storeService);
         ExcelUtil<StoreService> util = new ExcelUtil<StoreService>(StoreService.class);
         return util.exportExcel(list, "storeService");
     }
-	
-	/**
-	 * 新增业务
-	 */
-	@GetMapping("/add")
-	public String add(HttpServletRequest req)
-	{
-	    List<Status> statusList = statusService.selectServicesStatusList();
-	    req.setAttribute("statusList",statusList);
-		return prefix + "/add";
-	}
+
+    /**
+     * 新增业务
+     */
+    @GetMapping("/add")
+    public String add(HttpServletRequest req) {
+        Long userId = ShiroUtils.getSysUser().getUserId();
+//        UserAccount user = userAccountService.selectUserAccountByUserId(userId);
+//        Store store = storeService.selectByStoreId(user.getStoreId());
+//        List<Store> list = storeService.selectStoreByStatusId();
+//        if (!list.contains(store)) {
+//            return "redirect:list";
+//        } else {
+            List<Status> statusList = statusService.selectServicesStatusList();
+            List<DefaultService> serviceList = defaultServiceService.selectDefaultService();
+            req.setAttribute("statusList", statusList);
+            req.setAttribute("serviceList", serviceList);
+            req.setAttribute("services", JSON.toJSONString(serviceList));
+            return prefix + "/add";
+        //}
+    }
 
 	/**
 	 * 新增保存业务

@@ -70,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectOrderListByConsumerAccountAndStatusId" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
         where consumer_account = #{consumerAccount}<if test="statusId != null"> and status_id = #{statusId}</if>
+        order by create_date desc;
     </select>
 
     <select id="selectOrderByOrderId" parameterType="String" resultMap="OrderResult">

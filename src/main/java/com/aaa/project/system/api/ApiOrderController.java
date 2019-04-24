@@ -160,4 +160,17 @@ public class ApiOrderController {
         return ajaxResult;
     }
 
+    /**
+     * 查询order
+     * @param orderId order编号
+     * @return order
+     */
+    @RequestMapping("/getOrder")
+    public AjaxResult getOrder(@RequestParam(name = "orderId")String orderId){
+        AjaxResult ajaxResult = new AjaxResult();
+        Order order = orderService.selectOrderByOrderId(orderId);
+        ajaxResult.put("code",0);
+        ajaxResult.put("order",order);
+        return ajaxResult;
+    }
 }

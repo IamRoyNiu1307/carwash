@@ -65,9 +65,13 @@ public class MyConst {
     }
 
     //车辆照片上传路径
-    public static final String UPLOAD_CAR_IMAGE = "/Users/roy/project/carwash/src/main/resources/static/fileupload/car/";
+    public static final String UPLOAD_CAR_IMAGE = "E:/IdeaProject/carwash/src/main/resources/static/fileupload/car/";
     //车辆照片请求路径
     public static final String CAR_IMAGE_DIR = "/car/";
+    //新增门店图标上传路径
+    public  static  final  String UPLOAD_STORE_ICON="E:/IdeaProject/carwash/src/main/resources/static/fileupload/store/logo";
+    //store图标请求路径
+    public static final String STORE_ICON_IMAGE_DIR = "/store/logo/";
 
 
 

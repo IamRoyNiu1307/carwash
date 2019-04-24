@@ -6,32 +6,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="UserAccount" id="UserAccountResult">
         <result property="id"    column="id"    />
-        <result property="userAccount"    column="user_account"    />
-        <result property="userPassword"    column="user_password"    />
-        <result property="roleId"    column="role_id"    />
+        <result property="userId"    column="user_id"    />
         <result property="openid"    column="openid"    />
-        <result property="realName"    column="real_name"    />
-        <result property="phone"    column="phone"    />
         <result property="drivingLicence1"    column="driving_licence_1"    />
         <result property="drivingLicence2"    column="driving_licence_2"    />
+        <result property="storeId"    column="store_id"    />
     </resultMap>
-	
+
 	<sql id="selectUserAccountVo">
-        select id, user_account, user_password, role_id, openid, real_name, phone, driving_licence_1, driving_licence_2 from cw_user_account
+        select id, user_id, openid, driving_licence_1, driving_licence_2, store_id from cw_user_account
     </sql>
 	
     <select id="selectUserAccountList" parameterType="UserAccount" resultMap="UserAccountResult">
         <include refid="selectUserAccountVo"/>
         <where>  
             <if test="id != null "> and id = #{id}</if>
-             <if test="userAccount != null  and userAccount != '' "> and user_account = #{userAccount}</if>
-             <if test="userPassword != null  and userPassword != '' "> and user_password = #{userPassword}</if>
-             <if test="roleId != null "> and role_id = #{roleId}</if>
+             <if test="userId != null "> and user_id = #{userId}</if>
              <if test="openid != null  and openid != '' "> and openid = #{openid}</if>
-             <if test="realName != null  and realName != '' "> and real_name = #{realName}</if>
-             <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
              <if test="drivingLicence1 != null  and drivingLicence1 != '' "> and driving_licence_1 = #{drivingLicence1}</if>
              <if test="drivingLicence2 != null  and drivingLicence2 != '' "> and driving_licence_2 = #{drivingLicence2}</if>
+             <if test="storeId != null  and storeId != '' "> and store_id = #{storeId}</if>
          </where>
     </select>
     
@@ -39,44 +33,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectUserAccountVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectUserAccountByUserId" parameterType="Integer" resultMap="UserAccountResult">
+        <include refid="selectUserAccountVo"/>
+        where user_id = #{userId}
+    </select>
         
     <insert id="insertUserAccount" parameterType="UserAccount">
         insert into cw_user_account
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">id,</if>
-			<if test="userAccount != null  and userAccount != ''  ">user_account,</if>
-			<if test="userPassword != null  and userPassword != ''  ">user_password,</if>
-			<if test="roleId != null  ">role_id,</if>
+			<if test="userId != null  ">user_id,</if>
 			<if test="openid != null  and openid != ''  ">openid,</if>
-			<if test="realName != null  and realName != ''  ">real_name,</if>
-			<if test="phone != null  and phone != ''  ">phone,</if>
 			<if test="drivingLicence1 != null  and drivingLicence1 != ''  ">driving_licence_1,</if>
 			<if test="drivingLicence2 != null  and drivingLicence2 != ''  ">driving_licence_2,</if>
+			<if test="storeId != null  and storeId != ''  ">store_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
-			<if test="userAccount != null  and userAccount != ''  ">#{userAccount},</if>
-			<if test="userPassword != null  and userPassword != ''  ">#{userPassword},</if>
-			<if test="roleId != null  ">#{roleId},</if>
+			<if test="userId != null  ">#{userId},</if>
 			<if test="openid != null  and openid != ''  ">#{openid},</if>
-			<if test="realName != null  and realName != ''  ">#{realName},</if>
-			<if test="phone != null  and phone != ''  ">#{phone},</if>
 			<if test="drivingLicence1 != null  and drivingLicence1 != ''  ">#{drivingLicence1},</if>
 			<if test="drivingLicence2 != null  and drivingLicence2 != ''  ">#{drivingLicence2},</if>
+			<if test="storeId != null  and storeId != ''  ">#{storeId},</if>
          </trim>
     </insert>
 	 
     <update id="updateUserAccount" parameterType="UserAccount">
         update cw_user_account
         <trim prefix="SET" suffixOverrides=",">
-            <if test="userAccount != null  and userAccount != ''  ">user_account = #{userAccount},</if>
-            <if test="userPassword != null  and userPassword != ''  ">user_password = #{userPassword},</if>
-            <if test="roleId != null  ">role_id = #{roleId},</if>
+            <if test="userId != null  ">user_id = #{userId},</if>
             <if test="openid != null  and openid != ''  ">openid = #{openid},</if>
-            <if test="realName != null  and realName != ''  ">real_name = #{realName},</if>
-            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
             <if test="drivingLicence1 != null  and drivingLicence1 != ''  ">driving_licence_1 = #{drivingLicence1},</if>
             <if test="drivingLicence2 != null  and drivingLicence2 != ''  ">driving_licence_2 = #{drivingLicence2},</if>
+            <if test="storeId != null  and storeId != ''  ">store_id = #{storeId},</if>
         </trim>
         where id = #{id}
     </update>

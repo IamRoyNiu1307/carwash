@@ -1,0 +1,109 @@
+<view class='addr'>
+  <view class="addr_info">
+
+    <view class="addr_info_pre">
+      <image src="/image/img_lable_information.png" mode="widthFix" /> 预约信息
+    </view>
+
+    <navigator url="/pages/user/car?model=1" wx:if="{{carInfo}}">
+      <view>
+        <view class="addr_info_name">
+          车牌号: {{carInfo.carLicence}}
+        </view>
+        <view class="addr_info_name">
+          参数: {{carInfo.brand}} {{carInfo.typeName}} {{carInfo.color}}
+        </view>
+        <view class="addr_info_addr">
+          车位地址：{{carInfo.carAddr}}
+        </view>
+      </view>
+    </navigator>
+
+    <view class="addr_none" wx:else>
+      <image src="/image/img_no_adress.png" mode="widthFix" />
+      <view class="addr_none_txt">
+        暂无车辆信息
+
+        <navigator url="/pages/user/car?model=1">
+          <text>立即添加</text>
+        </navigator>
+      </view>
+    </view>
+
+  </view>
+</view>
+<view class="addr">
+
+  <view class="addr_info">
+
+    <view class="addr_info_pre">
+      <image src="/image/img_lable_information.png" mode="widthFix" /> 项目选择
+    </view>
+
+        <checkbox-group bindchange="checkboxChange">
+	        <view class='checkItem' wx:for="{{items}}">
+	  	      <checkbox class="ws-checkbox" id="{{item.id}}" checked="{{item.itemChecked}}" bindtap='selectItem'/>
+            <view class='item'>
+            <view class='itemCost' wx:if="{{item.cost}}">{{item.cost}}￥</view>
+              <view class='itemValue'>{{item.serviceName}}</view>
+              
+              <view class='itemDetail'>{{item.description}}</view>
+            </view>
+	        </view>
+        </checkbox-group>
+  
+
+    <!-- <view class="addr_none" wx:else>
+      <image src="/image/img_no_adress.png" mode="widthFix" />
+      <view class="addr_none_txt">
+        <navigator url="/pages/service/service">
+          <text>选择项目</text>
+        </navigator>
+      </view>
+    </view> -->
+
+  </view>
+
+  <view class="dateTime-box">
+    <view class="label">送洗时间</view>
+    <view class="value">
+      <!-- <picker mode="date" value="{{dateTime}}" start="{{startTime}}" bindchange="dateTimeChange">
+        <view class="weui-input">{{dateTime}}</view>
+      </picker> -->
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+        <view>{{orderData}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="dateTime-box">
+    <view class="label">预算范围</view>
+    <view class="value">
+      <!-- <picker mode="date" value="{{dateTime}}" start="{{startTime}}" bindchange="dateTimeChange">
+        <view class="weui-input">{{dateTime}}</view>
+      </picker> -->
+      <picker bindchange="bindPickerChange" bindchange="bindSinglePickerChange" value="{{arrayIndex}}" range="{{array}}">
+    <view class="picker">
+      {{array[arrayIndex]}}
+    </view>
+  </picker>
+    </view>
+  </view>
+
+  
+
+
+</view>
+<view class="addr">
+  <view class="addr_info">
+    <view class="addr_info_pre">
+      <image src="/image/img_lable_information.png" mode="widthFix" /> 订单备注
+    </view>
+      <textarea style='font-size:34rpx;' bindinput='commentInput'></textarea>
+
+  </view>
+</view>
+
+
+
+<view class="button" bindtap='submitOrder'>下单</view>
