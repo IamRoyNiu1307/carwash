@@ -66,7 +66,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectOrderVo"/>
         where id = #{id}
     </select>
-
+    <select id="selectOrderToUser" resultMap="OrderResult">
+        <include refid="selectOrderVo"/> where status_id=#{statusId} and user_account=#{userAccount}
+    </select>
     <select id="selectOrderListByConsumerAccountAndStatusId" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
         where consumer_account = #{consumerAccount}<if test="statusId != null"> and status_id = #{statusId}</if>

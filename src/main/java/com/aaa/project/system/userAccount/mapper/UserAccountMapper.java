@@ -27,6 +27,14 @@ public interface UserAccountMapper
 	public UserAccount selectUserAccountByUserId(Integer userId);
 
 	/**
+	 * 查询洗车员所属店铺
+	 *
+	 * @param openId 唯一openid
+	 * @return 店铺id
+	 */
+	public String selectStoreIdByOpenId(String openId);
+
+	/**
      * 查询用户列表
      * 
      * @param userAccount 用户信息

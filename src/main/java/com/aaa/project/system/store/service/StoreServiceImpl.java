@@ -158,4 +158,20 @@ public class StoreServiceImpl implements IStoreService {
     @Override
     public String selectStoreNameByStoreId(String storeId){return storeMapper.selectStoreNameByStoreId(storeId);};
 
+    /**
+     *  更新门店信息
+     * @param ids
+     * @return
+     */
+    @Override
+    public int updateStoreById(String ids) {
+        //组合一个store
+        Store store = new Store();
+        store.setId(Convert.toInt(ids));
+        store.setStatusId(100);
+        System.out.println(store);
+        storeMapper.updateStore(store);
+        return 0;
+    }
+
 }

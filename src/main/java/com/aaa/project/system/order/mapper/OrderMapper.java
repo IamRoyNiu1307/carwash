@@ -32,6 +32,15 @@ public interface OrderMapper
 	public List<Order> selectOrderList(Order order);
 
 	/**
+	 * 查询订单信息
+	 *
+	 * @param statusId 订单状态
+	 * @param userAccount	洗车员手机号
+	 * @return 订单信息
+	 */
+	public Order selectOrderToUser(@Param("statusId")int statusId,@Param("userAccount")String userAccount);
+
+	/**
 	 * 查询订单服务关系列表
 	 *
 	 * @param orderId 订单id
