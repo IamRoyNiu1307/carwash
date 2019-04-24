@@ -99,7 +99,7 @@ public class ApiOrderController {
         String[] serviceList = serviceIdList.substring(1, serviceIdList.length() - 1).split(",");
         List<String> list = Arrays.asList(serviceList);
         orderServiceService.insertOrder(orderId, list);
-
+        //将订单信息插入订单表中
         orderService.insertOrder(order);
         return AjaxResult.success("下单成功");
     }
@@ -112,13 +112,17 @@ public class ApiOrderController {
      */
     @RequestMapping("/calc")
     public AjaxResult calc(@RequestParam(name = "orderId", required = true) String orderId) {
+        //通过订单号查找订单中的服务
         List<OrderService> orderServices = orderServiceService.selectOrderService(orderId);
+        //通过订单号在订单表中查找店铺id
         Order order = orderService.selectOrderByOrderId(orderId);
         String storeId = order.getStoreId();
+        //循环遍历所选服务，计算订单金额
         float amount = 0;
         for (int i = 0; i < orderServices.size(); i++) {
             amount += storeServiceService.selectCost(storeId, orderServices.get(i).getServiceId());
         }
+        //插入订单金额表
         OrderAmount orderAmount = new OrderAmount();
         orderAmount.setOrderId(orderId);
         orderAmount.setTotalAmount(amount);
