@@ -11,11 +11,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="drivingLicence1"    column="driving_licence_1"    />
         <result property="drivingLicence2"    column="driving_licence_2"    />
         <result property="storeId"    column="store_id"    />
+        <result property="statusId" column="status_id" />
         <association property="storeName" column="store_id" select="com.aaa.project.system.store.mapper.StoreMapper.selectStoreNameByStoreId"></association>
+        <association property="status" column="status_id" select="com.aaa.project.system.status.mapper.StatusMapper.selectStatusById" />
     </resultMap>
 
 	<sql id="selectUserAccountVo">
-        select id, user_id, openid, driving_licence_1, driving_licence_2, store_id from cw_user_account
+        select id, user_id, openid, driving_licence_1, driving_licence_2, store_id, status_id from cw_user_account
     </sql>
 	
     <select id="selectUserAccountList" parameterType="UserAccount" resultMap="UserAccountResult">
@@ -27,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="drivingLicence1 != null  and drivingLicence1 != '' "> and driving_licence_1 = #{drivingLicence1}</if>
              <if test="drivingLicence2 != null  and drivingLicence2 != '' "> and driving_licence_2 = #{drivingLicence2}</if>
              <if test="storeId != null  and storeId != '' "> and store_id = #{storeId}</if>
+             <if test="statusId != null  and statusId != '' "> and status_id = #{statusId}</if>
          </where>
     </select>
     <select id="selectStoreIdByOpenId" parameterType="string" resultType="string">
@@ -51,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="drivingLicence1 != null  and drivingLicence1 != ''  ">driving_licence_1,</if>
 			<if test="drivingLicence2 != null  and drivingLicence2 != ''  ">driving_licence_2,</if>
 			<if test="storeId != null  and storeId != ''  ">store_id,</if>
+			<if test="statusId != null  and statusId != ''  ">status_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
@@ -59,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="drivingLicence1 != null  and drivingLicence1 != ''  ">#{drivingLicence1},</if>
 			<if test="drivingLicence2 != null  and drivingLicence2 != ''  ">#{drivingLicence2},</if>
 			<if test="storeId != null  and storeId != ''  ">#{storeId},</if>
+			<if test="statusId != null  and statusId != ''  ">#{statusId},</if>
          </trim>
     </insert>
 	 
@@ -70,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="drivingLicence1 != null  and drivingLicence1 != ''  ">driving_licence_1 = #{drivingLicence1},</if>
             <if test="drivingLicence2 != null  and drivingLicence2 != ''  ">driving_licence_2 = #{drivingLicence2},</if>
             <if test="storeId != null  and storeId != ''  ">store_id = #{storeId},</if>
+            <if test="statusId != null  and statusId != ''  ">status_id = #{statusId},</if>
         </trim>
         where id = #{id}
     </update>

@@ -1,5 +1,6 @@
 package com.aaa.project.system.userAccount.domain;
 
+import com.aaa.project.system.status.domain.Status;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -26,10 +27,31 @@ public class UserAccount extends BaseEntity
 	private String drivingLicence2;
 	/** 所属门店编号 */
 	private String storeId;
+	/**状态id*/
+	private Integer statusId;
 	/** 所属门店名称*/
 	private String storeName;
 
-	public void setId(Integer id) 
+	/**账号状态*/
+	private Status status;
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Integer getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Integer statusId) {
+		this.statusId = statusId;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -92,14 +114,18 @@ public class UserAccount extends BaseEntity
 		this.storeName = storeName;
 	}
 
+	@Override
 	public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userId", getUserId())
-            .append("openid", getOpenid())
-            .append("drivingLicence1", getDrivingLicence1())
-            .append("drivingLicence2", getDrivingLicence2())
-            .append("storeId", getStoreId())
-            .toString();
-    }
+		return "UserAccount{" +
+				"id=" + id +
+				", userId=" + userId +
+				", openid='" + openid + '\'' +
+				", drivingLicence1='" + drivingLicence1 + '\'' +
+				", drivingLicence2='" + drivingLicence2 + '\'' +
+				", storeId='" + storeId + '\'' +
+				", statusId=" + statusId +
+				", storeName='" + storeName + '\'' +
+				", status=" + status +
+				'}';
+	}
 }
