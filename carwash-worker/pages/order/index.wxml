@@ -46,8 +46,7 @@
         <view class="weui-cell__bd"></view>
         <view class="weui-cell__ft">
         <view class=''>
-          <view class="list-button" wx:if="{{item.statusId === 200 || item.statusId === 201 || item.statusId === 202}}" bindtap="cancelOrder" id="{{item.sn}}">取消订单</view>
-          <view class="list-button" wx:if="{{item.statusId === 200 || item.statusId === 201 || item.statusId === 202}}" bindtap="payOrder" id="{{item.orderId}}">确认付款</view>
+          <view class="list-button" wx:if="{{item.statusId === 208}}" bindtap="updateOrder" id="{{item.orderId}}">更新进度</view>
           
         </view>
           

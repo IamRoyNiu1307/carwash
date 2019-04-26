@@ -8,9 +8,6 @@ Page({
   data: {
     storeList:[],
     containerList: [],
-    bannerList: [
-      { imgs: '/image/huodong.jpg' }, { imgs: '/image/huodong.jpg' }, { imgs: '/image/huodong.jpg' }
-    ],
     markers: [],
     listype: 0,
     longitude: 0,

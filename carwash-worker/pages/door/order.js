@@ -1,23 +1,30 @@
 // pages/door/order.js
 const app = getApp();
+const config = require('../../config.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    dataList: [
-      {
-        status:'1',
-      },{}
-    ],
+    orderInfoList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
+  },
+  getOrderList() {
+    app.http('/api/user/getOrderList', {
+      account: app.globalData.account,
+      //0：所有订单  1：已完成  2：未完成
+      statusId: 208
+    })
+      .then(res => {
+        this.setData({ orderInfoList: res.orderInfoList });
+      })
   },
 
   /**
@@ -31,7 +38,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getDataList();
+    this.getOrderList()
   },
 
   /**
@@ -69,61 +76,12 @@ Page({
 
   },
 
-  getDataList() {
-    app.http('/Iorder/getMorderlist', { openid: app.globalData.userInfo.openid, status: 'all' })
-      .then(res => {
-        this.setData({ dataList: res });
-      });
-  },
-
-  agreeOrder(e) {
-    wx.showModal({
-      title: '提示',
-      content: `是否确认接单？`,
-      success: res => {
-        if (res.confirm) {
-          app.http('/Iorder/agreeorderstatus', {
-            openid: app.globalData.userInfo.openid,
-            sn: e.target.id
-          }).then(() => {
-            this.getDataList();
-          });
-        }
-      }
+  updateOrder(e){
+    var orderId = e.currentTarget.id
+    wx.navigateTo({
+      url: '/pages/door/index?orderId=' + orderId,
     })
-  },
+  }
 
-  cancelOrder(e) {
-    wx.showModal({
-      title: '提示',
-      content: `是否确认拒绝订单？`,
-      success: res => {
-        if (res.confirm) {
-          app.http('/Iorder/noagreeorderstatus', {
-            openid: app.globalData.userInfo.openid,
-            sn: e.target.id
-          }).then(() => {
-            this.getDataList();
-          });
-        }
-      }
-    })
-  },
-
-  completeOrder(e) {
-    wx.showModal({
-      title: '提示',
-      content: `是否确认订单完成？`,
-      success: res => {
-        if (res.confirm) {
-          app.http('/Iorder/commitorder', {
-            openid: app.globalData.userInfo.openid,
-            sn: e.target.id
-          }).then(() => {
-            this.getDataList();
-          });
-        }
-      }
-    })
-  },
+ 
 })

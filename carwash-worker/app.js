@@ -34,6 +34,7 @@ App({
         }
       }
     })
+    this.sendLocation()
   },
   bind(){
     var _this = this
@@ -43,6 +44,12 @@ App({
         return res.account
       }
     })
+  },
+  sendLocation(){
+    setInterval(function () {
+      //循环执行代码
+      console.log("aaaaaaa")
+    }, 30000) //循环时间 这里是1秒 
   },
   http,
   qs

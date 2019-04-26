@@ -1,24 +1,29 @@
 // pages/door/index.js
 const app = getApp();
+const config = require('../../config.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    logoList: [],
-    imageList: [],
-    info: {},
-    startTime: '',
-    endTime: '',
-    region: ['', '', ''],
+    orderList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
+  },
+  
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.setData({
+      uploadFile: config.uploadFileUrl
+    });
   },
 
   /**

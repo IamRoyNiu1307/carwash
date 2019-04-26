@@ -21,7 +21,8 @@
     "pages/tmp/tmp",
     "pages/user/car",
     "pages/user/car_add",
-    "pages/user/register"
+    "pages/user/register",
+    "pages/order/update"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -44,7 +45,7 @@
       {
         "iconPath": "image/icon_tab_order.png",
         "selectedIconPath": "image/icon_tab_order_pressed.png",
-        "pagePath": "pages/order/index",
+        "pagePath": "pages/door/order",
         "text": "订单"
       },
       {

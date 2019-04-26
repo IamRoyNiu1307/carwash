@@ -143,12 +143,13 @@ public class ApiUserController {
         List<Map<String,Object>> orderInfoList=new ArrayList<>();
         Order order = new Order();
         order.setUserAccount(account);
+        order.setStatusId(statusId);
         List<Order> orderList = orderService.selectOrderList(order);
         for(Order each:orderList){
             Map orderInfo = new HashMap();
             CarImage carImage = new CarImage();
             carImage.setCarInfoId(each.getCarId());
-            orderInfo.put("order",orderInfo);
+            orderInfo.put("order",each);
             orderInfo.put("carImage",carImageService.selectCarImageList(carImage));
             orderInfoList.add(orderInfo);
         }
