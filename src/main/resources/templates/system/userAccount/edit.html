@@ -101,7 +101,7 @@
             var password = $("input[name='password']").val();
             var phonenumber = $("input[name='phonenumber']").val();
             var status = $("input[name='status']").is(':checked') == true ? 0 : 1;
-            var roleIds = $.form.selectSelects("roleId");
+            var roleIds = $("#roleId option:selected").val();
             var storeId=$("#storeId").val();
             var formData= new FormData();
             formData.append("id",id);

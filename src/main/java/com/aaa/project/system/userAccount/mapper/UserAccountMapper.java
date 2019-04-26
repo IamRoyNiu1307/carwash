@@ -73,5 +73,12 @@ public interface UserAccountMapper
      * @return 结果
      */
 	public int deleteUserAccountByIds(String[] ids);
+
+	/**
+	 * 根据userId查询店铺Id
+	 * @param userId
+	 * @return 店铺Id
+	 */
+	public String selectStoreIdByUserId(Long userId);
 	
 }

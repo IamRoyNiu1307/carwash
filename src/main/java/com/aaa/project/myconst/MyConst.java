@@ -44,6 +44,10 @@ public class MyConst {
     public static final int STATUS_ORDER_UNPAY=201;
     //订单状态：已付款
     public static final int STATUS_ORDER_PAID=202;
+    //订单状态：进行中
+    public static final int STATUS_ORDER_ONGOING=208;
+    //订单状态：已完成
+    public static final int STATUS_ORDER_FINISHED=203;
     //短信类型：账号登录、注册
     public static final int TYPE_ACCOUNT = 0;
     //短信类型：获得取件码
@@ -57,6 +61,9 @@ public class MyConst {
     public static final Integer STATUS_KEY_STORED=300;
     //钥匙状态：已取出
     public static final Integer STATUS_KEY_TAKED=301;
+
+    //角色ID：洗车员
+    public static final long STAFF_ROLE_ID=102;
 
     static{
         TIME_MAP.put("08时",8);

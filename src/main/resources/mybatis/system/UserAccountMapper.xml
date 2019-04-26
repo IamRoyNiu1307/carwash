@@ -45,6 +45,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where user_id = #{userId}
     </select>
 
+    <select id="selectStoreIdByUserId" parameterType="Long" resultType="String">
+        select store_id from cw_user_account where user_id = #{userId}
+    </select>
+
     <insert id="insertUserAccount" parameterType="UserAccount">
         insert into cw_user_account
 		<trim prefix="(" suffix=")" suffixOverrides=",">

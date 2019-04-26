@@ -118,4 +118,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
         return userAccountMapper.deleteUserAccountByIds(Convert.toStrArray(ids));
     }
 
+    /**
+     * 根据userId查询店铺Id
+     * @param userId
+     * @return 店铺Id
+     */
+    @Override
+    public String selectStoreIdByUserId(Long userId){return userAccountMapper.selectStoreIdByUserId(userId);};
+
 }
