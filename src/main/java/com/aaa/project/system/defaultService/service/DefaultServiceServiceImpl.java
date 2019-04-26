@@ -56,6 +56,17 @@ public class DefaultServiceServiceImpl implements IDefaultServiceService
 	}
 
 	/**
+	 * 订单服务
+	 * @param list 服务id list
+	 * @return 订单服务
+	 */
+	@Override
+	public List<DefaultService> selectBylist(List list) {
+		return defaultServiceMapper.selectBylist(list);
+	}
+
+
+	/**
      * 新增默认业务
      * 
      * @param defaultService 默认业务信息

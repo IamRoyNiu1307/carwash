@@ -35,7 +35,7 @@ public interface OrderServiceMapper
 	 * @param orderId 订单id
 	 * @return 订单服务
 	 */
-	public List<OrderService> selectOrderService(String orderId);
+	public List selectOrderService(String orderId);
 	/**
      * 新增订单服务关系
      * 

@@ -22,8 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="serviceId != null "> and service_id = #{serviceId}</if>
          </where>
     </select>
-    <select id="selectOrderService" parameterType="string" resultMap="OrderServiceResult">
-        <include refid="selectOrderServiceVo"/> where order_id=#{orderId}
+    <select id="selectOrderService" parameterType="string" resultType="list">
+        select service_id from cw_order_service where order_id=#{orderId}
     </select>
     <select id="selectOrderServiceById" parameterType="Integer" resultMap="OrderServiceResult">
         <include refid="selectOrderServiceVo"/>

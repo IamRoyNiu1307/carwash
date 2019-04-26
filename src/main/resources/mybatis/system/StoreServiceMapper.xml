@@ -44,6 +44,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectStoreServiceVo"/>
         where store_id = #{store_id}
     </select>
+    <select id="selectOrderService" resultMap="StoreServiceResult">
+        <include refid="selectStoreServiceVo"/> <foreach item="each" collection="list">
+        where  store_id=#{storeId} and default_service_id=#{each}
+    </foreach>
+    </select>
         
     <insert id="insertStoreService" parameterType="StoreService">
         insert into cw_store_service

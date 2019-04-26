@@ -68,5 +68,13 @@ public interface IStoreServiceService
 	 * @return 业务信息
 	 */
 	public List<StoreService> selectStoreServiceByStoreId(String storeId);
+
+	/**
+	 * 查询订单服务
+	 * @param storeId 门店id
+	 * @param list 服务id表
+	 * @return 服务
+	 */
+	public List<StoreService> selectOrderService(@Param("storeId")String storeId, List list);
 	
 }

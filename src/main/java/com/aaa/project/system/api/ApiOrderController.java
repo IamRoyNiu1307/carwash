@@ -9,6 +9,8 @@ import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.carImage.domain.CarImage;
 import com.aaa.project.system.carInfo.domain.CarInfo;
 import com.aaa.project.system.carInfo.service.ICarInfoService;
+import com.aaa.project.system.defaultService.domain.DefaultService;
+import com.aaa.project.system.defaultService.service.IDefaultServiceService;
 import com.aaa.project.system.logImage.domain.LogImage;
 import com.aaa.project.system.logImage.service.ILogImageService;
 import com.aaa.project.system.order.domain.Order;
@@ -19,6 +21,7 @@ import com.aaa.project.system.orderLog.domain.OrderLog;
 import com.aaa.project.system.orderLog.service.IOrderLogService;
 import com.aaa.project.system.orderService.domain.OrderService;
 import com.aaa.project.system.orderService.service.IOrderServiceService;
+import com.aaa.project.system.storeService.domain.StoreService;
 import com.aaa.project.system.storeService.service.IStoreServiceService;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +58,8 @@ public class ApiOrderController {
     private IOrderLogService orderLogService;
     @Autowired
     private ILogImageService logImageService;
+    @Autowired
+    private IDefaultServiceService defaultServiceService;
 
 
     /**
@@ -223,6 +228,14 @@ public class ApiOrderController {
     public AjaxResult getOrder(@RequestParam(name = "orderId") String orderId) {
         AjaxResult ajaxResult = new AjaxResult();
         Order order = orderService.selectOrderByOrderId(orderId);
+        List list = orderServiceService.selectOrderService(order.getOrderId());
+        if(order.getTypeId()==0){
+            List<DefaultService> orderService = defaultServiceService.selectBylist(list);
+            ajaxResult.put("orderService",orderService);
+        }else {
+            List<StoreService> orderService = storeServiceService.selectOrderService(order.getStoreId(), list);
+            ajaxResult.put("orderService",orderService);
+        }
         ajaxResult.put("code", 0);
         ajaxResult.put("order", order);
         return ajaxResult;

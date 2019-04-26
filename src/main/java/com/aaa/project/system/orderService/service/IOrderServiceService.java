@@ -1,6 +1,7 @@
 package com.aaa.project.system.orderService.service;
 
 import com.aaa.project.system.orderService.domain.OrderService;
+import com.aaa.project.system.storeService.domain.StoreService;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public interface IOrderServiceService
 	 * @param orderId 订单id
 	 * @return 订单服务关系集合
 	 */
-	public List<OrderService> selectOrderService(String orderId);
+	public List selectOrderService(String orderId);
 	
 	/**
      * 新增订单服务关系
@@ -70,5 +71,6 @@ public interface IOrderServiceService
      * @return 结果
      */
 	public int deleteOrderServiceByIds(String ids);
+
 	
 }
