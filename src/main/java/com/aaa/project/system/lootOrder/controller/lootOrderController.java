@@ -70,6 +70,7 @@ public class lootOrderController extends BaseController {
     @PostMapping("/loot")
     @ResponseBody
     public AjaxResult lootOrder(Order order) {
+
         return toAjax(lootOrderService.lootOrder(order));
     }
 

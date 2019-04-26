@@ -1,9 +1,13 @@
 package com.aaa.project.system.lootOrder.service;
 
-import com.aaa.common.support.Convert;
 import com.aaa.common.utils.security.ShiroUtils;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.mapper.OrderMapper;
+import com.aaa.project.system.orderAmount.domain.OrderAmount;
+import com.aaa.project.system.orderAmount.mapper.OrderAmountMapper;
+import com.aaa.project.system.orderService.domain.OrderService;
+import com.aaa.project.system.orderService.mapper.OrderServiceMapper;
+import com.aaa.project.system.storeService.mapper.StoreServiceMapper;
 import com.aaa.project.system.userAccount.domain.UserAccount;
 import com.aaa.project.system.userAccount.mapper.UserAccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +19,14 @@ import java.util.List;
 public class LootOrderServiceImpl implements ILootOrderService {
     @Autowired
     private OrderMapper orderMapper;
-    //@Autowired
-    //private
+    @Autowired
+    private OrderServiceMapper orderServiceMapper;
     @Autowired
     private UserAccountMapper userAccountMapper;
+    @Autowired
+    private StoreServiceMapper storeServiceMapper;
+    @Autowired
+    private OrderAmountMapper orderAmountMapper;
 
     @Override
     public List<Order> selectCanLootOrderList(Order order) {
@@ -31,15 +39,28 @@ public class LootOrderServiceImpl implements ILootOrderService {
 
     @Override
     public int lootOrder(Order order) {
+
         //获取当前用户门店ID
         Long userId = ShiroUtils.getUserId();
         UserAccount userAccount = userAccountMapper.selectUserAccountByUserId(userId);
         order.setStoreId(userAccount.getStoreId());
+        orderMapper.lootOrder(order);
         //计算出该订单的花费：
-          //1-查询出该订单的服务有哪些
-
-          //2-查询出订单所属门店
-          //3-计算所有服务花费
-        return orderMapper.lootOrder(order);
+        //1-查询出该订单的服务有哪些
+        List<OrderService> list = orderServiceMapper.selectOrderService(order.getOrderId());
+        //2-查询出订单所属门店
+        float countCost = 0;
+        //3-计算所有服务花费
+        for (OrderService orderService : list) {
+            countCost += storeServiceMapper.selectCost(order.getStoreId(), orderService.getServiceId());
+        }
+        //插入数据
+        //创建对象设值
+        OrderAmount orderAmount = new OrderAmount();
+        orderAmount.setOrderId(order.getOrderId());
+        orderAmount.setTotalAmount(countCost);
+        orderAmount.setFinalAmount(countCost);
+        //插入
+        return orderAmountMapper.insertOrderAmount(orderAmount);
     }
 }
