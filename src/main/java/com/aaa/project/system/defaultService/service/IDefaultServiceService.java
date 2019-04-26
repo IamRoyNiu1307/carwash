@@ -34,6 +34,13 @@ public interface IDefaultServiceService
 	 * @return 默认业务集合
 	 */
 	public List<DefaultService> selectDefaultService();
+
+	/**
+	 * 服务id查询服务
+	 * @param list 服务id list
+	 * @return 服务
+	 */
+	public List<DefaultService> selectBylist(String orderId);
 	
 	/**
      * 新增默认业务

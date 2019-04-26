@@ -1,6 +1,8 @@
 package com.aaa.project.system.orderService.service;
 
 import java.util.List;
+
+import com.aaa.project.system.storeService.domain.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aaa.project.system.orderService.mapper.OrderServiceMapper;
@@ -100,5 +102,5 @@ public class OrderServiceServiceImpl implements IOrderServiceService
 	{
 		return orderServiceMapper.deleteOrderServiceByIds(Convert.toStrArray(ids));
 	}
-	
+
 }

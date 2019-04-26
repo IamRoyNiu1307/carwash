@@ -47,7 +47,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
      * @return 用户信息
      */
     @Override
-    public UserAccount selectUserAccountByUserId(Integer userId) {
+    public UserAccount selectUserAccountByUserId(Long userId) {
         return userAccountMapper.selectUserAccountByUserId(userId);
     }
 
@@ -126,4 +126,23 @@ public class UserAccountServiceImpl implements IUserAccountService {
     @Override
     public String selectStoreIdByUserId(Long userId){return userAccountMapper.selectStoreIdByUserId(userId);};
 
+    /**
+     * 清空该openid的绑定信息
+     * @param openid
+     */
+    @Override
+    public void cleanOpenid(String openid) {
+        userAccountMapper.cleanOpenid(openid);
+    }
+
+    /**
+     * 绑定openid和account
+     * @param userId userId
+     * @param openid openid
+     */
+    @Override
+    public void bindAccountWithOpenid(Long userId, String openid) {
+        this.cleanOpenid(openid);
+        userAccountMapper.bindAccountWithOpenid(userId,openid);
+    }
 }

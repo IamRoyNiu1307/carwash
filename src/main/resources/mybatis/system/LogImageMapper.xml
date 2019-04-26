@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.logImage.mapper.LogImageMapper">
+    
+    <resultMap type="LogImage" id="LogImageResult">
+        <result property="id"    column="id"    />
+        <result property="logId"    column="log_id"    />
+        <result property="imagePath"    column="image_path"    />
+    </resultMap>
+	
+	<sql id="selectLogImageVo">
+        select id, log_id, image_path from cw_log_image
+    </sql>
+	
+    <select id="selectLogImageList" parameterType="LogImage" resultMap="LogImageResult">
+        <include refid="selectLogImageVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="logId != null "> and log_id = #{logId}</if>
+             <if test="imagePath != null  and imagePath != '' "> and image_path = #{imagePath}</if>
+         </where>
+    </select>
+    
+    <select id="selectLogImageById" parameterType="Integer" resultMap="LogImageResult">
+        <include refid="selectLogImageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLogImage" parameterType="LogImage">
+        insert into cw_log_image
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="logId != null  ">log_id,</if>
+			<if test="imagePath != null  and imagePath != ''  ">image_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="logId != null  ">#{logId},</if>
+			<if test="imagePath != null  and imagePath != ''  ">#{imagePath},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateLogImage" parameterType="LogImage">
+        update cw_log_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="logId != null  ">log_id = #{logId},</if>
+            <if test="imagePath != null  and imagePath != ''  ">image_path = #{imagePath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteLogImageById" parameterType="Integer">
+        delete from cw_log_image where id = #{id}
+    </delete>
+	
+    <delete id="deleteLogImageByIds" parameterType="String">
+        delete from cw_log_image where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

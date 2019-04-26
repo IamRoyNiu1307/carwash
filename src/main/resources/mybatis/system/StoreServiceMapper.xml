@@ -44,6 +44,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectStoreServiceVo"/>
         where store_id = #{store_id}
     </select>
+    <select id="selectOrderService" resultMap="StoreServiceResult">
+      SELECT cw_store_service.* FROM cw_store_service ,(select service_id from cw_order_service where order_id=#{orderId}) M WHERE store_id=#{storeId} AND M.service_id=default_service_id;
+    </select>
         
     <insert id="insertStoreService" parameterType="StoreService">
         insert into cw_store_service

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.userLocation.mapper.UserLocationMapper">
+    
+    <resultMap type="UserLocation" id="UserLocationResult">
+        <result property="id"    column="id"    />
+        <result property="userAccount"    column="user_account"    />
+        <result property="posLng"    column="pos_lng"    />
+        <result property="posLat"    column="pos_lat"    />
+        <result property="updateDatetime"    column="update_datetime"    />
+    </resultMap>
+	
+	<sql id="selectUserLocationVo">
+        select id, user_account, pos_lng, pos_lat, update_datetime from cw_user_location
+    </sql>
+	
+    <select id="selectUserLocationList" parameterType="UserLocation" resultMap="UserLocationResult">
+        <include refid="selectUserLocationVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="userAccount != null  and userAccount != '' "> and user_account = #{userAccount}</if>
+             <if test="posLng != null "> and pos_lng = #{posLng}</if>
+             <if test="posLat != null "> and pos_lat = #{posLat}</if>
+             <if test="updateDatetime != null "> and update_datetime = #{updateDatetime}</if>
+         </where>
+    </select>
+    
+    <select id="selectUserLocationById" parameterType="Integer" resultMap="UserLocationResult">
+        <include refid="selectUserLocationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserLocation" parameterType="UserLocation">
+        insert into cw_user_location
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="userAccount != null  and userAccount != ''  ">user_account,</if>
+			<if test="posLng != null  ">pos_lng,</if>
+			<if test="posLat != null  ">pos_lat,</if>
+			<if test="updateDatetime != null  ">update_datetime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="userAccount != null  and userAccount != ''  ">#{userAccount},</if>
+			<if test="posLng != null  ">#{posLng},</if>
+			<if test="posLat != null  ">#{posLat},</if>
+			<if test="updateDatetime != null  ">#{updateDatetime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateUserLocation" parameterType="UserLocation">
+        update cw_user_location
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userAccount != null  and userAccount != ''  ">user_account = #{userAccount},</if>
+            <if test="posLng != null  ">pos_lng = #{posLng},</if>
+            <if test="posLat != null  ">pos_lat = #{posLat},</if>
+            <if test="updateDatetime != null  ">update_datetime = #{updateDatetime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteUserLocationById" parameterType="Integer">
+        delete from cw_user_location where id = #{id}
+    </delete>
+	
+    <delete id="deleteUserLocationByIds" parameterType="String">
+        delete from cw_user_location where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

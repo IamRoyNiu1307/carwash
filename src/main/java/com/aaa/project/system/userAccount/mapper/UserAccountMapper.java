@@ -1,7 +1,9 @@
 package com.aaa.project.system.userAccount.mapper;
 
 import com.aaa.project.system.userAccount.domain.UserAccount;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 用户 数据层
@@ -24,7 +26,7 @@ public interface UserAccountMapper
 	 * @param userId
 	 * @return
 	 */
-	public UserAccount selectUserAccountByUserId(Integer userId);
+	public UserAccount selectUserAccountByUserId(Long userId);
 
 	/**
 	 * 查询洗车员所属店铺
@@ -80,5 +82,18 @@ public interface UserAccountMapper
 	 * @return 店铺Id
 	 */
 	public String selectStoreIdByUserId(Long userId);
-	
+
+
+	/**
+	 * 清空该openid的绑定信息
+	 * @param openid
+	 */
+    void cleanOpenid(String openid);
+
+	/**
+	 * 绑定openid和account
+	 * @param userId userId
+	 * @param openid openid
+	 */
+	void bindAccountWithOpenid(@Param("userId") Long userId, @Param("openid") String openid);
 }

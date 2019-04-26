@@ -1,0 +1,24 @@
+<!--index.wxml-->
+
+<!-- <view class="topbar clear">
+  <view class="topbar-item">
+    <text class="{{listype==0?'active':''}}" id="0" bindtap='changeType'>地图</text>
+  </view>
+  <view class="topbar-item">
+    <text class="{{listype==1?'active':''}}" id="1" bindtap='changeType'>门店列表</text>
+  </view>
+</view> -->
+
+
+<view class="map_container" hidden="{{listype==1?true:false}}">
+  <map id="map" markers="{{markers}}" bindmarkertap='clickMarker' longitude="{{longitude}}" latitude="{{latitude}}" style="width: 100%; height: 100%;"></map>
+  <cover-view class="place_info">
+<cover-view class='place_info_btn' bindtap='quickcreate'>立即下单</cover-view>
+</cover-view>
+</view>
+
+<!-- <cover-view class='control'>
+    <cover-view class='quick_create' bindtap='quickcreate'>立即下单</cover-view>
+</cover-view> -->
+
+

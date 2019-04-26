@@ -29,7 +29,7 @@ public interface IUserAccountService
 	 * @param userId
 	 * @return
 	 */
-	public UserAccount selectUserAccountByUserId(Integer userId);
+	public UserAccount selectUserAccountByUserId(Long userId);
 
 	/**
 	 * 查询洗车员所属店铺
@@ -77,4 +77,17 @@ public interface IUserAccountService
 	 * @return 店铺Id
 	 */
 	public String selectStoreIdByUserId(Long userId);
+
+	/**
+	 * 清空该openid的绑定信息
+	 * @param openid
+	 */
+	void cleanOpenid(String openid);
+
+	/**
+	 * 让账号和openid绑定
+	 * @param userId 用户id
+ 	 * @param openid openid
+	 */
+    void bindAccountWithOpenid(Long userId, String openid);
 }

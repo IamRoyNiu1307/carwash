@@ -107,4 +107,15 @@ public class StoreServiceServiceImpl implements IStoreServiceService
 
 	}
 
+	/**
+	 *  订单服务列表
+	 * @param storeId 门店id
+	 * @param list 服务id表
+	 * @return 服务列表
+	 */
+	@Override
+	public List<StoreService> selectOrderService(String storeId, String orderId) {
+		return storeServiceMapper.selectOrderService(storeId,orderId);
+	}
+
 }

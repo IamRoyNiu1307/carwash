@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
     <select id="selectOrderService" parameterType="string" resultMap="OrderServiceResult">
-        <include refid="selectOrderServiceVo"/> where order_id=#{orderId}
+        select service_id from cw_order_service where order_id=#{orderId}
     </select>
     <select id="selectOrderServiceById" parameterType="Integer" resultMap="OrderServiceResult">
         <include refid="selectOrderServiceVo"/>

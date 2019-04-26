@@ -65,8 +65,18 @@ public class Order extends BaseEntity
 	private String payStatusName;
 	/** 预算范围名称*/
 	private String expectCostName;
+	/** 往返路程*/
+	private Integer journey;
 
-	public void setId(Integer id) 
+	public Integer getJourney() {
+		return journey;
+	}
+
+	public void setJourney(Integer journey) {
+		this.journey = journey;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -277,25 +287,34 @@ public class Order extends BaseEntity
 		this.expectCostName = expectCostName;
 	}
 
+	@Override
 	public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("orderId", getOrderId())
-            .append("consumerAccount", getConsumerAccount())
-            .append("storeId", getStoreId())
-            .append("statusId", getStatusId())
-            .append("payStatusId", getPayStatusId())
-            .append("createDate", getCreateDate())
-            .append("finishDate", getFinishDate())
-            .append("carId", getCarId())
-            .append("carAddress", getCarAddress())
-            .append("keyInfoId", getKeyInfoId())
-            .append("typeId", getTypeId())
-            .append("userAccount", getUserAccount())
-            .append("orderComment", getOrderComment())
-            .append("appointmentTime", getAppointmentTime())
-            .append("timeQuantum", getTimeQuantum())
-            .append("expectCostId", getExpectCostId())
-            .toString();
-    }
+		return "Order{" +
+				"id=" + id +
+				", orderId='" + orderId + '\'' +
+				", consumerAccount='" + consumerAccount + '\'' +
+				", storeId='" + storeId + '\'' +
+				", statusId=" + statusId +
+				", payStatusId=" + payStatusId +
+				", payDate=" + payDate +
+				", createDate=" + createDate +
+				", finishDate=" + finishDate +
+				", carId=" + carId +
+				", carAddress='" + carAddress + '\'' +
+				", keyInfoId=" + keyInfoId +
+				", typeId=" + typeId +
+				", typeName='" + typeName + '\'' +
+				", userAccount='" + userAccount + '\'' +
+				", orderComment='" + orderComment + '\'' +
+				", appointmentTime=" + appointmentTime +
+				", timeQuantum=" + timeQuantum +
+				", expectCostId=" + expectCostId +
+				", keyInfo=" + keyInfo +
+				", statusName='" + statusName + '\'' +
+				", store=" + store +
+				", payStatusName='" + payStatusName + '\'' +
+				", expectCostName='" + expectCostName + '\'' +
+				", journey=" + journey +
+				'}';
+	}
 }

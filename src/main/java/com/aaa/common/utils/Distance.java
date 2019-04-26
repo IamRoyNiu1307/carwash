@@ -53,13 +53,21 @@ public class Distance {
     }
 
     /**
-     * 计算两点(经纬度)之间的直线距离
+     * 路径规划距离
      * @param origins 起点
      * @param destination 终点
-     * @return 两点间的直线距离
+     * @param type 路径计算的方式和方法
+     *             0：直线距离
+     *             1：驾车导航距离（仅支持国内坐标）
+     *                必须指出，当为1时会考虑路况，故在不同时间请求返回结果可能不同。
+     *                此策略和驾车路径规划接口的 strategy=4策略基本一致，策略为“ 躲避拥堵的路线，但是可能会存在绕路的情况，耗时可能较长 ”
+     *                若需要实现高德地图客户端效果，可以考虑使用驾车路径规划接口
+     *             2：公交规划距离（仅支持同城坐标,QPS不可超过1，否则可能导致意外）
+     *             3：步行规划距离（仅支持5km之间的距离）
+     * @return 距离
      */
-    public static int getDistance(String origins,String destination){
-        String param = "origins="+origins+"&destination="+destination+"&type=1&output=json&key="+MyConst.MAP_WEB_KEY;
+    public static int getDistance(String origins,String destination,int type){
+        String param = "origins="+origins+"&destination="+destination+"&type="+type+"&output=json&key="+MyConst.MAP_WEB_KEY;
         String resultJson = HttpRequestUtil.sendGet(MyConst.DISTANCE_URL, param);
         JSONObject jsonObject = new JSONObject(resultJson);
         JSONArray results = jsonObject.getJSONArray("results");

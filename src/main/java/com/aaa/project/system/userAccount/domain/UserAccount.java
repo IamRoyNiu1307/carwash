@@ -25,33 +25,16 @@ public class UserAccount extends BaseEntity
 	private String drivingLicence1;
 	/** 驾照B面 */
 	private String drivingLicence2;
+	/** 状态编号 */
+	private Integer statusId;
+	/** 状态 */
+	private Status status;
 	/** 所属门店编号 */
 	private String storeId;
-	/**状态id*/
-	private Integer statusId;
 	/** 所属门店名称*/
 	private String storeName;
 
-	/**账号状态*/
-	private Status status;
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public Integer getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(Integer statusId) {
-		this.statusId = statusId;
-	}
-
-	public void setId(Integer id)
+	public void setId(Integer id) 
 	{
 		this.id = id;
 	}
@@ -114,7 +97,22 @@ public class UserAccount extends BaseEntity
 		this.storeName = storeName;
 	}
 
-	@Override
+	public Integer getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Integer statusId) {
+		this.statusId = statusId;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	public String toString() {
 		return "UserAccount{" +
 				"id=" + id +
@@ -125,7 +123,6 @@ public class UserAccount extends BaseEntity
 				", storeId='" + storeId + '\'' +
 				", statusId=" + statusId +
 				", storeName='" + storeName + '\'' +
-				", status=" + status +
 				'}';
 	}
 }

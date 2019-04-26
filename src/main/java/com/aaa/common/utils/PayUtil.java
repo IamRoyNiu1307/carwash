@@ -38,7 +38,7 @@ public class PayUtil {
             packageParams.put("appid", WXConst.APPID);                  //微信分配的小程序ID
             packageParams.put("mch_id", WXConst.MCH_ID);                //微信支付分配的商户号
             packageParams.put("nonce_str", nonce_str);                  //随机字符串，长度要求在32位以内。
-            packageParams.put("body", WXConst.TITLE);                   //商品简单描述，该字段请按照规范传递
+            packageParams.put("body", body);                            //商品简单描述，该字段请按照规范传递
             packageParams.put("out_trade_no", orderId);                 //商户订单号
             packageParams.put("total_fee", money);                      //支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
             packageParams.put("spbill_create_ip", spbill_create_ip);    //终端IP，支持IPV4和IPV6两种格式的IP地址。调用微信支付API的机器IP
@@ -154,9 +154,9 @@ public class PayUtil {
      * @return 签名结果
      */
     public static boolean verify(String text, String sign, String key, String input_charset) {
-        text = text + key;
-        String mysign = DigestUtils.md5Hex(getContentBytes(text, input_charset));
-        if (mysign.equals(sign)) {
+        text = text + "&key=" + key;
+        String mysign = DigestUtils.md5Hex(getContentBytes(text, input_charset)).toUpperCase();
+        if (mysign.equals(sign.toUpperCase())) {
             return true;
         } else {
             return false;
@@ -343,16 +343,15 @@ public class PayUtil {
 
         Map map = WxUtil.doXMLParse(notityXml);
 
-
         String returnCode = (String) map.get("return_code");
+
         if ("SUCCESS".equals(returnCode)) {
+            System.out.println("------------------------"+returnCode+"---------------------------");
             //验证签名是否正确
-            if (PayUtil.verify(PayUtil.createLinkString(map), (String) map.get("sign"), WXConst.KEY, "utf-8")) {
-                /**此处添加自己的业务逻辑代码start**/
+            if (PayUtil.verify(PayUtil.createLinkString(PayUtil.paraFilter(map)), (String) map.get("sign"), WXConst.KEY, "utf-8")) {
+                System.out.println("------------------------签名正确---------------------------");
 
-
-                /**此处添加自己的业务逻辑代码end**/
-
+                map.put("notify_result","SUCCESS");
 
                 //通知微信服务器已经支付成功
                 resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
