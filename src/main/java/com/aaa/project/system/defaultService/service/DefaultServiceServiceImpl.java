@@ -61,8 +61,8 @@ public class DefaultServiceServiceImpl implements IDefaultServiceService
 	 * @return 订单服务
 	 */
 	@Override
-	public List<DefaultService> selectBylist(List list) {
-		return defaultServiceMapper.selectBylist(list);
+	public List<DefaultService> selectBylist(String orderId) {
+		return defaultServiceMapper.selectBylist(orderId);
 	}
 
 

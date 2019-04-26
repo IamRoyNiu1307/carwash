@@ -30,14 +30,13 @@ public interface IOrderServiceService
      */
 	public List<OrderService> selectOrderServiceList(OrderService orderService);
 
-
 	/**
 	 * 查询订单服务关系列表
 	 *
 	 * @param orderId 订单id
 	 * @return 订单服务关系集合
 	 */
-	public List selectOrderService(String orderId);
+	public List<OrderService> selectOrderService(String orderId);
 	
 	/**
      * 新增订单服务关系
@@ -72,5 +71,4 @@ public interface IOrderServiceService
      */
 	public int deleteOrderServiceByIds(String ids);
 
-	
 }

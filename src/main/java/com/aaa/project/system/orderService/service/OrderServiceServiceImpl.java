@@ -52,7 +52,7 @@ public class OrderServiceServiceImpl implements IOrderServiceService
 	 * @return orderService
 	 */
 	@Override
-	public List selectOrderService(String orderId) {
+	public List<OrderService> selectOrderService(String orderId) {
 		return orderServiceMapper.selectOrderService(orderId);
 	}
 

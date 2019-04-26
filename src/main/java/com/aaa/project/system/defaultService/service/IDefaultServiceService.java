@@ -40,7 +40,7 @@ public interface IDefaultServiceService
 	 * @param list 服务id list
 	 * @return 服务
 	 */
-	public List<DefaultService> selectBylist(List list);
+	public List<DefaultService> selectBylist(String orderId);
 	
 	/**
      * 新增默认业务

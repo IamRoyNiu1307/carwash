@@ -17,11 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectDefaultService" parameterType="DefaultService" resultMap="DefaultServiceResult">
         <include refid="selectDefaultServiceVo"/>
     </select>
-    <select id="selectBylist" parameterType="list" resultMap="DefaultServiceResult">
-        <include refid="selectDefaultServiceVo"/> where id in <foreach item="each" collection="list"
-                                                                       open="(" separator="," close=")">
-        #{each}
-    </foreach>
+    <select id="selectBylist" parameterType="string" resultMap="DefaultServiceResult">
+        SELECT cw_default_service.* FROM cw_default_service,(select service_id from cw_order_service where order_id=#{orderId})M WHERE M.service_id=id;
     </select>
     <select id="selectDefaultServiceList" parameterType="DefaultService" resultMap="DefaultServiceResult">
         <include refid="selectDefaultServiceVo"/>
