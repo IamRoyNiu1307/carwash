@@ -118,4 +118,23 @@ public class UserAccountServiceImpl implements IUserAccountService {
         return userAccountMapper.deleteUserAccountByIds(Convert.toStrArray(ids));
     }
 
+    /**
+     * 清空该openid的绑定信息
+     * @param openid
+     */
+    @Override
+    public void cleanOpenid(String openid) {
+        userAccountMapper.cleanOpenid(openid);
+    }
+
+    /**
+     * 绑定openid和account
+     * @param userId userId
+     * @param openid openid
+     */
+    @Override
+    public void bindAccountWithOpenid(Long userId, String openid) {
+        this.cleanOpenid(openid);
+        userAccountMapper.bindAccountWithOpenid(userId,openid);
+    }
 }

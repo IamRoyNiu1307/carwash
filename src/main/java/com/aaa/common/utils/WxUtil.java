@@ -1,18 +1,10 @@
 package com.aaa.common.utils;
 
-import com.aaa.project.myconst.WXConst;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
-
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.MessageDigest;
 import java.util.*;
 
 import static com.aaa.common.utils.PayUtil.String2Inputstream;

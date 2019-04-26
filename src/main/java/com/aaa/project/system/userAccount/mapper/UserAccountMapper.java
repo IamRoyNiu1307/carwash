@@ -1,7 +1,9 @@
 package com.aaa.project.system.userAccount.mapper;
 
 import com.aaa.project.system.userAccount.domain.UserAccount;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 用户 数据层
@@ -73,5 +75,17 @@ public interface UserAccountMapper
      * @return 结果
      */
 	public int deleteUserAccountByIds(String[] ids);
-	
+
+	/**
+	 * 清空该openid的绑定信息
+	 * @param openid
+	 */
+    void cleanOpenid(String openid);
+
+	/**
+	 * 绑定openid和account
+	 * @param userId userId
+	 * @param openid openid
+	 */
+	void bindAccountWithOpenid(@Param("userId") Long userId, @Param("openid") String openid);
 }

@@ -44,6 +44,8 @@ public class MyConst {
     public static final int STATUS_ORDER_UNPAY=201;
     //订单状态：已付款
     public static final int STATUS_ORDER_PAID=202;
+    //账号状态：可用
+    public static final int STATUS_ACCOUNT_ENABLE = 501;
     //短信类型：账号登录、注册
     public static final int TYPE_ACCOUNT = 0;
     //短信类型：获得取件码
@@ -67,7 +69,7 @@ public class MyConst {
     }
 
     //车辆照片上传路径
-    public static final String UPLOAD_CAR_IMAGE = "E:/IdeaProject/carwash/src/main/resources/static/fileupload/car/";
+    public static final String UPLOAD_CAR_IMAGE = "/Users/roy/project/carwash/src/main/resources/static/fileupload/car/";
     //车辆照片请求路径
     public static final String CAR_IMAGE_DIR = "/car/";
     //洗车照片上传路径
@@ -75,13 +77,13 @@ public class MyConst {
     //洗车照片请求路径
     public static final String WASHCAR_IMAGE_DIR="/washcar/";
     //新增门店图标上传路径
-    public  static  final  String UPLOAD_STORE_ICON="E:/IdeaProject/carwash/src/main/resources/static/fileupload/store/logo";
+    public  static  final  String UPLOAD_STORE_ICON="/Users/roy/project/pcarwash/src/main/resources/static/fileupload/store/logo";
     //store图标请求路径
     public static final String STORE_ICON_IMAGE_DIR = "/store/logo/";
     //用户驾驶证照片上传路径
-    public static  final String DRIVING_LICENCE_IMG="D:/idea/ideaWorkSpace/carwash/src/main/resources/static/fileupload/user/drivingLicence";
+    public static  final String DRIVING_LICENCE_IMG="/Users/roy/project/carwash/src/main/resources/static/fileupload/user/drivingLicence";
     //用户驾驶证照片请求路径
-    public static final String DRIVING_LICENCE_ICON_IMG="/fileupload/user/drivingLicence/";
+    public static final String DRIVING_LICENCE_ICON_IMG="/user/drivingLicence/";
 
 
 }

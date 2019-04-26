@@ -70,5 +70,17 @@ public interface IUserAccountService
      * @return 结果
      */
 	public int deleteUserAccountByIds(String ids);
-	
+
+	/**
+	 * 清空该openid的绑定信息
+	 * @param openid
+	 */
+	void cleanOpenid(String openid);
+
+	/**
+	 * 让账号和openid绑定
+	 * @param userId 用户id
+ 	 * @param openid openid
+	 */
+    void bindAccountWithOpenid(Long userId, String openid);
 }
