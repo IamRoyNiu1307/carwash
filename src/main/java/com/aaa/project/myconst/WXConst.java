@@ -19,7 +19,7 @@ public class WXConst {
     //获取微信Openid的请求地址
     public static String WX_GETOPENID_URL = "";
     //支付成功后的服务器回调url
-    public static final String NOTIFY_URL="https://97af941c.ngrok.io/api/wxpay/notice";
+    public static final String NOTIFY_URL="https://9ec88aa8.ngrok.io/api/wxpay/notice";
     //签名方式
     public static final String SIGNTYPE = "MD5";
     //交易类型
