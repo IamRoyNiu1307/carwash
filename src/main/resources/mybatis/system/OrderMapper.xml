@@ -23,6 +23,7 @@
         <result property="appointmentTime" column="appointment_time"/>
         <result property="timeQuantum" column="time_quantum"/>
         <result property="expectCostId" column="expect_cost_id"/>
+        <result property="journey" column="journey" />
         <association property="keyInfo" column="key_info_id"
                      select="com.aaa.project.system.keyInfo.mapper.KeyInfoMapper.selectKeyInfoById"/>
         <association property="statusName" column="status_id"
@@ -37,7 +38,7 @@
     </resultMap>
 
     <sql id="selectOrderVo">
-        select id, order_id, consumer_account, store_id, status_id, pay_status_id,pay_date, create_date, finish_date, car_id, car_address, key_info_id, type_id, user_account, order_comment, appointment_time, time_quantum, expect_cost_id from cw_order
+        select id, order_id, consumer_account, store_id, status_id, pay_status_id,pay_date, create_date, finish_date, car_id, car_address, key_info_id, type_id, user_account, order_comment, appointment_time, time_quantum, expect_cost_id, journey from cw_order
     </sql>
 
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
@@ -62,6 +63,7 @@
             <if test="appointmentTime != null ">and appointment_time = #{appointmentTime}</if>
             <if test="timeQuantum != null ">and time_quantum = #{timeQuantum}</if>
             <if test="expectCostId != null ">and expect_cost_id = #{expectCostId}</if>
+            <if test="journey != null ">and journey = #{journey}</if>
         </where>
     </select>
 
@@ -151,6 +153,7 @@ GROUP BY
             <if test="appointmentTime != null  ">appointment_time,</if>
             <if test="timeQuantum != null  ">time_quantum,</if>
             <if test="expectCostId != null  ">expect_cost_id,</if>
+            <if test="journey != null  ">journey,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null  ">#{id},</if>
@@ -171,6 +174,7 @@ GROUP BY
             <if test="appointmentTime != null  ">#{appointmentTime},</if>
             <if test="timeQuantum != null  ">#{timeQuantum},</if>
             <if test="expectCostId != null  ">#{expectCostId},</if>
+            <if test="journey != null  ">#{journey},</if>
         </trim>
     </insert>
 
@@ -194,13 +198,14 @@ GROUP BY
             <if test="appointmentTime != null  ">appointment_time = #{appointmentTime},</if>
             <if test="timeQuantum != null  ">time_quantum = #{timeQuantum},</if>
             <if test="expectCostId != null  ">expect_cost_id = #{expectCostId},</if>
+            <if test="journey != null  ">journey = #{journey},</if>
         </trim>
         where id = #{id}
     </update>
 
 
     <update id="lootOrder" parameterType="Order">
-        update cw_order set status_id = 201,store_id = #{storeId} where order_id = #{orderId}
+        update cw_order set status_id = 201,store_id = #{storeId},journey = #{journey} where order_id = #{orderId}
     </update>
 
     <update id="cancelOrderByOrderId">

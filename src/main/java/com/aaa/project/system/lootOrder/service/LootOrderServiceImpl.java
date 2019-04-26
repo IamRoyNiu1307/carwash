@@ -1,5 +1,7 @@
 package com.aaa.project.system.lootOrder.service;
 
+import com.aaa.common.utils.Distance;
+import com.aaa.common.utils.Geo;
 import com.aaa.common.utils.security.ShiroUtils;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.mapper.OrderMapper;
@@ -7,13 +9,18 @@ import com.aaa.project.system.orderAmount.domain.OrderAmount;
 import com.aaa.project.system.orderAmount.mapper.OrderAmountMapper;
 import com.aaa.project.system.orderService.domain.OrderService;
 import com.aaa.project.system.orderService.mapper.OrderServiceMapper;
+import com.aaa.project.system.store.domain.Store;
+import com.aaa.project.system.store.mapper.StoreMapper;
 import com.aaa.project.system.storeService.mapper.StoreServiceMapper;
 import com.aaa.project.system.userAccount.domain.UserAccount;
 import com.aaa.project.system.userAccount.mapper.UserAccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+
+import static com.aaa.project.myconst.MyConst.DISTANCE_TYPE_CAR;
 
 @Service
 public class LootOrderServiceImpl implements ILootOrderService {
@@ -27,6 +34,10 @@ public class LootOrderServiceImpl implements ILootOrderService {
     private StoreServiceMapper storeServiceMapper;
     @Autowired
     private OrderAmountMapper orderAmountMapper;
+    @Autowired
+    private StoreMapper storeMapper;
+    @Autowired
+    private Geo geo;
 
     @Override
     public List<Order> selectCanLootOrderList(Order order) {
@@ -44,6 +55,15 @@ public class LootOrderServiceImpl implements ILootOrderService {
         Long userId = ShiroUtils.getUserId();
         UserAccount userAccount = userAccountMapper.selectUserAccountByUserId(userId);
         order.setStoreId(userAccount.getStoreId());
+        //计算往返路程
+        Store store = storeMapper.selectByStoreId(userAccount.getStoreId());
+        BigDecimal oLat = store.getPosLat();
+        BigDecimal oLng = store.getPosLng();
+        String origin = oLng + "," + oLat;
+        String destination = Geo.geo(order.getCarAddress());
+        int distance = Distance.getDistance(origin, destination, DISTANCE_TYPE_CAR);
+        order.setJourney(distance * 2);
+        
         orderMapper.lootOrder(order);
         //计算出该订单的花费：
         //1-查询出该订单的服务有哪些
