@@ -45,8 +45,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where store_id = #{store_id}
     </select>
     <select id="selectOrderService" resultMap="StoreServiceResult">
-        <include refid="selectStoreServiceVo"/> <foreach item="each" collection="list">
-        where  store_id=#{storeId} and default_service_id=#{each}
+        <include refid="selectStoreServiceVo"/> where  store_id=#{storeId}
+        <foreach item="each" collection="list">
+        or default_service_id=#{each}
     </foreach>
     </select>
         

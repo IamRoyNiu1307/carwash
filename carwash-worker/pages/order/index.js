@@ -14,8 +14,9 @@ Page({
   },
 
   getOrderList(type) {
-    app.http('/api/order/getOrderList',{
-      account:app.globalData.account
+    app.http('/api/user/getOrderList',{
+      account:app.globalData.account,
+      type:0//0：所有订单  1：已完成  2：未完成
     })
       .then(res => {
         this.setData({ orderList: res.orderList });
@@ -110,6 +111,12 @@ Page({
         console.log("pay complete")
       }
     });
+  },
+  updateOrder(e){
+    var orderId = e.target.id
+    wx.navigateTo({
+      url: '/pages/order/update?orderId='+orderId,
+    })
   }
 
 })
