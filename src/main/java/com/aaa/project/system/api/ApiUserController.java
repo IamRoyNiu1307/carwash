@@ -2,6 +2,8 @@ package com.aaa.project.system.api;
 
 import com.aaa.common.utils.SmsUtil;
 import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.project.system.carImage.domain.CarImage;
+import com.aaa.project.system.carImage.service.ICarImageService;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.service.IOrderService;
 import com.aaa.project.system.orderService.domain.OrderService;
@@ -13,6 +15,7 @@ import com.aaa.project.system.userAccount.service.IUserAccountService;
 import com.aaa.project.system.userLocation.domain.UserLocation;
 import com.aaa.project.system.userLocation.service.IUserLocationService;
 import com.alibaba.fastjson.JSONObject;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static com.aaa.project.myconst.MyConst.*;
 
@@ -40,6 +42,8 @@ public class ApiUserController {
     private IOrderService orderService;
     @Autowired
     private IUserLocationService userLocationService;
+    @Autowired
+    private ICarImageService carImageService;
 
     /**
      * 登录接口
@@ -130,30 +134,27 @@ public class ApiUserController {
      * 洗车员返回订单
      *
      * @param account 洗车员账号
-     * @param type    订单类型：0、所有订单 1、已完成订单 2、未完成订单
+     * @param statusId   订单状态
      * @return
      */
     @RequestMapping("/getOrderList")
-    public AjaxResult getOrderList(@RequestParam(name = "account", required = true) String account, int type) {
+    public AjaxResult getOrderList(@RequestParam(name = "account", required = true) String account,@RequestParam(name="statusId",required = true) int statusId) {
         AjaxResult ajaxResult = new AjaxResult();
+        List<Map<String,Object>> orderInfoList=new ArrayList<>();
         Order order = new Order();
-        if (type == 0) {
-            order.setUserAccount(account);
-            List<Order> orderList = orderService.selectOrderList(order);
-            ajaxResult.put("orderList", orderList);
-        } else if (type == 1) {
-            order.setUserAccount(account);
-            order.setStatusId(STATUS_ORDER_FINISHED);
-            List<Order> orderList = orderService.selectOrderList(order);
-            ajaxResult.put("orderList", orderList);
-        } else {
-            order.setUserAccount(account);
-            order.setStatusId(STATUS_ORDER_RUNNING);
-            List<Order> orderList = orderService.selectOrderList(order);
-            ajaxResult.put("orderList", orderList);
+        order.setUserAccount(account);
+        List<Order> orderList = orderService.selectOrderList(order);
+        for(Order each:orderList){
+            Map orderInfo = new HashMap();
+            CarImage carImage = new CarImage();
+            carImage.setCarInfoId(each.getCarId());
+            orderInfo.put("order",orderInfo);
+            orderInfo.put("carImage",carImageService.selectCarImageList(carImage));
+            orderInfoList.add(orderInfo);
         }
 
         ajaxResult.put("code", 0);
+        ajaxResult.put("orderInfoList",orderInfoList);
         return ajaxResult;
     }
 
