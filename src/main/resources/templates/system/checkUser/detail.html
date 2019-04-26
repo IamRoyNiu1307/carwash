@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+    <form class="form-horizontal m-t">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">用户编号：</label>
+            <div class="form-control-static" th:text="${user.userId}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">登录名：</label>
+            <div class="form-control-static" th:text="${user.loginName}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">用户姓名：</label>
+            <div class="form-control-static" th:text="${user.userName}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">性别：</label>
+            <div class="form-control-static" th:text="${user.sex == '0' ? '男' : '女'}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">电话：</label>
+            <div class="form-control-static" th:text="${user.phonenumber}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">密码：</label>
+            <div class="form-control-static" th:text="${user.password}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">salt：</label>
+            <div class="form-control-static" th:text="${user.salt}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">状态：</label>
+            <div class="form-control-static" th:text="${user.status}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">驾照A面：</label>
+            <div class="form-control-static">
+                <img th:src="@{${user.drivingLicence1}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">驾照B面：</label>
+            <div class="form-control-static">
+                <img th:src="@{${user.drivingLicence2}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">所属门店：</label>
+            <div class="form-control-static" th:text="${user.store.storeName}">
+            </div>
+        </div>
+        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="javascript:acceptUser()" shiro:hasPermission="system:checkUser:acceptUser">
+                <i class="fa fa-plus"></i> 通过
+            </a>
+            <a class="btn btn-danger" onclick="javascript:refuseUser()" shiro:hasPermission="system:checkUser:refuseUser">
+                <i class="fa fa-remove"></i> 拒绝
+            </a>
+            <a class="btn btn-default" onclick="$.modal.close()">
+                <i class="fa fa-edit"></i> 取消
+            </a>
+        </div>
+    </form>
+
+</div>
+<div th:include="include :: footer"></div>
+</body>
+<script th:inline="javascript">
+    var prefix = ctx + "system/checkUser";
+    function acceptUser() {
+        $.modal.confirm("确定通过此用户？", function() {
+            var data = { "userId": [[${user.userId}]] };
+            $.operate.save(prefix + "/acceptUser", data);
+        })
+    }
+    function refuseUser() {
+        $.modal.confirm("确定拒绝此用户？", function() {
+            var data = { "userId": [[${user.userId}]] };
+            $.operate.save(prefix + "/refuseUser", data);
+        })
+    }
+</script>
+</html>

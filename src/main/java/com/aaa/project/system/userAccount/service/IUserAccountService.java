@@ -29,7 +29,7 @@ public interface IUserAccountService
 	 * @param userId
 	 * @return
 	 */
-	public UserAccount selectUserAccountByUserId(Integer userId);
+	public UserAccount selectUserAccountByUserId(Long userId);
 
 	/**
 	 * 查询洗车员所属店铺

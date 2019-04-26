@@ -79,9 +79,9 @@ public class MyConst {
     //store图标请求路径
     public static final String STORE_ICON_IMAGE_DIR = "/store/logo/";
     //用户驾驶证照片上传路径
-    public static  final String DRIVING_LICENCE_IMG="E:/IdeaProject/carwash/src/main/resources/static/fileupload/user/drivingLicence";
+    public static  final String DRIVING_LICENCE_IMG="D:/idea/ideaWorkSpace/carwash/src/main/resources/static/fileupload/user/drivingLicence";
     //用户驾驶证照片请求路径
-    public static final String DRIVING_LICENCE_ICON_IMG="/user/drivingLicence/";
+    public static final String DRIVING_LICENCE_ICON_IMG="/fileupload/user/drivingLicence/";
 
 
 }
