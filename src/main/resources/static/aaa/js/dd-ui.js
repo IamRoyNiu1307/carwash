@@ -464,7 +464,7 @@
             },
             // 删除信息
             remove: function (id) {
-                $.modal.confirm("确定拒绝该条" + $.table._option.modalName + "门店申请吗？", function () {
+                $.modal.confirm("确定删除" + $.table._option.modalName + "审批信息吗？", function () {
                     var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
                     var data = {"ids": id};
                     $.operate.submit(url, "post", "json", data);
@@ -478,6 +478,46 @@
                     alert(url);
                     $.operate.submit(url, "post", "json", data);
                 });
+            },
+
+            // 拒绝信息
+            refuse: function (id) {
+                $.modal.confirm("确定拒绝" + $.table._option.modalName + "该信息吗？", function () {
+                    var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
+                    var data = {"ids": id};
+                    $.operate.submit(url, "post", "json", data);
+                });
+            },
+            //查看order详细信息
+            showOrderDetail: function (id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = $.table._option.showOrderInfoUrl.replace("{id}", id);
+                } else {
+                    var id = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+                    if (id.length == 0) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
+                    }
+                    url = $.table._option.showOrderInfoUrl.replace("id", id);
+
+                }
+
+                $.modal.open("展示" + $.table._option.modalName+"详细信息", url);
+            },
+            //抢订单
+            loot: function (url,data) {
+                $.modal.loading("正在处理中，请稍后...");
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (result) {
+                        $.operate.successCallback(result);
+                    }
+                };
+                $.ajax(config)
             },
             // 批量删除信息
             removeAll: function () {

@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+import static com.aaa.project.myconst.MyConst.PASS_CONST_ID;
+import static com.aaa.project.myconst.MyConst.REFUSE_CONST_ID;
+
 @Controller
 @RequestMapping("/system/reviewedStore")
 public class storeReviewController extends BaseController {
@@ -55,8 +58,7 @@ public class storeReviewController extends BaseController {
     @PostMapping("/refuse")
     @ResponseBody
     public AjaxResult refuse(String ids) {
-        System.out.println("refuse");
-        return toAjax(iStoreReviewService.updateStoreStatusById(Convert.toInt(ids), 106));
+        return toAjax(iStoreReviewService.updateStoreStatusById(Convert.toInt(ids), REFUSE_CONST_ID));
     }
 
     /**
@@ -70,8 +72,7 @@ public class storeReviewController extends BaseController {
     @PostMapping("/agree")
     @ResponseBody
     public AjaxResult agree(String ids) {
-        System.out.println("agree");
-        return toAjax(iStoreReviewService.updateStoreStatusById(Convert.toInt(ids), 105));
+        return toAjax(iStoreReviewService.updateStoreStatusById(Convert.toInt(ids), PASS_CONST_ID));
     }
 
 
