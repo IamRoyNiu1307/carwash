@@ -22,6 +22,8 @@ public class KeyInfo extends BaseEntity
 	private Integer statusId;
 	/** 状态名称*/
 	private String statusName;
+	/** 验证码*/
+	private Integer verifyCode;
 
 	public void setId(Integer id) 
 	{
@@ -57,6 +59,14 @@ public class KeyInfo extends BaseEntity
 
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
+	}
+
+	public Integer getVerifyCode() {
+		return verifyCode;
+	}
+
+	public void setVerifyCode(Integer verifyCode) {
+		this.verifyCode = verifyCode;
 	}
 
 	public String toString() {

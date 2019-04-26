@@ -79,7 +79,7 @@ Page({
   updateOrder(e){
     var orderId = e.currentTarget.id
     wx.navigateTo({
-      url: '/pages/door/index?orderId=' + orderId,
+      url: '/pages/takePhoto/takePhoto?orderId='+orderId,
     })
   }
 

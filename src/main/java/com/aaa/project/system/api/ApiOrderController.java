@@ -230,7 +230,7 @@ public class ApiOrderController {
     public AjaxResult getOrder(@RequestParam(name = "orderId") String orderId) {
         AjaxResult ajaxResult = new AjaxResult();
         Order order = orderService.selectOrderByOrderId(orderId);
-        if(order.getStatusId()==STATUS_ORDER_UNPAY){
+        if(order.getStatusId().equals(STATUS_ORDER_CREATED)){
             List<DefaultService> orderService = defaultServiceService.selectBylist(orderId);
             ajaxResult.put("orderService",orderService);
         }else {

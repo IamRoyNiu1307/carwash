@@ -1,24 +1,13 @@
 <!--pages/door/index.wxml-->
 
 <view class="door_log">
-  <view class="door_log_title">门店LOGO</view>
+  <view class="door_log_title">车辆照片</view>
   <view class="door_log_list clear" bindtap="uploadLogo">
     <view class="item">
       <image src="/image/icon_upload_image.png" mode="widthFix" />
     </view>
     <view class="item" wx:for="{{logoList}}" wx:key="index">
       <image src="{{item.imgpath}}" mode="widthFix" />
-    </view>
-  </view>
-</view>
-<view class="door_log">
-  <view class="door_log_title">门店相册</view>
-  <view class="door_log_list clear">
-    <view class="item" bindtap="uploadImage">
-      <image src="/image/icon_upload_image.png" mode="widthFix" />
-    </view>
-    <view class="item" wx:for="{{imageList}}" wx:key="index" bindtap="deleteImage" id="{{index}}">
-      <image src="{{item.url}}" mode="widthFix" />
     </view>
   </view>
 </view>

@@ -12,7 +12,29 @@ import static com.aaa.project.myconst.MyConst.TYPE_KEY;
 
 public class SmsUtil {
 
+    public static void sendSms(String phone,String msg, String verifyCode){
+        try {
+            // 发送短信
+            ZhenziSmsClient client = new ZhenziSmsClient("https://sms_developer.zhenzikj.com", "100701",
+                    "e63cba85-be9b-40d0-bfa2-d70bbc13cb6f");
+            String result = client.send(phone, msg+",请凭取件码：" + verifyCode +" 取件！");
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendSms(String phone,String msg){
+        try {
+            // 发送短信
+            ZhenziSmsClient client = new ZhenziSmsClient("https://sms_developer.zhenzikj.com", "100701",
+                    "e63cba85-be9b-40d0-bfa2-d70bbc13cb6f");
+            String result = client.send(phone, msg);
+            System.out.println("sms:"+result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static AjaxResult sendSms(HttpSession session, String phone){
         return sendSms(session,phone,TYPE_ACCOUNT);

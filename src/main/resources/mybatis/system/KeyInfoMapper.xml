@@ -8,12 +8,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="containerId"    column="container_id"    />
         <result property="statusId"    column="status_id"    />
+        <result property="verifyCode"    column="verify_code"    />
         <association property="statusName" column="status_id" select="com.aaa.project.system.status.mapper.StatusMapper.selectStatusNameById">
         </association>
     </resultMap>
 	
 	<sql id="selectKeyInfoVo">
-        select id, container_id, status_id from cw_key_info
+        select id, container_id, status_id , verify_code from cw_key_info
     </sql>
 	
     <select id="selectKeyInfoList" parameterType="KeyInfo" resultMap="KeyInfoResult">
@@ -22,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null "> and id = #{id}</if>
              <if test="containerId != null  and containerId != '' "> and container_id = #{containerId}</if>
              <if test="statusId != null "> and status_id = #{statusId}</if>
+             <if test="verifyCode != null "> and verify_code = #{verifyCode}</if>
          </where>
     </select>
     
@@ -41,11 +43,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="id != null  ">id,</if>
 			<if test="containerId != null  and containerId != ''  ">container_id,</if>
 			<if test="statusId != null  ">status_id,</if>
+            <if test="verifyCode != null  ">verify_code,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
 			<if test="containerId != null  and containerId != ''  ">#{containerId},</if>
 			<if test="statusId != null  ">#{statusId},</if>
+            <if test="verifyCode != null  ">#{verifyCode},</if>
          </trim>
     </insert>
 	 
@@ -54,6 +58,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="containerId != null  and containerId != ''  ">container_id = #{containerId},</if>
             <if test="statusId != null  ">status_id = #{statusId},</if>
+            <if test="verifyCode != null  ">verify_code = #{verifyCode},</if>
+            <if test="verifyCode == null  ">verify_code = NULL,</if>
         </trim>
         where id = #{id}
     </update>

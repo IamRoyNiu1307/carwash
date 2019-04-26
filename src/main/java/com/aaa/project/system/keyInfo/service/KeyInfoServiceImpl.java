@@ -1,6 +1,7 @@
 package com.aaa.project.system.keyInfo.service;
 
 import com.aaa.common.support.Convert;
+import com.aaa.common.utils.SmsUtil;
 import com.aaa.project.system.keyInfo.domain.KeyInfo;
 import com.aaa.project.system.keyInfo.mapper.KeyInfoMapper;
 import com.aaa.project.system.order.domain.Order;
@@ -9,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
-import static com.aaa.project.myconst.MyConst.STATUS_KEY_STORED;
-import static com.aaa.project.myconst.MyConst.STATUS_KEY_TAKED;
+import static com.aaa.project.myconst.MyConst.*;
 
 /**
  * 钥匙 服务层实现
@@ -95,29 +96,39 @@ public class KeyInfoServiceImpl implements IKeyInfoService
 	 */
 	@Override
 	public boolean updateKeyInfoByKeyInfo(KeyInfo keyInfo, String uuid, Order order){
+		int verifyCode = new Random().nextInt(899999) + 100000;
 		if(keyInfo==null){
 			//新建一个钥匙信息
 			KeyInfo keyInfo2=new KeyInfo();
 			keyInfo2.setContainerId(uuid);
+
 			keyInfo2.setStatusId(STATUS_KEY_STORED);
+
+			keyInfo2.setVerifyCode(verifyCode);
 			//将新建的钥匙信息添加到数据库中
 			keyInfoMapper.insertKeyInfo(keyInfo2);
 			//将钥匙信息添加到订单中
 			order.setKeyInfoId(keyInfo2.getId());
 			//更新数据库中的订单信息
 			orderMapper.updateOrder(order);
+			SmsUtil.sendSms(order.getConsumerAccount(),"订单号:"+order.getOrderId()+" 钥匙已寄存",""+verifyCode);
+			if(order.getUserAccount()!=null){
+				SmsUtil.sendSms(order.getUserAccount(),"订单号:"+order.getOrderId()+" 钥匙已寄存",""+verifyCode);
+			}
 			return true;
 		}else if(keyInfo.getStatusId().equals(STATUS_KEY_STORED)) {
 				//判断钥匙信息上的钥匙柜id是否与传入的钥匙柜id相符合
 				if(keyInfo.getContainerId().equals(uuid)){
 					//如果钥匙柜id符合，则更改钥匙状态
 					keyInfo.setStatusId(STATUS_KEY_TAKED);
+					keyInfo.setVerifyCode(null);
 					//更新钥匙信息
 					keyInfoMapper.updateKeyInfo(keyInfo);
 					//更改订单中的钥匙信息
 					order.setKeyInfo(keyInfo);
 					//更新订单信息
 					orderMapper.updateOrder(order);
+					SmsUtil.sendSms(order.getConsumerAccount(),"订单号:"+order.getOrderId()+" 的钥匙已取出！");
 					return true;
 				}else {
 					return false;
@@ -126,12 +137,18 @@ public class KeyInfoServiceImpl implements IKeyInfoService
 			//更改钥匙柜id和钥匙状态
 			keyInfo.setContainerId(uuid);
 			keyInfo.setStatusId(STATUS_KEY_STORED);
+			keyInfo.setVerifyCode(new Random().nextInt(899999) + 100000);
 			//更新钥匙信息
 			keyInfoMapper.updateKeyInfo(keyInfo);
 			//更改订单中的钥匙信息
 			order.setKeyInfo(keyInfo);
+			if(order.getStatusId().equals(STATUS_ORDER_RUNNING)){
+			    order.setStatusId(STATUS_ORDER_FINISHED);
+            }
 			//更新订单信息
 			orderMapper.updateOrder(order);
+			SmsUtil.sendSms(order.getConsumerAccount(),"订单号:"+order.getOrderId()+" 钥匙已寄存",""+verifyCode);
+
 			return true;
 		}
 		return true;

@@ -22,7 +22,8 @@
     "pages/user/car",
     "pages/user/car_add",
     "pages/user/register",
-    "pages/order/update"
+    "pages/order/update",
+    "pages/takePhoto/takePhoto"
   ],
   "window": {
     "backgroundTextStyle": "light",

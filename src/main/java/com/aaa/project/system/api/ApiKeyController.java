@@ -1,5 +1,6 @@
 package com.aaa.project.system.api;
 
+import com.aaa.common.utils.SmsUtil;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.keyContainer.service.IKeyContainerService;
 import com.aaa.project.system.keyInfo.service.IKeyInfoService;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.aaa.project.myconst.MyConst.STATUS_KEY_STORED;
 
 /**
  * 钥匙接口
@@ -56,10 +59,28 @@ public class ApiKeyController {
     @RequestMapping("/storeKey")
     public AjaxResult storeKey(@RequestParam(name = "uuid",required = true)String uuid,
                                @RequestParam(name = "orderId",required = true)String orderId){
+        AjaxResult ajaxResult = new AjaxResult();
         //根据订单id查找订单
         Order order = orderService.selectOrderByOrderId(orderId);
         //根据钥匙柜信息、订单信息、钥匙信息进行订单更新
         keyInfoService.updateKeyInfoByKeyInfo(order.getKeyInfo(),uuid,order);
-        return AjaxResult.success();
+        ajaxResult.put("code",0);
+        ajaxResult.put("msg","开柜成功");
+        return ajaxResult;
+    }
+
+    /**
+     * 获得取件码
+     * @param phone 接收短信的手机号
+     * @param orderId 订单号
+     * @return
+     */
+    @RequestMapping("/getVerifyCode")
+    public AjaxResult getVerifyCode(@RequestParam(name = "phone")String phone,@RequestParam(name = "orderId")String orderId){
+        Order order = orderService.selectOrderByOrderId(orderId);
+        if(order.getKeyInfo().getStatusId().equals(STATUS_KEY_STORED)){
+            SmsUtil.sendSms(phone,"订单号："+orderId+"的取件码为："+order.getKeyInfo().getVerifyCode()+"，请凭取件码取件！");
+        }
+        return AjaxResult.success("短信已发送！");
     }
 }

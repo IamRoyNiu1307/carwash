@@ -19,6 +19,8 @@ const config = {
   // 登录地址，用于建立会话
   loginUrl: `http://${host}/login`,
 
+  updateOrderUrl: `http://${host}/api/order/uploadPicture`,
+
   // 测试的请求地址，用于测试会话
   requestUrl: `http://${host}/testRequest`,
 

@@ -34,10 +34,10 @@
       钥匙寄取：{{keyInfo.addr}}
     </view>
     <view class='btnArea'>
-      <button>扫码开柜</button>
+      <button bindtap='scanCode'>扫码开柜</button>
     </view>
     <view class='btnArea'>
-      <button>获得取件码</button>
+      <button bindtap="getVerifyCode">获得取件码</button>
     </view>
   </view>
 
@@ -55,15 +55,15 @@
             <view class="weui-media-box__title">{{order.store.storeName}}</view>
             <view class="weui-media-box__desc" style="margin-top:8rpx;">类型: {{order.typeId==0?'普通订单':'预约订单'}}</view>
             <view class="weui-media-box__desc" style="margin-top:8rpx;">预约时间: {{order.appointmentTime}}</view>
-            <view class="weui-media-box__desc" style="margin-top:8rpx;">预约项目: </view>
+            <view class="weui-media-box__desc" style="margin-top:8rpx;">预约项目: <text wx:for="{{orderService}}">{{item.serviceName}} </text></view>
 
           </view>
         </view>
       </view>
       <view class="weui-panel__ft">
-        <view class="weui-panel__ft_desc">订单编号: {{info.sn}}</view>
-        <view class="weui-panel__ft_desc">下单时间: {{info.times}}</view>
-        <view class="weui-panel__ft_desc">送洗时间: {{info.trantime || ''}}</view>
+        <view class="weui-panel__ft_desc">订单编号: {{order.orderId}}</view>
+        <view class="weui-panel__ft_desc">下单时间: {{order.createDate}}</view>
+        <view class="weui-panel__ft_desc">送洗时间: {{order.appointmentTime}}</view>
       </view>
     </view>
   </view>
