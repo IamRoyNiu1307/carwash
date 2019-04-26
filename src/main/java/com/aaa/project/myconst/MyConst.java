@@ -44,6 +44,10 @@ public class MyConst {
     public static final int STATUS_ORDER_UNPAY=201;
     //订单状态：已付款
     public static final int STATUS_ORDER_PAID=202;
+    //订单状态：已完成
+    public static final int STATUS_ORDER_FINISHED=203;
+    //订单状态：进行中
+    public static final int STATUS_ORDER_RUNNING=208;
     //账号状态：可用
     public static final int STATUS_ACCOUNT_ENABLE = 501;
     //短信类型：账号登录、注册
