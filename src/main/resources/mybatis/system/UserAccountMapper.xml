@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-    <select id="selectUserAccountByUserId" parameterType="Integer" resultMap="UserAccountResult">
+    <select id="selectUserAccountByUserId" parameterType="Long" resultMap="UserAccountResult">
         <include refid="selectUserAccountVo"/>
         where user_id = #{userId}
     </select>

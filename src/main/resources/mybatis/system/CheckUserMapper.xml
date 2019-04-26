@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.checkUser.mapper.CheckUserMapper">
+
+    <resultMap type="CheckUser" id="UserResult">
+        <id property="userId" column="user_id"/>
+        <result property="loginName" column="login_name"/>
+        <result property="userName" column="user_name"/>
+        <result property="phonenumber" column="phonenumber"/>
+        <result property="sex" column="sex"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="status" column="status"/>
+        <result property="drivingLicence1" column="driving_licence_1"/>
+        <result property="drivingLicence2" column="driving_licence_2"/>
+        <result property="storeId" column="store_id"/>
+        <association property="store" column="store_id" select="com.aaa.project.system.store.mapper.StoreMapper.selectByStoreId"></association>
+        <!--<collection property="roles" javaType="java.util.List" resultMap="RoleResult"/>-->
+    </resultMap>
+    <sql id="selectCheckUserVo">
+        select su.user_id,su.login_name,su.user_name,su.phonenumber,su.sex,su.password,su.salt,su.status,
+                cu.driving_licence_1,cu.driving_licence_2,cu.store_id
+        from sys_user su inner join cw_user_account cu on su.user_id = cu.user_id
+                          inner join sys_user_role sur on su.user_id = sur.user_id
+                          inner join sys_role sr on sr.role_id = sur.role_id
+    </sql>
+    <select id="selectCheckUserList" resultMap="UserResult">
+        <include refid="selectCheckUserVo"></include>
+        where cu.status_id = 500
+    </select>
+    <select id="selectByUserId" parameterType="long" resultMap="UserResult">
+        <include refid="selectCheckUserVo"></include>
+        where su.user_id = #{userId}
+    </select>
+</mapper>

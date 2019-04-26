@@ -16,7 +16,7 @@
             <label class="col-sm-3 control-label">业务名称：</label>
             <div class="col-sm-8">
                 <select id="serviceName" name="serviceName" class="form-control" onchange="changeDescription()">
-                    <option th:each="service:${serviceList}" th:value="${service.id}" th:text="${service.serviceName}" th:field="*{serviceName}"></option>
+                    <option th:each="service:${serviceList}" th:value="${service.id}" th:text="${service.serviceName}" th:selected="${service.id eq storeService.defaultServiceId}"></option>
                 </select>
                 <!--<input id="serviceName" name="serviceName" th:field="*{serviceName}" class="form-control" type="text">-->
             </div>

@@ -47,7 +47,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
      * @return 用户信息
      */
     @Override
-    public UserAccount selectUserAccountByUserId(Integer userId) {
+    public UserAccount selectUserAccountByUserId(Long userId) {
         return userAccountMapper.selectUserAccountByUserId(userId);
     }
 
