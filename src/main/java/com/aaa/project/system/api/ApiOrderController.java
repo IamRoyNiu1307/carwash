@@ -230,14 +230,11 @@ public class ApiOrderController {
     public AjaxResult getOrder(@RequestParam(name = "orderId") String orderId) {
         AjaxResult ajaxResult = new AjaxResult();
         Order order = orderService.selectOrderByOrderId(orderId);
-   
-        List list = orderServiceService.selectOrderService(order.getOrderId());
-     
         if(order.getStatusId()==STATUS_ORDER_UNPAY){
             List<DefaultService> orderService = defaultServiceService.selectBylist(orderId);
             ajaxResult.put("orderService",orderService);
         }else {
-            List<StoreService> orderService = storeServiceService.selectOrderService(order.getStoreId(), list);
+            List<StoreService> orderService = storeServiceService.selectOrderService(order.getStoreId(),orderId);
             ajaxResult.put("orderService",orderService);
         }
         ajaxResult.put("code", 0);

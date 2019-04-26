@@ -114,8 +114,8 @@ public class StoreServiceServiceImpl implements IStoreServiceService
 	 * @return 服务列表
 	 */
 	@Override
-	public List<StoreService> selectOrderService(String storeId, List list) {
-		return storeServiceMapper.selectOrderService(storeId,list);
+	public List<StoreService> selectOrderService(String storeId, String orderId) {
+		return storeServiceMapper.selectOrderService(storeId,orderId);
 	}
 
 }

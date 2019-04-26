@@ -75,6 +75,6 @@ public interface IStoreServiceService
 	 * @param list 服务id表
 	 * @return 服务
 	 */
-	public List<StoreService> selectOrderService(@Param("storeId")String storeId, List list);
+	public List<StoreService> selectOrderService(@Param("storeId")String storeId,@Param("orderId") String orderId);
 	
 }
