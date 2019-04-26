@@ -10,6 +10,8 @@ import com.aaa.project.system.user.service.IUserService;
 import com.aaa.framework.shiro.service.PasswordService;
 import com.aaa.project.system.userAccount.domain.UserAccount;
 import com.aaa.project.system.userAccount.service.IUserAccountService;
+import com.aaa.project.system.userLocation.domain.UserLocation;
+import com.aaa.project.system.userLocation.service.IUserLocationService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import static com.aaa.project.myconst.MyConst.*;
@@ -34,6 +38,8 @@ public class ApiUserController {
     private IUserAccountService userAccountService;
     @Autowired
     private IOrderService orderService;
+    @Autowired
+    private IUserLocationService userLocationService;
 
     /**
      * 登录接口
@@ -121,9 +127,10 @@ public class ApiUserController {
     }
 
     /**
-     *  洗车员返回订单
+     * 洗车员返回订单
+     *
      * @param account 洗车员账号
-     * @param type 订单类型：0、所有订单 1、已完成订单 2、未完成订单
+     * @param type    订单类型：0、所有订单 1、已完成订单 2、未完成订单
      * @return
      */
     @RequestMapping("/getOrderList")
@@ -139,14 +146,32 @@ public class ApiUserController {
             order.setStatusId(STATUS_ORDER_FINISHED);
             List<Order> orderList = orderService.selectOrderList(order);
             ajaxResult.put("orderList", orderList);
-        }else {
+        } else {
             order.setUserAccount(account);
             order.setStatusId(STATUS_ORDER_RUNNING);
             List<Order> orderList = orderService.selectOrderList(order);
-            ajaxResult.put("orderList",orderList);
+            ajaxResult.put("orderList", orderList);
         }
 
         ajaxResult.put("code", 0);
         return ajaxResult;
+    }
+
+    /**
+     * 洗车员位置信息
+     * @param account 洗车员账号
+     * @param posLng 经度
+     * @param posLat 纬度
+     * @return ajaxResult.success
+     */
+    @RequestMapping("/insertLocation")
+    public AjaxResult insertLocation(@RequestParam(name = "account", required = true) String account, @RequestParam(name = "posLng", required = true) String posLng, @RequestParam(name = "posLat", required = true) String posLat) {
+        UserLocation userLocation = new UserLocation();
+        userLocation.setUserAccount(account);
+        userLocation.setPosLng(new BigDecimal(posLng));
+        userLocation.setPosLat(new BigDecimal(posLat));
+        userLocation.setUpdateDatetime(new Date());
+        userLocationService.insertUserLocation(userLocation);
+        return AjaxResult.success();
     }
 }
