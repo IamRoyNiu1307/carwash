@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="orderId"    column="order_id"    />
         <result property="content"    column="content"    />
         <result property="createDate"    column="create_date"    />
+        <association property="imgPath" column="img_path" select="com.aaa.project.system.logImage.mapper.LogImageMapper.selectLogImg"></association>
     </resultMap>
 	
 	<sql id="selectOrderLogVo">
@@ -16,6 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 	<select id="selectOrderCountByOrderId" parameterType="string" resultType="int">
         select count(*) from cw_order_log where order_id=#{orderId}
+    </select>
+    <select id="selectOrderLog" parameterType="string" resultMap="OrderLogResult" >
+        select order_id,content,create_date,image_path from cw_order_log,cw_log_image where cw_order_log.id=cw_log_image.log_id order by create_date desc
     </select>
     <select id="selectOrderLogList" parameterType="OrderLog" resultMap="OrderLogResult">
         <include refid="selectOrderLogVo"/>

@@ -43,6 +43,16 @@ public class OrderLogServiceImpl implements IOrderLogService {
     }
 
     /**
+     * 查询订单日志
+     * @param orderId 订单id
+     * @return 订单日志
+     */
+    @Override
+    public List<OrderLog> selectOrderLog(String orderId) {
+        return orderLogMapper.selectOrderLog(orderId);
+    }
+
+    /**
      * 查询订单数量
      *
      * @param orderId 订单id

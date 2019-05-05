@@ -6,12 +6,10 @@ import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.common.utils.IDUtil;
 import com.aaa.common.utils.ReGeo;
 import com.aaa.framework.web.domain.AjaxResult;
-import com.aaa.project.system.carImage.domain.CarImage;
 import com.aaa.project.system.carInfo.domain.CarInfo;
 import com.aaa.project.system.carInfo.service.ICarInfoService;
 import com.aaa.project.system.defaultService.domain.DefaultService;
 import com.aaa.project.system.defaultService.service.IDefaultServiceService;
-import com.aaa.project.system.keyInfo.service.IKeyInfoService;
 import com.aaa.project.system.logImage.domain.LogImage;
 import com.aaa.project.system.logImage.service.ILogImageService;
 import com.aaa.project.system.order.domain.Order;
@@ -22,8 +20,11 @@ import com.aaa.project.system.orderLog.domain.OrderLog;
 import com.aaa.project.system.orderLog.service.IOrderLogService;
 import com.aaa.project.system.orderService.domain.OrderService;
 import com.aaa.project.system.orderService.service.IOrderServiceService;
+import com.aaa.project.system.store.domain.Store;
+import com.aaa.project.system.store.service.IStoreService;
 import com.aaa.project.system.storeService.domain.StoreService;
 import com.aaa.project.system.storeService.service.IStoreServiceService;
+import com.aaa.project.system.user.domain.User;
 import com.aaa.project.system.user.service.IUserService;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,8 @@ public class ApiOrderController {
     private IDefaultServiceService defaultServiceService;
     @Autowired
     private IUserService userService;
-
+    @Autowired
+    private IStoreService storeService;
 
     /**
      * @param consumerAccount 顾客账号
@@ -127,7 +129,7 @@ public class ApiOrderController {
         orderService.insertOrder(order);
 
         ajaxResult.put("code", 0);
-        ajaxResult.put("order",order);
+        ajaxResult.put("order", order);
         return ajaxResult;
     }
 
@@ -245,6 +247,27 @@ public class ApiOrderController {
         }
         ajaxResult.put("code", 0);
         ajaxResult.put("order", order);
+        return ajaxResult;
+    }
+
+    /**
+     * 获取订单相关信息
+     *
+     * @param orderId 订单id
+     * @return 订单信息及日志
+     */
+    @RequestMapping("/traceOrder")
+    public AjaxResult traceOrder(@RequestParam(value = "orderId", required = true) String orderId) {
+        AjaxResult ajaxResult = new AjaxResult();
+        Order order = orderService.selectOrderByOrderId(orderId);
+        CarInfo carInfo = carInfoService.selectCarInfoById(order.getCarId());
+        ajaxResult.put("carInfo", carInfo);
+        Store store = storeService.selectByStoreId(order.getStoreId());
+        ajaxResult.put("store", store);
+        List<OrderLog> logList = orderLogService.selectOrderLog(orderId);
+        ajaxResult.put("logList", logList);
+        User user = userService.selectUserByPhoneNumber(order.getUserAccount());
+        ajaxResult.put("user", user);
         return ajaxResult;
     }
 }

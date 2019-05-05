@@ -23,8 +23,18 @@ public class OrderLog extends BaseEntity
 	private String content;
 	/** 生成时间 */
 	private Date createDate;
+	/** 图片路径*/
+	private String imgPath;
 
-	public void setId(Integer id) 
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}

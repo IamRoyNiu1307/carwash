@@ -28,6 +28,13 @@ public interface IOrderLogService
 	public List<OrderLog> selectOrderLogList(OrderLog orderLog);
 
 	/**
+	 * 查询日志及图片
+	 * @param orderId 订单id
+	 * @return 日志
+	 */
+	public List<OrderLog> selectOrderLog(String orderId);
+
+	/**
 	 * 查询订单日志数量
 	 *
 	 * @param orderId 订单id

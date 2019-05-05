@@ -34,6 +34,13 @@ public interface OrderLogMapper
 	 * @return 订单日志数量
 	 */
 	public int selectOrderCountByOrderId(String orderId);
+
+	/**
+	 * 查询日志及图片
+	 * @param orderId 订单id
+	 * @return 日志
+	 */
+	public List<OrderLog> selectOrderLog(String orderId);
 	
 	/**
      * 新增订单日志

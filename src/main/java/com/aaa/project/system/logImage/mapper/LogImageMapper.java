@@ -26,6 +26,13 @@ public interface LogImageMapper
      * @return 日志图片集合
      */
 	public List<LogImage> selectLogImageList(LogImage logImage);
+
+	/**
+	 * 查询订单图片
+	 * @param logId 订单di
+	 * @return 订单图片路径
+	 */
+	public String selectLogImg(int logId);
 	
 	/**
      * 新增日志图片

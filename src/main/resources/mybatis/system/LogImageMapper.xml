@@ -22,7 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="imagePath != null  and imagePath != '' "> and image_path = #{imagePath}</if>
          </where>
     </select>
-    
+    <select id="selectLogImg" parameterType="int" resultType="string">
+        select image_path from cw_log_image where log_id=#{logId}
+    </select>
     <select id="selectLogImageById" parameterType="Integer" resultMap="LogImageResult">
         <include refid="selectLogImageVo"/>
         where id = #{id}
