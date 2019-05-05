@@ -1,5 +1,6 @@
 package com.aaa.project.system.orderLog.domain;
 
+import com.aaa.project.system.logImage.domain.LogImage;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -24,14 +25,14 @@ public class OrderLog extends BaseEntity
 	/** 生成时间 */
 	private Date createDate;
 	/** 图片路径*/
-	private String imgPath;
+	private LogImage logImage;
 
-	public String getImgPath() {
-		return imgPath;
+	public LogImage getLogImage() {
+		return logImage;
 	}
 
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
+	public void setLogImage(LogImage logImage) {
+		this.logImage = logImage;
 	}
 
 	public void setId(Integer id)

@@ -2,6 +2,7 @@ package com.aaa.project.system.orderLog.service;
 
 import java.util.List;
 
+import com.aaa.project.system.orderLog.domain.OrderLogVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aaa.project.system.orderLog.mapper.OrderLogMapper;
@@ -48,7 +49,7 @@ public class OrderLogServiceImpl implements IOrderLogService {
      * @return 订单日志
      */
     @Override
-    public List<OrderLog> selectOrderLog(String orderId) {
+    public List<OrderLogVO> selectOrderLog(String orderId) {
         return orderLogMapper.selectOrderLog(orderId);
     }
 

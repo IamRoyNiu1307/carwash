@@ -1,6 +1,8 @@
 package com.aaa.project.system.orderLog.service;
 
 import com.aaa.project.system.orderLog.domain.OrderLog;
+import com.aaa.project.system.orderLog.domain.OrderLogVO;
+
 import java.util.List;
 
 /**
@@ -32,7 +34,7 @@ public interface IOrderLogService
 	 * @param orderId 订单id
 	 * @return 日志
 	 */
-	public List<OrderLog> selectOrderLog(String orderId);
+	public List<OrderLogVO> selectOrderLog(String orderId);
 
 	/**
 	 * 查询订单日志数量

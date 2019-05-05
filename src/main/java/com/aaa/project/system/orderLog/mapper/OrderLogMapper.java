@@ -1,7 +1,9 @@
 package com.aaa.project.system.orderLog.mapper;
 
 import com.aaa.project.system.orderLog.domain.OrderLog;
-import java.util.List;	
+import com.aaa.project.system.orderLog.domain.OrderLogVO;
+
+import java.util.List;
 
 /**
  * 订单日志 数据层
@@ -40,7 +42,7 @@ public interface OrderLogMapper
 	 * @param orderId 订单id
 	 * @return 日志
 	 */
-	public List<OrderLog> selectOrderLog(String orderId);
+	public List<OrderLogVO> selectOrderLog(String orderId);
 	
 	/**
      * 新增订单日志

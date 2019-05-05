@@ -17,6 +17,7 @@ import com.aaa.project.system.order.service.IOrderService;
 import com.aaa.project.system.orderAmount.domain.OrderAmount;
 import com.aaa.project.system.orderAmount.service.IOrderAmountService;
 import com.aaa.project.system.orderLog.domain.OrderLog;
+import com.aaa.project.system.orderLog.domain.OrderLogVO;
 import com.aaa.project.system.orderLog.service.IOrderLogService;
 import com.aaa.project.system.orderService.domain.OrderService;
 import com.aaa.project.system.orderService.service.IOrderServiceService;
@@ -264,7 +265,7 @@ public class ApiOrderController {
         ajaxResult.put("carInfo", carInfo);
         Store store = storeService.selectByStoreId(order.getStoreId());
         ajaxResult.put("store", store);
-        List<OrderLog> logList = orderLogService.selectOrderLog(orderId);
+        List<OrderLogVO> logList = orderLogService.selectOrderLog(orderId);
         ajaxResult.put("logList", logList);
         User user = userService.selectUserByPhoneNumber(order.getUserAccount());
         ajaxResult.put("user", user);
