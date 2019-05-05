@@ -46,9 +46,23 @@ App({
     })
   },
   sendLocation(){
+    var _this = this
     setInterval(function () {
       //循环执行代码
       console.log("aaaaaaa")
+      wx.getLocation({
+        complete: res => {
+          
+          var lng = res.longitude
+          var lat = res.latitude
+          
+          http('/api/user/insertLocation',{
+            account:_this.globalData.account,
+            posLng:lng,
+            posLat:lat
+          }).then(res=>{})
+
+        }})
     }, 30000) //循环时间 这里是1秒 
   },
   http,
