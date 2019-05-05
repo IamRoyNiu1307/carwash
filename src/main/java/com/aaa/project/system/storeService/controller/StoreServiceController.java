@@ -115,6 +115,8 @@ public class StoreServiceController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(StoreService storeService)
 	{
+	    DefaultService defaultService = defaultServiceService.selectDefaultServiceById(Integer.parseInt(storeService.getServiceName()));
+	    storeService.setServiceName(defaultService.getServiceName());
 		return toAjax(storeServiceService.insertStoreService(storeService));
 	}
 
@@ -141,7 +143,9 @@ public class StoreServiceController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(StoreService storeService)
-	{		
+	{
+        DefaultService defaultService = defaultServiceService.selectDefaultServiceById(Integer.parseInt(storeService.getServiceName()));
+        storeService.setServiceName(defaultService.getServiceName());
 		return toAjax(storeServiceService.updateStoreService(storeService));
 	}
 	
