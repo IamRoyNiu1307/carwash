@@ -64,8 +64,6 @@ public class ApiOrderController {
     private IDefaultServiceService defaultServiceService;
     @Autowired
     private IUserService userService;
-    @Autowired
-    private IKeyInfoService keyInfoService;
 
 
     /**
@@ -128,7 +126,7 @@ public class ApiOrderController {
         orderServiceService.insertOrder(orderId, list);
         //将订单信息插入订单表中
         orderService.insertOrder(order);
-        keyInfoService.updateKeyInfoByKeyInfo(null, uuId, orderService.selectOrderByOrderId(orderId));
+
         ajaxResult.put("code", 0);
         return ajaxResult;
     }
