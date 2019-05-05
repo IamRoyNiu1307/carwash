@@ -23,6 +23,7 @@ import com.aaa.project.system.orderService.domain.OrderService;
 import com.aaa.project.system.orderService.service.IOrderServiceService;
 import com.aaa.project.system.storeService.domain.StoreService;
 import com.aaa.project.system.storeService.service.IStoreServiceService;
+import com.aaa.project.system.user.service.IUserService;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,8 @@ public class ApiOrderController {
     private ILogImageService logImageService;
     @Autowired
     private IDefaultServiceService defaultServiceService;
+    @Autowired
+    private IUserService userService;
 
 
     /**
@@ -165,7 +168,7 @@ public class ApiOrderController {
         OrderLog orderLog = new OrderLog();
         Order order = orderService.selectOrderByOrderId(orderId);
         orderLog.setOrderId(orderId);
-        orderLog.setContent("订单追踪，照片上传 操作员账号："+order.getUserAccount());
+        orderLog.setContent("订单追踪，照片上传 操作员账号："+order.getUserAccount()+"操作员："+userService.selectUserByPhoneNumber(order.getUserAccount()).getUserName());
         //判断插入车辆照片状态内容
         //int i = orderLogService.selectOrderCountByOrderId(orderId);
         //if(i==0){
