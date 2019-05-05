@@ -36,8 +36,6 @@ public class LootOrderServiceImpl implements ILootOrderService {
     private OrderAmountMapper orderAmountMapper;
     @Autowired
     private StoreMapper storeMapper;
-    @Autowired
-    private Geo geo;
 
     @Override
     public List<Order> selectCanLootOrderList(Order order) {
@@ -63,7 +61,7 @@ public class LootOrderServiceImpl implements ILootOrderService {
         String destination = Geo.geo(order.getCarAddress());
         int distance = Distance.getDistance(origin, destination, DISTANCE_TYPE_CAR);
         order.setJourney(distance * 2);
-        
+
         orderMapper.lootOrder(order);
         //计算出该订单的花费：
         //1-查询出该订单的服务有哪些
