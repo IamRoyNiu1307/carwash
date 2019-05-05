@@ -11,6 +11,7 @@ import com.aaa.project.system.carInfo.domain.CarInfo;
 import com.aaa.project.system.carInfo.service.ICarInfoService;
 import com.aaa.project.system.defaultService.domain.DefaultService;
 import com.aaa.project.system.defaultService.service.IDefaultServiceService;
+import com.aaa.project.system.keyInfo.service.IKeyInfoService;
 import com.aaa.project.system.logImage.domain.LogImage;
 import com.aaa.project.system.logImage.service.ILogImageService;
 import com.aaa.project.system.order.domain.Order;
@@ -63,6 +64,8 @@ public class ApiOrderController {
     private IDefaultServiceService defaultServiceService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IKeyInfoService keyInfoService;
 
 
     /**
@@ -84,7 +87,8 @@ public class ApiOrderController {
                                   @RequestParam(name = "expectCostId", required = true) int expectCostId,
                                   @RequestParam(name = "orderComment", required = false) String orderComment,
                                   @RequestParam(name = "storeId", required = false) String storeId,
-                                  @RequestParam(name = "carId", required = true) int carId) {
+                                  @RequestParam(name = "carId", required = true) int carId,
+                                  @RequestParam(name = "uuid", required = true) String uuId) {
         AjaxResult ajaxResult = new AjaxResult();
         Order order = new Order();
         //获取车辆信息
@@ -124,6 +128,7 @@ public class ApiOrderController {
         orderServiceService.insertOrder(orderId, list);
         //将订单信息插入订单表中
         orderService.insertOrder(order);
+        keyInfoService.updateKeyInfoByKeyInfo(null, uuId, orderService.selectOrderByOrderId(orderId));
         ajaxResult.put("code", 0);
         return ajaxResult;
     }
@@ -158,7 +163,7 @@ public class ApiOrderController {
     /**
      * 洗车员图片拍照上传
      *
-     * @param file 上传的文件
+     * @param file    上传的文件
      * @param orderId 订单id
      * @return AjaxResult.success
      */
@@ -168,7 +173,7 @@ public class ApiOrderController {
         OrderLog orderLog = new OrderLog();
         Order order = orderService.selectOrderByOrderId(orderId);
         orderLog.setOrderId(orderId);
-        orderLog.setContent("订单追踪，照片上传 操作员账号："+order.getUserAccount()+"操作员："+userService.selectUserByPhoneNumber(order.getUserAccount()).getUserName());
+        orderLog.setContent("订单追踪，照片上传 操作员账号：" + order.getUserAccount() + "操作员：" + userService.selectUserByPhoneNumber(order.getUserAccount()).getUserName());
         //判断插入车辆照片状态内容
         //int i = orderLogService.selectOrderCountByOrderId(orderId);
         //if(i==0){
@@ -233,12 +238,12 @@ public class ApiOrderController {
     public AjaxResult getOrder(@RequestParam(name = "orderId") String orderId) {
         AjaxResult ajaxResult = new AjaxResult();
         Order order = orderService.selectOrderByOrderId(orderId);
-        if(order.getStatusId().equals(STATUS_ORDER_CREATED)){
+        if (order.getStatusId().equals(STATUS_ORDER_CREATED)) {
             List<DefaultService> orderService = defaultServiceService.selectBylist(orderId);
-            ajaxResult.put("orderService",orderService);
-        }else {
-            List<StoreService> orderService = storeServiceService.selectOrderService(order.getStoreId(),orderId);
-            ajaxResult.put("orderService",orderService);
+            ajaxResult.put("orderService", orderService);
+        } else {
+            List<StoreService> orderService = storeServiceService.selectOrderService(order.getStoreId(), orderId);
+            ajaxResult.put("orderService", orderService);
         }
         ajaxResult.put("code", 0);
         ajaxResult.put("order", order);
