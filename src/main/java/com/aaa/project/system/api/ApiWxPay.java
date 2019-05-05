@@ -37,7 +37,7 @@ public class ApiWxPay {
     private IOrderService orderService;
 
     @RequestMapping("/pay")
-    public JSONObject pay(@RequestParam("orderId")String orderId, @RequestParam(name = "openid") String openid,HttpServletRequest request){
+    public JSONObject pay(@RequestParam("orderId")String orderId, @RequestParam(name = "openid") String openid,@RequestParam(name = "amount") Float amount,HttpServletRequest request){
         JSONObject jsonObject = PayUtil.wxPay(orderId,openid, request);
         return jsonObject;
     }
@@ -56,8 +56,19 @@ public class ApiWxPay {
     }
 
 
+    /**
+     * 完成支付
+     * @param orderId 订单id
+     * @param date 日期
+     * @param uuid uuid
+     * @param amount 订单金额
+     * @return
+     */
     @RequestMapping("/payComplete")
-    public AjaxResult payComplete(@RequestParam(name = "orderId")String orderId,@RequestParam(name = "date") String date){
+    public AjaxResult payComplete(@RequestParam(name = "orderId")String orderId,
+                                  @RequestParam(name = "date") String date,
+                                  @RequestParam(name = "uuid")String uuid,
+                                  @RequestParam(name = "amount")Float amount){
 
         System.out.println(date);
         DateTime parse = DateUtil.parse(date, "yyyy-MM-dd HH:mm:ss");

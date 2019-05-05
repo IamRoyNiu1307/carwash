@@ -85,8 +85,7 @@ public class ApiOrderController {
                                   @RequestParam(name = "expectCostId", required = true) int expectCostId,
                                   @RequestParam(name = "orderComment", required = false) String orderComment,
                                   @RequestParam(name = "storeId", required = false) String storeId,
-                                  @RequestParam(name = "carId", required = true) int carId,
-                                  @RequestParam(name = "uuid", required = true) String uuId) {
+                                  @RequestParam(name = "carId", required = true) int carId) {
         AjaxResult ajaxResult = new AjaxResult();
         Order order = new Order();
         //获取车辆信息
@@ -128,6 +127,7 @@ public class ApiOrderController {
         orderService.insertOrder(order);
 
         ajaxResult.put("code", 0);
+        ajaxResult.put("order",order);
         return ajaxResult;
     }
 

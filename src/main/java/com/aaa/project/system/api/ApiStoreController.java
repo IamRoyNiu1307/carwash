@@ -67,6 +67,7 @@ public class ApiStoreController {
      *
      * @param posLng 经度
      * @param posLat 纬度
+     * @param limit 返回门店数量
      * @return 结果
      */
     @RequestMapping("/aroundStoreList")
@@ -79,7 +80,10 @@ public class ApiStoreController {
         List<Map<String, Object>> aroundStoreList = storeService.searchAroundStore(posLng, posLat);
         //3-赋值
         ajaxResult.put("code",0);
+
         ajaxResult.put("aroundStoreList", aroundStoreList);
+
+
         //4-返回结果
         return ajaxResult;
     }
@@ -97,5 +101,7 @@ public class ApiStoreController {
         ajaxResult.put("envList",envList);
         return ajaxResult;
     }
+
+
 
 }
