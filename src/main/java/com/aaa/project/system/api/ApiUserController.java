@@ -174,6 +174,6 @@ public class ApiUserController {
         userLocation.setPosLat(new BigDecimal(posLat));
         userLocation.setUpdateDatetime(new Date());
         userLocationService.insertUserLocation(userLocation);
-        return AjaxResult.success();
+        return null;
     }
 }

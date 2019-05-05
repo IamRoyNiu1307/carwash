@@ -1,9 +1,11 @@
 package com.aaa.project.system.api;
 
 
+import com.aaa.common.utils.Distance;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.evaluate.domain.Evaluate;
 import com.aaa.project.system.evaluate.service.IEvaluateService;
+import com.aaa.project.system.store.domain.Store;
 import com.aaa.project.system.store.service.IStoreService;
 import com.aaa.project.system.storeEnv.domain.StoreEnv;
 import com.aaa.project.system.storeEnv.service.IStoreEnvService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +37,22 @@ public class ApiStoreController {
 
     @Autowired
     private IStoreEnvService storeEnvService;
+
+
+    /**
+     * 根据门店id获取门店
+     * @param storeId 门店id
+     * @return 门店
+     */
+    @RequestMapping("/getStore")
+    public AjaxResult getStore(@RequestParam(name = "storeId")String storeId){
+        AjaxResult ajaxResult = new AjaxResult();
+        Map result = new HashMap();
+        Store store = storeService.selectByStoreId(storeId);
+        result.put("store",store);
+        ajaxResult.put("store",result);
+        return ajaxResult;
+    }
 
     /**
      * 业务列表
@@ -67,7 +86,6 @@ public class ApiStoreController {
      *
      * @param posLng 经度
      * @param posLat 纬度
-     * @param limit 返回门店数量
      * @return 结果
      */
     @RequestMapping("/aroundStoreList")
