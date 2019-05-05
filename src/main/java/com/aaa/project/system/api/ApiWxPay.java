@@ -5,8 +5,11 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.XmlUtil;
 import com.aaa.common.utils.PayUtil;
 import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.project.system.keyInfo.service.IKeyInfoService;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.service.IOrderService;
+import com.aaa.project.system.orderAmount.domain.OrderAmount;
+import com.aaa.project.system.orderAmount.service.IOrderAmountService;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.jdom.JDOMException;
@@ -35,6 +38,10 @@ public class ApiWxPay {
 
     @Autowired
     private IOrderService orderService;
+    @Autowired
+    private IKeyInfoService keyInfoService;
+    @Autowired
+    private IOrderAmountService orderAmountService;
 
     @RequestMapping("/pay")
     public JSONObject pay(@RequestParam("orderId")String orderId, @RequestParam(name = "openid") String openid,@RequestParam(name = "amount") Float amount,HttpServletRequest request){
@@ -76,6 +83,14 @@ public class ApiWxPay {
         order.setStatusId(STATUS_ORDER_PAID);
         order.setPayDate(parse.toJdkDate());
         orderService.updateOrder(order);
+        //更改订单钥匙柜信息并发短信
+        keyInfoService.updateKeyInfoByKeyInfo(null,uuid,order);
+        //插入订单金额表
+        OrderAmount orderAmount = new OrderAmount();
+        orderAmount.setOrderId(orderId);
+        orderAmount.setTotalAmount(amount);
+        orderAmount.setFinalAmount(amount);
+        orderAmountService.insertOrderAmount(orderAmount);
         return AjaxResult.success();
     }
 }
