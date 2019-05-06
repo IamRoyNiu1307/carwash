@@ -7,6 +7,7 @@ import cn.hutool.core.util.NumberUtil;
 import com.aaa.common.utils.Distance;
 import com.aaa.common.utils.IDUtil;
 import com.aaa.common.utils.ReGeo;
+import com.aaa.common.utils.http.HttpUtils;
 import org.junit.Test;
 
 import java.util.*;
@@ -59,11 +60,6 @@ public class MyTest {
     }
     @Test
     public void toArray(){
-        String a="[1,2,3]";
-        String b = a.substring(1,a.length()-1);
-        String[] list=b.split(",");
-        for(int i=0;i<list.length;i++){
-            System.out.println(list[i]);
-        }
+        HttpUtils.sendGet("http://192.168.1.47:8080/api/openContainer","container=01&box=01&code=47");
     }
 }

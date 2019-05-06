@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.containerBox.mapper.ContainerBoxMapper">
+    
+    <resultMap type="ContainerBox" id="ContainerBoxResult">
+        <result property="id"    column="id"    />
+        <result property="uuid"    column="uuid"    />
+        <result property="containerNum"    column="container_num"    />
+        <result property="boxNum"    column="box_num"    />
+        <result property="code"    column="code"    />
+        <result property="statusId"    column="status_id"    />
+    </resultMap>
+	
+	<sql id="selectContainerBoxVo">
+        select id, uuid, container_num, box_num, code, status_id from cw_container_box
+    </sql>
+	
+    <select id="selectContainerBoxList" parameterType="ContainerBox" resultMap="ContainerBoxResult">
+        <include refid="selectContainerBoxVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="uuid != null  and uuid != '' "> and uuid = #{uuid}</if>
+             <if test="containerNum != null  and containerNum != '' "> and container_num = #{containerNum}</if>
+             <if test="boxNum != null  and boxNum != '' "> and box_num = #{boxNum}</if>
+             <if test="code != null  and code != '' "> and code = #{code}</if>
+             <if test="statusId != null "> and status_id = #{statusId}</if>
+         </where>
+    </select>
+    
+    <select id="selectContainerBoxById" parameterType="Integer" resultMap="ContainerBoxResult">
+        <include refid="selectContainerBoxVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="findFreeBox" parameterType="String" resultMap="ContainerBoxResult">
+        <include refid="selectContainerBoxVo"/>
+        where uuid = #{uuid} and status_id = 600 limit 1
+    </select>
+        
+    <insert id="insertContainerBox" parameterType="ContainerBox">
+        insert into cw_container_box
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="uuid != null  and uuid != ''  ">uuid,</if>
+			<if test="containerNum != null  and containerNum != ''  ">container_num,</if>
+			<if test="boxNum != null  and boxNum != ''  ">box_num,</if>
+			<if test="code != null  and code != ''  ">code,</if>
+			<if test="statusId != null  ">status_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="uuid != null  and uuid != ''  ">#{uuid},</if>
+			<if test="containerNum != null  and containerNum != ''  ">#{containerNum},</if>
+			<if test="boxNum != null  and boxNum != ''  ">#{boxNum},</if>
+			<if test="code != null  and code != ''  ">#{code},</if>
+			<if test="statusId != null  ">#{statusId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateContainerBox" parameterType="ContainerBox">
+        update cw_container_box
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uuid != null  and uuid != ''  ">uuid = #{uuid},</if>
+            <if test="containerNum != null  and containerNum != ''  ">container_num = #{containerNum},</if>
+            <if test="boxNum != null  and boxNum != ''  ">box_num = #{boxNum},</if>
+            <if test="code != null  and code != ''  ">code = #{code},</if>
+            <if test="statusId != null  ">status_id = #{statusId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteContainerBoxById" parameterType="Integer">
+        delete from cw_container_box where id = #{id}
+    </delete>
+	
+    <delete id="deleteContainerBoxByIds" parameterType="String">
+        delete from cw_container_box where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

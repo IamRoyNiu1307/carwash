@@ -65,6 +65,7 @@
             <if test="expectCostId != null ">and expect_cost_id = #{expectCostId}</if>
             <if test="journey != null ">and journey = #{journey}</if>
         </where>
+        order by create_date desc
     </select>
 
     <select id="selectOrderService" parameterType="string" resultMap="OrderResult">

@@ -11,6 +11,7 @@ import com.aaa.project.system.orderAmount.domain.OrderAmount;
 import com.aaa.project.system.orderAmount.service.IOrderAmountService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,13 +65,13 @@ public class ApiWxPay {
      * @param amount 订单金额
      * @return ajaxResult.success
      */
+    @Transactional
     @RequestMapping("/payComplete")
     public AjaxResult payComplete(@RequestParam(name = "orderId")String orderId,
                                   @RequestParam(name = "date") String date,
                                   @RequestParam(name = "uuid")String uuid,
                                   @RequestParam(name = "amount")Float amount){
 
-        System.out.println(date);
         DateTime parse = DateUtil.parse(date, "yyyy-MM-dd HH:mm:ss");
         Order order = orderService.selectOrderByOrderId(orderId);
         order.setStatusId(STATUS_ORDER_PAID);

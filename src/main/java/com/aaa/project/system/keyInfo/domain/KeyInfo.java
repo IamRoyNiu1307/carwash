@@ -8,7 +8,7 @@ import com.aaa.framework.web.domain.BaseEntity;
  * 钥匙表 cw_key_info
  * 
  * @author aaa
- * @date 2019-04-19
+ * @date 2019-05-06
  */
 public class KeyInfo extends BaseEntity
 {
@@ -20,11 +20,11 @@ public class KeyInfo extends BaseEntity
 	private String containerId;
 	/** 状态编号 */
 	private Integer statusId;
-	/** 状态名称*/
+	/** 状态名称 */
 	private String statusName;
-	/** 验证码*/
+	/** 验证码 */
 	private Integer verifyCode;
-	/** 货柜格子id*/
+	/** 钥匙柜格子编号 */
 	private Integer containerBoxId;
 
 	public void setId(Integer id) 
@@ -54,6 +54,10 @@ public class KeyInfo extends BaseEntity
 	{
 		return statusId;
 	}
+	public void setVerifyCode(Integer verifyCode) 
+	{
+		this.verifyCode = verifyCode;
+	}
 
 	public String getStatusName() {
 		return statusName;
@@ -63,27 +67,27 @@ public class KeyInfo extends BaseEntity
 		this.statusName = statusName;
 	}
 
-	public Integer getVerifyCode() {
+	public Integer getVerifyCode()
+	{
 		return verifyCode;
 	}
-
-	public void setVerifyCode(Integer verifyCode) {
-		this.verifyCode = verifyCode;
-	}
-
-	public Integer getContainerBoxId() {
-		return containerBoxId;
-	}
-
-	public void setContainerBoxId(Integer containerBoxId) {
+	public void setContainerBoxId(Integer containerBoxId) 
+	{
 		this.containerBoxId = containerBoxId;
 	}
 
-	public String toString() {
+	public Integer getContainerBoxId() 
+	{
+		return containerBoxId;
+	}
+
+    public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("containerId", getContainerId())
             .append("statusId", getStatusId())
+            .append("verifyCode", getVerifyCode())
+            .append("containerBoxId", getContainerBoxId())
             .toString();
     }
 }
