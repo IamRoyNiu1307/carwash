@@ -1,7 +1,6 @@
 package com.aaa.project.system.api;
 
 
-import com.aaa.common.utils.Distance;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.evaluate.domain.Evaluate;
 import com.aaa.project.system.evaluate.service.IEvaluateService;
@@ -70,8 +69,8 @@ public class ApiStoreController {
 
     /**
      * 用户对门店的评价
-     *
-     * @param evaluate
+     * @param evaluate 评价
+     * @return  ajaxResult.success
      */
     @RequestMapping("/evaluate")
     public AjaxResult evaluate(@RequestParam(name = "evaluate", required = true) Evaluate evaluate) {

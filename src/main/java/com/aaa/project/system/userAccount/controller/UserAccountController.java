@@ -189,7 +189,6 @@ public class UserAccountController extends BaseController
 		user.setRoleIds(roleIds);
 
 		userService.updateUserInfo(user);
-		System.out.println(user);
 
 		return AjaxResult.success();
 	}

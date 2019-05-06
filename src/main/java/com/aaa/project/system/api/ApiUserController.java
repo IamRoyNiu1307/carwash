@@ -1,23 +1,20 @@
 package com.aaa.project.system.api;
 
 import com.aaa.common.utils.SmsUtil;
+import com.aaa.framework.shiro.service.PasswordService;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.carImage.domain.CarImage;
 import com.aaa.project.system.carImage.service.ICarImageService;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.service.IOrderService;
-import com.aaa.project.system.orderService.domain.OrderService;
 import com.aaa.project.system.user.domain.User;
 import com.aaa.project.system.user.service.IUserService;
-import com.aaa.framework.shiro.service.PasswordService;
 import com.aaa.project.system.userAccount.domain.UserAccount;
 import com.aaa.project.system.userAccount.service.IUserAccountService;
 import com.aaa.project.system.userLocation.domain.UserLocation;
 import com.aaa.project.system.userLocation.service.IUserLocationService;
 import com.alibaba.fastjson.JSONObject;
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +24,8 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static com.aaa.project.myconst.MyConst.*;
+import static com.aaa.project.myconst.MyConst.STATUS_ACCOUNT_ENABLE;
+import static com.aaa.project.myconst.MyConst.TYPE_ACCOUNT;
 
 @RestController
 @RequestMapping("/api/user")
@@ -53,7 +51,7 @@ public class ApiUserController {
      * @param openid   openid
      * @param code     验证码
      * @param session
-     * @return
+     * @return ajaxResult
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AjaxResult login(@RequestParam(name = "account", required = true) String account,
@@ -102,7 +100,7 @@ public class ApiUserController {
      *
      * @param account 账号
      * @param session
-     * @return
+     * @return 验证码
      */
     @RequestMapping("/sendCode")
     public AjaxResult sendCode(@RequestParam(name = "account", required = true) String account,
@@ -116,7 +114,7 @@ public class ApiUserController {
      * 根据openid获得绑定的账号
      *
      * @param openid
-     * @return
+     * @return ajaxResult
      */
     @RequestMapping("/bind")
     public AjaxResult bind(@RequestParam(name = "openid") String openid) {
@@ -135,7 +133,7 @@ public class ApiUserController {
      *
      * @param account 洗车员账号
      * @param statusId   订单状态
-     * @return
+     * @return ajaxResult
      */
     @RequestMapping("/getOrderList")
     public AjaxResult getOrderList(@RequestParam(name = "account", required = true) String account,@RequestParam(name="statusId",required = true) int statusId) {
@@ -174,6 +172,6 @@ public class ApiUserController {
         userLocation.setPosLat(new BigDecimal(posLat));
         userLocation.setUpdateDatetime(new Date());
         userLocationService.insertUserLocation(userLocation);
-        return null;
+        return AjaxResult.success();
     }
 }

@@ -2,7 +2,6 @@ package com.aaa.project.system.api;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.XmlUtil;
 import com.aaa.common.utils.PayUtil;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.keyInfo.service.IKeyInfoService;
@@ -11,19 +10,13 @@ import com.aaa.project.system.order.service.IOrderService;
 import com.aaa.project.system.orderAmount.domain.OrderAmount;
 import com.aaa.project.system.orderAmount.service.IOrderAmountService;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.Document;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
 import java.util.Map;
 
 import static com.aaa.project.myconst.MyConst.STATUS_ORDER_PAID;
@@ -69,7 +62,7 @@ public class ApiWxPay {
      * @param date 日期
      * @param uuid uuid
      * @param amount 订单金额
-     * @return
+     * @return ajaxResult.success
      */
     @RequestMapping("/payComplete")
     public AjaxResult payComplete(@RequestParam(name = "orderId")String orderId,

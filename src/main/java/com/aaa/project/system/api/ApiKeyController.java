@@ -54,7 +54,7 @@ public class ApiKeyController {
      * 根据钥匙柜id和订单id进行钥匙寄存，更改订单信息
      * @param uuid 钥匙柜id
      * @param orderId 订单id
-     * @return
+     * @return ajaxResult
      */
     @RequestMapping("/storeKey")
     public AjaxResult storeKey(@RequestParam(name = "uuid",required = true)String uuid,
@@ -73,7 +73,7 @@ public class ApiKeyController {
      * 获得取件码
      * @param phone 接收短信的手机号
      * @param orderId 订单号
-     * @return
+     * @return ajaxResult.success
      */
     @RequestMapping("/getVerifyCode")
     public AjaxResult getVerifyCode(@RequestParam(name = "phone")String phone,@RequestParam(name = "orderId")String orderId){
