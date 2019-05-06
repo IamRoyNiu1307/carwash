@@ -35,7 +35,7 @@ public class ReGeo {
         String param = "location=" + lng + "," + lat + "&output=json" + "&key=" + MyConst.MAP_WEB_KEY;
         //发送get请求，得到json格式的请求结果
         String result = HttpRequestUtil.sendGet(MyConst.REGRO_URL, param);
-
+        System.out.println(result);
         JSONObject jsonObject = new JSONObject(result);
 
         String address = jsonObject.getJSONObject("regeocode").getString("formatted_address");

@@ -66,6 +66,8 @@ public class MyConst {
     public static final Integer STATUS_KEY_STORED = 300;
     //钥匙状态：已取出
     public static final Integer STATUS_KEY_TAKED = 301;
+    //洗车员位置更新最大间隔
+    public static final Long MAX_INTERVAL = 600000l;
 
     static {
         TIME_MAP.put("08时", 8);

@@ -31,6 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectUserLocationVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectLastLocationByUserAccount" parameterType="String" resultMap="UserLocationResult">
+        <include refid="selectUserLocationVo"/>
+        where user_account = #{userAccount}
+        order by update_datetime desc limit 1
+    </select>
         
     <insert id="insertUserLocation" parameterType="UserLocation">
         insert into cw_user_location
