@@ -24,6 +24,8 @@ public class KeyInfo extends BaseEntity
 	private String statusName;
 	/** 验证码*/
 	private Integer verifyCode;
+	/** 货柜格子id*/
+	private Integer containerBoxId;
 
 	public void setId(Integer id) 
 	{
@@ -67,6 +69,14 @@ public class KeyInfo extends BaseEntity
 
 	public void setVerifyCode(Integer verifyCode) {
 		this.verifyCode = verifyCode;
+	}
+
+	public Integer getContainerBoxId() {
+		return containerBoxId;
+	}
+
+	public void setContainerBoxId(Integer containerBoxId) {
+		this.containerBoxId = containerBoxId;
 	}
 
 	public String toString() {

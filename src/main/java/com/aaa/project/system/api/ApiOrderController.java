@@ -27,6 +27,8 @@ import com.aaa.project.system.storeService.domain.StoreService;
 import com.aaa.project.system.storeService.service.IStoreServiceService;
 import com.aaa.project.system.user.domain.User;
 import com.aaa.project.system.user.service.IUserService;
+import com.aaa.project.system.userLocation.domain.UserLocation;
+import com.aaa.project.system.userLocation.service.IUserLocationService;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,6 +70,8 @@ public class ApiOrderController {
     private IUserService userService;
     @Autowired
     private IStoreService storeService;
+    @Autowired
+    private IUserLocationService userLocationService;
 
     /**
      * @param consumerAccount 顾客账号
@@ -261,13 +265,20 @@ public class ApiOrderController {
         AjaxResult ajaxResult = new AjaxResult();
         Order order = orderService.selectOrderByOrderId(orderId);
         CarInfo carInfo = carInfoService.selectCarInfoById(order.getCarId());
-        ajaxResult.put("carInfo", carInfo);
+
         Store store = storeService.selectByStoreId(order.getStoreId());
-        ajaxResult.put("store", store);
+
         List<OrderLogVO> logList = orderLogService.selectOrderLog(orderId);
-        ajaxResult.put("logList", logList);
+
         User user = userService.selectUserByPhoneNumber(order.getUserAccount());
+
+        UserLocation userLocation = userLocationService.selectLastLocationByUserAccount(order.getUserAccount());
+
+        ajaxResult.put("carInfo", carInfo);
+        ajaxResult.put("store", store);
+        ajaxResult.put("logList", logList);
         ajaxResult.put("user", user);
+        ajaxResult.put("userLocation",userLocation);
         return ajaxResult;
     }
 }

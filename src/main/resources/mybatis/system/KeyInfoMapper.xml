@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="containerId"    column="container_id"    />
         <result property="statusId"    column="status_id"    />
         <result property="verifyCode"    column="verify_code"    />
+        <result property="containerBoxId" column="container_box_id" />
         <association property="statusName" column="status_id" select="com.aaa.project.system.status.mapper.StatusMapper.selectStatusNameById">
         </association>
     </resultMap>
@@ -24,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="containerId != null  and containerId != '' "> and container_id = #{containerId}</if>
              <if test="statusId != null "> and status_id = #{statusId}</if>
              <if test="verifyCode != null "> and verify_code = #{verifyCode}</if>
+             <if test="containerBoxId != null "> and container_box_id = #{containerBoxId}</if>
          </where>
     </select>
     
@@ -44,12 +46,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="containerId != null  and containerId != ''  ">container_id,</if>
 			<if test="statusId != null  ">status_id,</if>
             <if test="verifyCode != null  ">verify_code,</if>
+            <if test="containerBoxId != null  ">container_box_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
 			<if test="containerId != null  and containerId != ''  ">#{containerId},</if>
 			<if test="statusId != null  ">#{statusId},</if>
             <if test="verifyCode != null  ">#{verifyCode},</if>
+            <if test="containerBoxId != null  ">#{containerBoxId},</if>
          </trim>
     </insert>
 	 
@@ -60,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="statusId != null  ">status_id = #{statusId},</if>
             <if test="verifyCode != null  ">verify_code = #{verifyCode},</if>
             <if test="verifyCode == null  ">verify_code = NULL,</if>
+            <if test="containerBoxId == null  ">container_boxId = #{containerBoxId},</if>
         </trim>
         where id = #{id}
     </update>

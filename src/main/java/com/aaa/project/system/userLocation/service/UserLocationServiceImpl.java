@@ -1,12 +1,16 @@
 package com.aaa.project.system.userLocation.service;
 
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aaa.project.system.userLocation.mapper.UserLocationMapper;
 import com.aaa.project.system.userLocation.domain.UserLocation;
 import com.aaa.project.system.userLocation.service.IUserLocationService;
 import com.aaa.common.support.Convert;
+
+import static com.aaa.project.myconst.MyConst.MAX_INTERVAL;
 
 /**
  * 洗车员定位 服务层实现
@@ -79,5 +83,17 @@ public class UserLocationServiceImpl implements IUserLocationService
 	{
 		return userLocationMapper.deleteUserLocationByIds(Convert.toStrArray(ids));
 	}
-	
+
+	/**
+	 * 获取洗车员最新定位
+	 * @param userAccount 洗车员账号
+	 * @return 定位
+	 */
+	@Override
+	public UserLocation selectLastLocationByUserAccount(String userAccount) {
+		UserLocation userLocation = userLocationMapper.selectLastLocationByUserAccount(userAccount);
+		long interval = DateUtil.currentSeconds()-userLocation.getUpdateDatetime().getTime();
+
+		return interval<=MAX_INTERVAL?userLocation:null;
+	}
 }

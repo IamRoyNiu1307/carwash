@@ -58,5 +58,11 @@ public interface UserLocationMapper
      * @return 结果
      */
 	public int deleteUserLocationByIds(String[] ids);
-	
+
+	/**
+	 * 获取洗车员最新定位
+	 * @param userAccount 洗车员账号
+	 * @return 定位
+	 */
+    UserLocation selectLastLocationByUserAccount(String userAccount);
 }
