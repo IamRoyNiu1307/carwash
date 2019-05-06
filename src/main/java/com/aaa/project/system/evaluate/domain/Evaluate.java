@@ -18,7 +18,7 @@ public class Evaluate extends BaseEntity
 	/** 编号 */
 	private Integer id;
 	/** 业务编号 */
-	private Integer storeId;
+	private String storeId;
 	/** 发表时间 */
 	private Date pushTime;
 	/** 评论账号 */
@@ -35,12 +35,12 @@ public class Evaluate extends BaseEntity
 	{
 		return id;
 	}
-	public void setStoreId(Integer storeId) 
+	public void setStoreId(String storeId)
 	{
 		this.storeId = storeId;
 	}
 
-	public Integer getStoreId() 
+	public String getStoreId()
 	{
 		return storeId;
 	}

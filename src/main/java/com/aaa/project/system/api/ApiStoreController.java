@@ -4,19 +4,22 @@ package com.aaa.project.system.api;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.evaluate.domain.Evaluate;
 import com.aaa.project.system.evaluate.service.IEvaluateService;
+import com.aaa.project.system.order.domain.Order;
+import com.aaa.project.system.order.service.IOrderService;
 import com.aaa.project.system.store.domain.Store;
 import com.aaa.project.system.store.service.IStoreService;
 import com.aaa.project.system.storeEnv.domain.StoreEnv;
 import com.aaa.project.system.storeEnv.service.IStoreEnvService;
 import com.aaa.project.system.storeService.service.IStoreServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.aaa.project.myconst.MyConst.STATUS_ORDER_EVALUATED;
 
 
 /**
@@ -37,6 +40,8 @@ public class ApiStoreController {
     @Autowired
     private IStoreEnvService storeEnvService;
 
+    @Autowired
+    private IOrderService orderService;
 
     /**
      * 根据门店id获取门店
@@ -69,12 +74,22 @@ public class ApiStoreController {
 
     /**
      * 用户对门店的评价
-     * @param evaluate 评价
      * @return  ajaxResult.success
      */
     @RequestMapping("/evaluate")
-    public AjaxResult evaluate(@RequestParam(name = "evaluate", required = true) Evaluate evaluate) {
+    public AjaxResult evaluate(@RequestParam(name = "orderId", required = false) String orderId,
+                               @RequestParam(name = "storeId", required = false) String storeId,
+                               @RequestParam(name = "account", required = false) String account,
+                               @RequestParam(name = "star", required = false) int star) {
+        Evaluate evaluate = new Evaluate();
+        evaluate.setStoreId(storeId);
+        evaluate.setConsumerAccount(account);
+        evaluate.setPushTime(new Date());
+        evaluate.setStar(star);
         evaluateService.insertEvaluate(evaluate);
+        Order order = orderService.selectOrderByOrderId(orderId);
+        order.setStatusId(STATUS_ORDER_EVALUATED);
+        orderService.updateOrder(order);
         AjaxResult ajaxResult = new AjaxResult();
         ajaxResult.success("评价成功");
         return ajaxResult;

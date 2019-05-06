@@ -3,6 +3,7 @@ package com.aaa.project.system.api;
 
 import cn.hutool.core.date.DateUtil;
 import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
+import com.aaa.common.utils.Distance;
 import com.aaa.common.utils.IDUtil;
 import com.aaa.common.utils.ReGeo;
 import com.aaa.framework.web.domain.AjaxResult;
@@ -94,6 +95,7 @@ public class ApiOrderController {
                                   @RequestParam(name = "storeId", required = false) String storeId,
                                   @RequestParam(name = "carId", required = true) int carId) {
         AjaxResult ajaxResult = new AjaxResult();
+        Store store = storeService.selectByStoreId(storeId);
         Order order = new Order();
         //获取车辆信息
         CarInfo carInfo = carInfoService.selectCarInfoById(carId);
@@ -126,6 +128,8 @@ public class ApiOrderController {
         order.setExpectCostId(expectCostId);
         //订单备注
         order.setOrderComment(orderComment);
+
+        order.setJourney(2*Distance.getDistance(carInfo.getCarAddrLng()+","+carInfo.getCarAddrLat(),store.getPosLng()+","+store.getPosLat(),1));
         //订单服务
         String[] serviceList = serviceIdList.substring(1, serviceIdList.length() - 1).split(",");
         List<String> list = Arrays.asList(serviceList);
@@ -173,10 +177,13 @@ public class ApiOrderController {
      * @return AjaxResult.success
      */
     @RequestMapping("/uploadPicture")
-    public AjaxResult uploadPicture(@RequestParam(name = "orderId", required = true) String orderId, @RequestParam(value = "file") MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
+    public AjaxResult uploadPicture(@RequestParam(name = "orderId", required = true) String orderId,
+                                    @RequestParam(name = "statusId", required = true) int statusId,
+                                    @RequestParam(value = "file") MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
 
         OrderLog orderLog = new OrderLog();
         Order order = orderService.selectOrderByOrderId(orderId);
+        order.setStatusId(statusId);
         orderLog.setOrderId(orderId);
         orderLog.setContent("订单追踪，照片上传 操作员账号：" + order.getUserAccount() + "操作员：" + userService.selectUserByPhoneNumber(order.getUserAccount()).getUserName());
         //判断插入车辆照片状态内容
@@ -188,6 +195,7 @@ public class ApiOrderController {
         //}else {
         //    orderLog.setContent("还车完毕车辆仪表盘");
         //}
+        orderService.updateOrder(order);
         orderLog.setCreateDate(new Date());
         //插入日志并返回主键
         orderLogService.insertOrderLog(orderLog);
@@ -274,6 +282,7 @@ public class ApiOrderController {
 
         UserLocation userLocation = userLocationService.selectLastLocationByUserAccount(order.getUserAccount());
 
+        ajaxResult.put("order",order);
         ajaxResult.put("carInfo", carInfo);
         ajaxResult.put("store", store);
         ajaxResult.put("logList", logList);

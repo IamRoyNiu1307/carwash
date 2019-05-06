@@ -7,7 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    context:null
+    context:null,
+    orderId:'',
+    todo:''
   },
 
   /**
@@ -19,6 +21,7 @@ Page({
     if (this.context == null) {
       this.setData({
         orderId:options.orderId,
+        todo:options.todo,
         context: wx.createCameraContext()
       })
     }
@@ -26,7 +29,17 @@ Page({
 
   takePhoto: function () {
     var _this = this
+    var statusId
     console.log("takephoto")
+    if(this.data.todo=='b1'){
+      statusId = 211
+    }
+    if (this.data.todo == 'b2') {
+      statusId = 212
+    }
+    if (this.data.todo == 'b3') {
+      statusId = 213
+    }
     //拍摄
     this.data.context.takePhoto({
       quality: 'normal',
@@ -49,7 +62,8 @@ Page({
           filePath: res.tempImagePath,
           name: 'file',
           formData: {
-            'orderId': _this.data.orderId
+            'orderId': _this.data.orderId,
+            "statusId":statusId
           },
           header: {
             'content-type': 'multipart/form-data'

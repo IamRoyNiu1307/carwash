@@ -136,12 +136,12 @@ public class ApiUserController {
      * @return ajaxResult
      */
     @RequestMapping("/getOrderList")
-    public AjaxResult getOrderList(@RequestParam(name = "account", required = true) String account,@RequestParam(name="statusId",required = true) int statusId) {
+    public AjaxResult getOrderList(@RequestParam(name = "account", required = true) String account) {
         AjaxResult ajaxResult = new AjaxResult();
         List<Map<String,Object>> orderInfoList=new ArrayList<>();
         Order order = new Order();
         order.setUserAccount(account);
-        order.setStatusId(statusId);
+        //order.setStatusId(statusId);
         List<Order> orderList = orderService.selectOrderList(order);
         for(Order each:orderList){
             Map orderInfo = new HashMap();

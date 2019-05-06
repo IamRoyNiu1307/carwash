@@ -29,10 +29,20 @@
       <view class="weui-cell weui-cell_access weui-cell_link">
         <view class="weui-cell__bd"></view>
         <view class="weui-cell__ft">
-          <view class="list-button list-button-act" wx:if="{{item.order.statusId === 208}}" id="{{item.order.orderId}}" bindtap="updateOrder">更新进度</view>
+          <view class="list-button list-button-act" wx:if="{{item.order.statusId === 208||item.order.statusId === 211||item.order.statusId === 212}}" id="{{item.order.orderId}}" bindtap="showModal">更新进度</view>
         </view>
       </view>
     </view>
   </view>
 
+</view>
+
+<view class="modals modals-bottom-dialog" hidden="{{hideModal}}">
+    <view class="modals-cancel" bindtap="hideModal"></view>
+    <view class="bottom-dialog-body bottom-pos" animation="{{animationData}}">
+    <button id='b1' class="btn b1" bindtap="updateOrder">已取车</button>
+    <button id='b2' class="btn b1" bindtap="updateOrder">已洗车</button>
+    <button id='b3' class="btn b1" bindtap="updateOrder">已还车</button>
+    <button wx:if="{{disabled==true}}" class="btn b2" bindtap="finishMission">配送完成</button>
+</view>
 </view>

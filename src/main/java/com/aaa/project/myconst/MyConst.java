@@ -48,6 +48,8 @@ public class MyConst {
     public static final int STATUS_ORDER_ONGOING=208;
     //订单状态：已完成
     public static final int STATUS_ORDER_FINISHED = 203;
+    //订单状态：已评价
+    public static final int STATUS_ORDER_EVALUATED = 205;
     //订单状态：进行中
     public static final int STATUS_ORDER_RUNNING = 208;
     //账号状态：可用
