@@ -189,4 +189,13 @@ public class StoreServiceImpl implements IStoreService {
         return 0;
     }
 
+    /**
+     * 根据userid查询所属门店
+     * @param userId userid
+     * @return 所属门店
+     */
+    @Override
+    public Store selectByUserId(Long userId) {
+        return storeMapper.selectByUserId(userId);
+    }
 }

@@ -5,9 +5,13 @@ import java.util.List;
 import com.aaa.common.utils.security.ShiroUtils;
 import com.aaa.project.system.defaultService.domain.DefaultService;
 import com.aaa.project.system.defaultService.service.IDefaultServiceService;
+import com.aaa.project.system.role.domain.Role;
+import com.aaa.project.system.role.service.IRoleService;
 import com.aaa.project.system.status.domain.Status;
 import com.aaa.project.system.status.service.IStatusService;
+import com.aaa.project.system.store.domain.Store;
 import com.aaa.project.system.store.service.IStoreService;
+import com.aaa.project.system.user.domain.User;
 import com.aaa.project.system.userAccount.service.IUserAccountService;
 import com.alibaba.fastjson.JSON;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -51,6 +55,8 @@ public class StoreServiceController extends BaseController {
     private IStoreService storeService;
     @Autowired
     private IDefaultServiceService defaultServiceService;
+    @Autowired
+    private IRoleService roleService;
 
     @RequiresPermissions("system:storeService:view")
     @GetMapping()
@@ -65,8 +71,18 @@ public class StoreServiceController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(StoreService storeService) {
+        boolean flag = true;
+        User user = ShiroUtils.getSysUser();
+        List<Role> roles = roleService.selectRolesByUserId(user.getUserId());
+        for(Role each : roles){
+
+            if(each.isFlag()&&"merchant".equals(each.getRoleKey())){
+                flag=false;
+            }
+        }
         startPage();
-        List<StoreService> list = storeServiceService.selectStoreServiceList(storeService);
+        //List<StoreService> list = storeServiceService.selectStoreServiceList(storeService);
+        List<StoreService> list = !flag?storeServiceService.selectStoreServiceInMerchant(user.getLoginName()):storeServiceService.selectStoreServiceInManager(user.getUserId());
         return getDataTable(list);
     }
 
@@ -88,11 +104,25 @@ public class StoreServiceController extends BaseController {
      */
     @GetMapping("/add")
     public String add(HttpServletRequest req) {
+        boolean flag = true;
+        User user = ShiroUtils.getSysUser();
+        List<Role> roles = roleService.selectRolesByUserId(user.getUserId());
+        for(Role each : roles){
 
+            if(each.isFlag()&&"merchant".equals(each.getRoleKey())){
+                flag=false;
+                break;
+            }
+        }
+        if(flag){
+            Store store = storeService.selectByUserId(user.getUserId());
+            req.setAttribute("store", store);
+        }
         List<Status> statusList = statusService.selectServicesStatusList();
         List<DefaultService> serviceList = defaultServiceService.selectDefaultService();
         req.setAttribute("statusList", statusList);
         req.setAttribute("serviceList", serviceList);
+
         return prefix + "/add";
     }
 

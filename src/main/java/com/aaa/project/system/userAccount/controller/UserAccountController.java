@@ -39,7 +39,8 @@ import static com.aaa.project.myconst.MyConst.Role_MERCHANT;
  */
 @Controller
 @RequestMapping("/system/userAccount")
-public class UserAccountController extends BaseController {
+public class UserAccountController extends BaseController
+{
     private String prefix = "system/userAccount";
 
     @Autowired
@@ -108,53 +109,55 @@ public class UserAccountController extends BaseController {
         ExcelUtil<UserAccount> util = new ExcelUtil<UserAccount>(UserAccount.class);
         return util.exportExcel(list, "userAccount");
     }
-
-    /**
-     * 新增用户
-     */
-    @GetMapping("/add")
-    public String add(ModelMap mmap) {
-        User sysUser = ShiroUtils.getSysUser();
-        Store store = new Store();
-        store.setOwnerAccount(sysUser.getLoginName());
-        mmap.put("stores", storeService.selectStoreList(store));
-        mmap.put("roles", roleService.selectAllRole());
-        return prefix + "/add";
-    }
-
-    /**
-     * 新增保存用户
-     */
-    @RequiresPermissions("system:userAccount:add")
-    @Log(title = "用户", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
-    @ResponseBody
-    public AjaxResult addSave(@RequestParam(name = "userName") String userName,
-                              @RequestParam(name = "loginName") String loginName,
-                              @RequestParam(name = "password") String password,
-                              @RequestParam(name = "phonenumber") String phonenumber,
-                              @RequestParam(name = "sex") String sex,
-                              @RequestParam(name = "status") String status,
-                              @RequestParam(name = "drivingLicence1") MultipartFile drivingLicence1,
-                              @RequestParam(name = "drivingLicence2") MultipartFile drivingLicence2,
-                              @RequestParam(name = "roleIds") Long[] roleIds,
-                              @RequestParam(name = "storeId") String stordId) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
-        User user = new User();
-        user.setUserName(userName);
-        user.setLoginName(loginName);
-        user.setPassword(password);
-        user.setPhonenumber(phonenumber);
-        user.setSex(sex);
-        user.setStatus(status);
-        user.setRoleIds(roleIds);
-        //向sysUser中添加信息
-        userService.insertUser(user);
-        //添加成功后，根据userId向userAccount中添加信息
-        UserAccount userAccount = new UserAccount();
-        userAccount.setUserId(user.getUserId());
-        userAccount.setStoreId(stordId);
-        return toAjax(userAccountService.insertUserAccount(userAccount, drivingLicence1, drivingLicence2));
-    }
+	
+	/**
+	 * 新增用户
+	 */
+	@GetMapping("/add")
+	public String add(ModelMap mmap)
+	{
+		User sysUser = ShiroUtils.getSysUser();
+		Store store = new Store();
+		store.setOwnerAccount(sysUser.getLoginName());
+		mmap.put("stores",storeService.selectStoreList(store));
+		mmap.put("roles",roleService.selectAllRole());
+		return prefix + "/add";
+	}
+	
+	/**
+	 * 新增保存用户
+	 */
+	@RequiresPermissions("system:userAccount:add")
+	@Log(title = "用户", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ResponseBody
+	public AjaxResult addSave(@RequestParam(name = "userName") String userName,
+							  @RequestParam(name = "loginName") String loginName,
+							  @RequestParam(name = "password") String password,
+							  @RequestParam(name = "phonenumber") String phonenumber,
+							  @RequestParam(name = "sex") String sex,
+							  @RequestParam(name = "status") String status,
+							  @RequestParam(name = "drivingLicence1",required = false) MultipartFile drivingLicence1,
+							  @RequestParam(name = "drivingLicence2",required = false) MultipartFile drivingLicence2,
+							  @RequestParam(name = "roleIds") Long[] roleIds,
+							  @RequestParam(name = "storeId")String stordId)throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException
+	{
+		User user = new User();
+		user.setUserName(userName);
+		user.setLoginName(loginName);
+		user.setPassword(password);
+		user.setPhonenumber(phonenumber);
+		user.setSex(sex);
+		user.setStatus(status);
+		user.setRoleIds(roleIds);
+		//向sysUser中添加信息
+		userService.insertUser(user);
+		//添加成功后，根据userId向userAccount中添加信息
+		UserAccount userAccount = new UserAccount();
+		userAccount.setUserId(user.getUserId());
+		userAccount.setStoreId(stordId);
+		return toAjax(userAccountService.insertUserAccount(userAccount,drivingLicence1,drivingLicence2));
+	}
 
 	/**
 	 * 修改用户
@@ -182,7 +185,7 @@ public class UserAccountController extends BaseController {
 		mmap.put("roles",roleService.selectAllRole());
 	    return prefix + "/edit";
 	}
-
+	
 	/**
 	 * 修改保存用户
 	 */
@@ -202,6 +205,7 @@ public class UserAccountController extends BaseController {
 		UserAccount userAccount = new UserAccount();
 		userAccount.setId(id);
 		userAccount.setStoreId(stordId);
+		System.out.println(userAccount);
 		userAccountService.updateUserAccount(userAccount);
 		//更新sysUser表的信息
 		UserAccount userAccount1 = userAccountService.selectUserAccountById(id);
@@ -213,37 +217,40 @@ public class UserAccountController extends BaseController {
 		user.setStatus(status);
 		user.setRoleIds(roleIds);
 
-        userService.updateUserInfo(user);
+		userService.updateUserInfo(user);
 
-        return AjaxResult.success();
-    }
+		return AjaxResult.success();
+	}
+	
+	/**
+	 * 删除用户
+	 */
+	@RequiresPermissions("system:userAccount:remove")
+	@Log(title = "用户", businessType = BusinessType.DELETE)
+	@PostMapping( "/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids)
+	{		
+		return toAjax(userAccountService.deleteUserAccountByIds(ids));
+	}
 
-    /**
-     * 删除用户
-     */
-    @RequiresPermissions("system:userAccount:remove")
-    @Log(title = "用户", businessType = BusinessType.DELETE)
-    @PostMapping("/remove")
-    @ResponseBody
-    public AjaxResult remove(String ids) {
-        return toAjax(userAccountService.deleteUserAccountByIds(ids));
-    }
+	/**
+	 * 校验用户名
+	 */
+	@PostMapping("/checkLoginNameUnique")
+	@ResponseBody
+	public String checkLoginNameUnique(User user)
+	{
+		return userService.checkLoginNameUnique(user.getLoginName());
+	}
 
-    /**
-     * 校验用户名
-     */
-    @PostMapping("/checkLoginNameUnique")
-    @ResponseBody
-    public String checkLoginNameUnique(User user) {
-        return userService.checkLoginNameUnique(user.getLoginName());
-    }
-
-    /**
-     * 校验手机号码
-     */
-    @PostMapping("/checkPhoneUnique")
-    @ResponseBody
-    public String checkPhoneUnique(User user) {
-        return userService.checkPhoneUnique(user);
-    }
+	/**
+	 * 校验手机号码
+	 */
+	@PostMapping("/checkPhoneUnique")
+	@ResponseBody
+	public String checkPhoneUnique(User user)
+	{
+		return userService.checkPhoneUnique(user);
+	}
 }

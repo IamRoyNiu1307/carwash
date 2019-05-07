@@ -76,5 +76,18 @@ public interface IStoreServiceService
 	 * @return 服务
 	 */
 	public List<StoreService> selectOrderService(@Param("storeId")String storeId,@Param("orderId") String orderId);
-	
+
+	/**
+	 * 根据账号查询门店下的服务
+	 * @param loginName 登录名
+	 * @return 所有账号下门店的服务
+	 */
+    List<StoreService> selectStoreServiceInMerchant(String loginName);
+
+	/**
+	 * 根据userid查询所属门店下的服务
+	 * @param userId userid
+	 * @return 该用户所属门店下的服务
+	 */
+	List<StoreService> selectStoreServiceInManager(Long userId);
 }

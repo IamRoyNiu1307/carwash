@@ -92,11 +92,13 @@ public class UserAccountServiceImpl implements IUserAccountService {
 	@Override
 	public int insertUserAccount(UserAccount userAccount, MultipartFile drivingLicence1,MultipartFile drivingLicence2)throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException
 	{
-		//得到用户驾照图片路径
-		String url1=DRIVING_LICENCE_ICON_IMG+upload(DRIVING_LICENCE_IMG, drivingLicence1, ".jpg");
-		String url2=DRIVING_LICENCE_ICON_IMG+upload(DRIVING_LICENCE_IMG, drivingLicence2, ".jpg");
-		userAccount.setDrivingLicence1(url1);
-		userAccount.setDrivingLicence2(url2);
+	    if(drivingLicence1!=null&&drivingLicence2!=null){
+            //得到用户驾照图片路径
+            String url1=DRIVING_LICENCE_ICON_IMG+upload(DRIVING_LICENCE_IMG, drivingLicence1, ".jpg");
+            String url2=DRIVING_LICENCE_ICON_IMG+upload(DRIVING_LICENCE_IMG, drivingLicence2, ".jpg");
+            userAccount.setDrivingLicence1(url1);
+            userAccount.setDrivingLicence2(url2);
+        }
 		return userAccountMapper.insertUserAccount(userAccount);
 	}
 	

@@ -2,6 +2,7 @@ package com.aaa.project.system.store.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.common.utils.security.ShiroUtils;
@@ -87,7 +88,8 @@ public class StoreController extends BaseController {
      * 新增门店
      */
     @GetMapping("/add")
-    public String add() {
+    public String add(Map map) {
+        map.put("user",ShiroUtils.getSysUser());
         return prefix + "/add";
     }
 

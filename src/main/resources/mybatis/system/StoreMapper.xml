@@ -71,6 +71,12 @@
         select store_name from cw_store where store_id =#{storeId}
     </select>
 
+    <select id="selectByUserId" parameterType="Long" resultMap="StoreResult">
+        select cw_store.id, cw_store.store_id, cw_store.store_name, owner_account, provinceid, cityid, street, pos_lng, pos_lat, contacts, contacts_phone, cw_store.status_id, introduction, favicon_path
+from cw_store,cw_user_account
+where cw_store.store_id = cw_user_account.store_id and cw_user_account.user_id = #{userId}
+    </select>
+
     <insert id="insertStore" parameterType="Store">
         insert into cw_store
         <trim prefix="(" suffix=")" suffixOverrides=",">

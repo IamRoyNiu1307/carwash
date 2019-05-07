@@ -118,4 +118,23 @@ public class StoreServiceServiceImpl implements IStoreServiceService
 		return storeServiceMapper.selectOrderService(storeId,orderId);
 	}
 
+	/**
+	 * 根据账号查询门店下的服务
+	 * @param loginName
+	 * @return
+	 */
+	@Override
+	public List<StoreService> selectStoreServiceInMerchant(String loginName) {
+		return storeServiceMapper.selectStoreServiceInMerchant(loginName);
+	}
+
+	/**
+	 * 根据userid查询所属门店下的服务
+	 * @param userId userid
+	 * @return 该用户所属门店下的服务
+	 */
+	@Override
+	public List<StoreService> selectStoreServiceInManager(Long userId) {
+		return storeServiceMapper.selectStoreServiceInManager(userId);
+	}
 }

@@ -104,5 +104,10 @@ public interface IStoreService {
      */
     int updateStoreById(String ids);
 
-
+    /**
+     * 根据userid查询所属门店
+     * @param userId userid
+     * @return 所属门店
+     */
+    Store selectByUserId(Long userId);
 }
