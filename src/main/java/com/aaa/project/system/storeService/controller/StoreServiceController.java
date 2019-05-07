@@ -32,14 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 业务 信息操作处理
- * 
+ *
  * @author aaa
  * @date 2019-04-19
  */
 @Controller
 @RequestMapping("/system/storeService")
-public class StoreServiceController extends BaseController
-{
+public class StoreServiceController extends BaseController {
     private String prefix = "system/storeService";
 
     @Autowired
@@ -91,74 +90,63 @@ public class StoreServiceController extends BaseController
      */
     @GetMapping("/add")
     public String add(HttpServletRequest req) {
-        Long userId = ShiroUtils.getSysUser().getUserId();
-//        UserAccount user = userAccountService.selectUserAccountByUserId(userId);
-//        Store store = storeService.selectByStoreId(user.getStoreId());
-//        List<Store> list = storeService.selectStoreByStatusId();
-//        if (!list.contains(store)) {
-//            return "redirect:list";
-//        } else {
-            List<Status> statusList = statusService.selectServicesStatusList();
-            List<DefaultService> serviceList = defaultServiceService.selectDefaultService();
-            req.setAttribute("statusList", statusList);
-            req.setAttribute("serviceList", serviceList);
-            return prefix + "/add";
-        //}
+
+        List<Status> statusList = statusService.selectServicesStatusList();
+        List<DefaultService> serviceList = defaultServiceService.selectDefaultService();
+        req.setAttribute("statusList", statusList);
+        req.setAttribute("serviceList", serviceList);
+        return prefix + "/add";
     }
 
-	/**
-	 * 新增保存业务
-	 */
-	@RequiresPermissions("system:storeService:add")
-	@Log(title = "业务", businessType = BusinessType.INSERT)
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(StoreService storeService)
-	{
-	    DefaultService defaultService = defaultServiceService.selectDefaultServiceById(Integer.parseInt(storeService.getServiceName()));
-	    storeService.setServiceName(defaultService.getServiceName());
-		return toAjax(storeServiceService.insertStoreService(storeService));
-	}
-
-	/**
-	 * 修改业务
-	 */
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Integer id, ModelMap mmap, HttpServletRequest req)
-	{
-		StoreService storeService = storeServiceService.selectStoreServiceById(id);
-		mmap.put("storeService", storeService);
-		List<Status> list = statusService.selectServicesStatusList();
-        List<DefaultService> serviceList = defaultServiceService.selectDefaultService();
-        req.setAttribute("serviceList", serviceList);
-		req.setAttribute("list",list);
-	    return prefix + "/edit";
-	}
-	
-	/**
-	 * 修改保存业务
-	 */
-	@RequiresPermissions("system:storeService:edit")
-	@Log(title = "业务", businessType = BusinessType.UPDATE)
-	@PostMapping("/edit")
-	@ResponseBody
-	public AjaxResult editSave(StoreService storeService)
-	{
+    /**
+     * 新增保存业务
+     */
+    @RequiresPermissions("system:storeService:add")
+    @Log(title = "业务", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(StoreService storeService) {
         DefaultService defaultService = defaultServiceService.selectDefaultServiceById(Integer.parseInt(storeService.getServiceName()));
         storeService.setServiceName(defaultService.getServiceName());
-		return toAjax(storeServiceService.updateStoreService(storeService));
-	}
-	
-	/**
-	 * 删除业务
-	 */
-	@RequiresPermissions("system:storeService:remove")
-	@Log(title = "业务", businessType = BusinessType.DELETE)
-	@PostMapping( "/remove")
-	@ResponseBody
-	public AjaxResult remove(String ids)
-	{		
-		return toAjax(storeServiceService.deleteStoreServiceByIds(ids));
-	}
-	
+        return toAjax(storeServiceService.insertStoreService(storeService));
+    }
+
+    /**
+     * 修改业务
+     */
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, ModelMap mmap, HttpServletRequest req) {
+        StoreService storeService = storeServiceService.selectStoreServiceById(id);
+        mmap.put("storeService", storeService);
+        List<Status> list = statusService.selectServicesStatusList();
+        List<DefaultService> serviceList = defaultServiceService.selectDefaultService();
+        req.setAttribute("serviceList", serviceList);
+        req.setAttribute("list", list);
+        return prefix + "/edit";
+    }
+
+    /**
+     * 修改保存业务
+     */
+    @RequiresPermissions("system:storeService:edit")
+    @Log(title = "业务", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(StoreService storeService) {
+        DefaultService defaultService = defaultServiceService.selectDefaultServiceById(Integer.parseInt(storeService.getServiceName()));
+        storeService.setServiceName(defaultService.getServiceName());
+        return toAjax(storeServiceService.updateStoreService(storeService));
+    }
+
+    /**
+     * 删除业务
+     */
+    @RequiresPermissions("system:storeService:remove")
+    @Log(title = "业务", businessType = BusinessType.DELETE)
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids) {
+        return toAjax(storeServiceService.deleteStoreServiceByIds(ids));
+    }
+
 }

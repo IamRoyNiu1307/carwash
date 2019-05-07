@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.List;
 
 import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
+import com.aaa.common.utils.security.ShiroUtils;
 import com.aaa.project.system.store.service.IStoreService;
+import com.aaa.project.system.user.domain.User;
+import com.aaa.project.system.user.service.IUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,8 @@ public class StoreController extends BaseController {
 
     @Autowired
     private IStoreService storeService;
+    @Autowired
+    private IUserService userService;
 
     @RequiresPermissions("system:store:view")
     @GetMapping()
@@ -47,9 +52,22 @@ public class StoreController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Store store) {
-        startPage();
-        List<Store> list = storeService.selectStoreList(store);
-        return getDataTable(list);
+        Long userId = ShiroUtils.getSysUser().getUserId();
+        Long roleId = userService.selectRoleIdByUserId(userId);
+        //如果登录用户的角色是管理员，查看所有门店
+        if (roleId == 1) {
+            startPage();
+            List<Store> list = storeService.selectStoreList(store);
+            return getDataTable(list);
+        }
+        //如果登录用户的角色是商家，查看该商家创建的所有门店
+        else {
+            User user = userService.selectUserById(userId);
+            store.setOwnerAccount(user.getLoginName());
+            startPage();
+            List<Store> list = storeService.selectStoreList(store);
+            return getDataTable(list);
+        }
     }
 
 
