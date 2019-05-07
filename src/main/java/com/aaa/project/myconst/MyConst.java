@@ -44,6 +44,8 @@ public class MyConst {
     public static final int STATUS_ORDER_UNPAY = 201;
     //订单状态：已付款
     public static final int STATUS_ORDER_PAID=202;
+    //订单状态：已取消
+    public static final int STATUS_ORDER_CANCELED=206;
     //订单状态：进行中
     public static final int STATUS_ORDER_ONGOING=208;
     //订单状态：已完成
@@ -68,6 +70,8 @@ public class MyConst {
     public static final Integer STATUS_KEY_STORED = 300;
     //钥匙状态：已取出
     public static final Integer STATUS_KEY_TAKED = 301;
+    //账号状态：待审核
+    public static final Integer STATUS_ACCOUNT_UNCHECK = 500;
     //格子状态：占用
     public static final Integer STATUS_BOX_USED = 601;
     //格子状态：空闲
@@ -92,7 +96,7 @@ public class MyConst {
     //洗车照片请求路径
     public static final String WASHCAR_IMAGE_DIR="/washcar/";
     //新增门店图标上传路径
-    public  static  final  String UPLOAD_STORE_ICON="/Users/roy/project/pcarwash/src/main/resources/static/fileupload/store/logo";
+    public  static  final  String UPLOAD_STORE_ICON="/Users/roy/project/pcarwash/src/main/resources/static/fileupload/store/logo/";
     //store图标请求路径
     public static final String STORE_ICON_IMAGE_DIR = "/store/logo/";
     //用户驾驶证照片上传路径

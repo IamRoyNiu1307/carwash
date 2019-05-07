@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单 数据层
@@ -66,10 +67,11 @@ public interface OrderMapper {
 
     /**
      * 抢单
+     *
      * @param order
      * @return 结果
      */
-    public  int lootOrder(Order order);
+    public int lootOrder(Order order);
 
     /**
      * 删除订单
@@ -116,9 +118,54 @@ public interface OrderMapper {
 
     /**
      * 查询能够抢单的列表
+     *
      * @param order
      * @return 能够抢单的列表
      */
     public List<Order> selectCanLootOrderList(String storeId);
+
+    /**
+     * 查询订单数目前5的商店信息
+     *
+     * @return list 集合
+     */
+    public List<Map<String, Object>> selectCountOrder();
+
+    /**
+     * 该门店最近订单情况
+     * @param store_id
+     * @return List<Map<String, Object>>集合
+     */
+    public List<Map<String, Object>> firstGraphGetSource(String store_id);
+
+    /**
+     * 该门店最近每天营业额
+     * @param store_id
+     * @return List<Map<String, Object>>集合
+     */
+    public List<Map<String, Object>> secondGraphGetSource(String store_id);
+
+    /**
+     * 该门店服务点击
+     * @param store_id
+     * @return List<Map<String, Object>>集合
+     */
+    public List<Map<String, Object>> thirdGraphGetSource(String store_id);
+
+
+    /**
+     * BOSS最近订单情况
+     * @param owner_account
+     * @return List<Map<String, Object>>集合
+     */
+    public List<Map<String, Object>> bossFirstGraphGetSource(String owner_account);
+
+    /**
+     * BOSS最近每天营业额
+     * @param owner_account
+     * @return List<Map<String, Object>>集合
+     */
+    public List<Map<String, Object>> bossSecondGraphGetSource(String owner_account);
+
 
 }

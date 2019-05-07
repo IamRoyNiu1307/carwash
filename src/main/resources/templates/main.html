@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +10,583 @@
     <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
     <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
     <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+    <link href="../static/css/tubiao.css" th:href="@{/css/tubiao.css}" rel="stylesheet"/>
 </head>
 
 <body class="gray-bg">
-       <h1>首页，可以加入统计图，以及项目介绍相关的内容！</h1>
-    <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+<!--管理员-->
+<div id="container" class="container" shiro:hasRole="admin"></div>
+
+<!--店长-->
+
+<div id="dianzhang_container_3" class="container" shiro:hasRole="manager"></div>
+<div class="row" style="margin-top: 30px;" shiro:hasRole="manager">
+    <div class="col-xs-6">
+        <div id="dianzhang_container_2" class="container"></div>
+    </div>
+
+    <div class="col-xs-6">
+        <div id="dianzhang_container_1" class="container"></div>
+    </div>
+</div>
+
+
+<!--商家-->
+<div class="row" style="margin-top: 30px;" shiro:hasRole="merchant">
+    <div class="col-xs-6">
+        <div id="BOSS_container_2" class="container"></div>
+    </div>
+    <div class="col-xs-6">
+        <div id="BOSS_container_1" class="container"></div>
+    </div>
+</div>
+
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/echarts.min.js}"></script>
+
 </body>
 </html>
+<script type="text/javascript">
+    var admin_url = "/api/index/adminGetSource";
+    var dianzhang_url_Frist = "/api/index/firstGraphGetSource";
+    var dianzhang_url_second = "/api/index/secondGraphGetSource";
+    var dianzhang_url_third = "/api/index/thirdGraphGetSource";
+    var BOOS_url_Frist = "/api/index/BOSSFirstGraphGetSource";
+    var BOSS_url_second = "/api/index/BOSSSecondGraphGetSource";
+    var BOSS_url_third = "/api/index/BOSSThirdGraphGetSource";
+    $(function () {
+        //管理员看到的图像（热门的前五洗车店）
+        $.ajax({
+            type: "POST",
+            url: admin_url,
+            success: function (msg) {
+                var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                var app = {};
+                option = null;
+                option = {
+                    backgroundColor: '#2c343c',
+
+                    title: {
+                        text: '前5位热门热门洗车店',
+                        left: 'center',
+                        top: 20,
+                        textStyle: {
+                            color: '#ccc'
+                        }
+                    },
+
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+
+                    visualMap: {
+                        show: false,
+                        min: 80,
+                        max: 600,
+                        inRange: {
+                            colorLightness: [0, 1]
+                        }
+                    },
+                    series: [{
+                        name: '信息统计',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '50%'],
+                        data: [{
+                            value: msg[0].sum,
+                            name: msg[0].store_name
+                        }, {
+                            value: msg[1].sum,
+                            name: msg[1].store_name
+                        }, {
+                            value: msg[2].sum,
+                            name: msg[2].store_name
+                        }, {
+                            value: msg[3].sum,
+                            name: msg[3].store_name
+                        }, {
+                            value: msg[4].sum,
+                            name: msg[4].store_name
+                        }].sort(function (a, b) {
+                            return a.value - b.value;
+                        }),
+                        roseType: 'radius',
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    color: 'rgba(255, 255, 255, 0.3)'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                lineStyle: {
+                                    color: 'rgba(255, 255, 255, 0.3)'
+                                },
+                                smooth: 0.2,
+                                length: 10,
+                                length2: 20
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#c23531',
+                                shadowBlur: 200,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        },
+
+                        animationType: 'scale',
+                        animationEasing: 'elasticOut',
+                        animationDelay: function (idx) {
+                            return Math.random() * 200;
+                        }
+                    }]
+                };
+                ;
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+
+
+            }
+        });
+
+
+        //店长看到的图像：自己最近5天门店下的订单数
+        $.ajax({
+            type: "POST",
+            url: dianzhang_url_Frist,
+            success: function (msg) {
+
+                var dom = document.getElementById("dianzhang_container_2");
+                var myChart = echarts.init(dom);
+                var app = {};
+                var data1 = [];
+                var data2 = [];
+                for (var i = 0; i < msg.length; i++) {
+
+                    data1.push(msg[i].cw_data);
+                    data2.push(msg[i].cw_number);
+                }
+                option = null;
+                app.title = '店长-条形图';
+
+                option = {
+                    title: {
+                        text: '最近订单情况'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: ['订单数']
+                    },
+                    xAxis: {
+                        type: 'value',
+                        boundaryGap: [0, 0.01]
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: data1
+                    },
+                    series: [{
+                        name: '订单数',
+                        type: 'bar',
+                        data: data2
+                    }]
+                };
+                ;
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+            }
+        });
+        //店长看到的图像：自己门店下最近5天营业额数目
+        $.ajax({
+            type: "POST",
+            url: dianzhang_url_second,
+            success: function (msg) {
+
+                var dom = document.getElementById("dianzhang_container_1");
+                var myChart = echarts.init(dom);
+                var xAxisData = [];
+                var app = {};
+                option = null;
+                var data1 = [];
+                var data2 = [];
+                for (var i = 0; i < msg.length; i++) {
+                    xAxisData.push(msg[i].cw_data);
+                    data1.push(
+                        {
+                            value: msg[i].dayIncome,
+                            name: msg[i].cw_data
+                        }
+                    );
+                    data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
+                }
+
+                option = {
+                    title: {
+                        text: '收入情况图'
+                    },
+                    legend: {
+                        data: ['xxx', 'xx'],
+                        align: 'left'
+                    },
+                    toolbox: {
+                        // y: 'bottom',
+                        feature: {
+                            magicType: {
+                                type: ['stack', 'tiled']
+                            },
+                            dataView: {},
+                            saveAsImage: {
+                                pixelRatio: 2
+                            }
+                        }
+                    },
+                    tooltip: {},
+                    xAxis: {
+                        data: xAxisData,
+                        silent: false,
+                        splitLine: {
+                            show: false
+                        }
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: 'xxx',
+                        type: 'bar',
+                        data: data1,
+                        animationDelay: function (idx) {
+                            return idx * 10;
+                        }
+                    }, {
+                        name: 'xx',
+                        type: 'bar',
+                        data: data2,
+                        animationDelay: function (idx) {
+                            return idx * 10 + 100;
+                        }
+                    }],
+                    animationEasing: 'elasticOut',
+                    animationDelayUpdate: function (idx) {
+                        return idx * 5;
+                    }
+                };
+                ;
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+
+
+            }
+        });
+        //店长看到的图像：各个服务消费次数
+        $.ajax({
+            type: "POST",
+            url: dianzhang_url_third,
+            success: function (msg) {
+                var dom = document.getElementById("dianzhang_container_3");
+                var myChart = echarts.init(dom);
+                var app = {};
+                var data1 = [];
+                for (var i = 0; i < msg.length; i++) {
+                    data1.push(
+                        {
+                            value: msg[i].cishu,
+                            name: msg[i].service_name
+                        }
+                    );
+                    option = null;
+                    option = {
+                        backgroundColor: '#2c343c',
+
+                        title: {
+                            text: '洗车店服务选择情况',
+                            left: 'center',
+                            top: 20,
+                            textStyle: {
+                                color: '#ccc'
+                            }
+                        },
+
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+
+                        visualMap: {
+                            show: false,
+                            min: 80,
+                            max: 600,
+                            inRange: {
+                                colorLightness: [0, 1]
+                            }
+                        },
+                        series: [{
+                            name: '信息统计',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '50%'],
+                            data: data1.sort(function (a, b) {
+                                return a.value - b.value;
+                            }),
+                            roseType: 'radius',
+                            label: {
+                                normal: {
+                                    textStyle: {
+                                        color: 'rgba(255, 255, 255, 0.3)'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    lineStyle: {
+                                        color: 'rgba(255, 255, 255, 0.3)'
+                                    },
+                                    smooth: 0.2,
+                                    length: 10,
+                                    length2: 20
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: '#c23531',
+                                    shadowBlur: 200,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            },
+
+                            animationType: 'scale',
+                            animationEasing: 'elasticOut',
+                            animationDelay: function (idx) {
+                                return Math.random() * 200;
+                            }
+                        }]
+                    };
+
+                    if (option && typeof option === "object") {
+                        myChart.setOption(option, true);
+                    }
+                }
+            }
+        });
+
+
+        //BOSS看到的图像：自己最近5天门店下的订单数
+        $.ajax({
+            type: "POST",
+            url: BOOS_url_Frist,
+            success: function (msg) {
+
+                var dom = document.getElementById("BOSS_container_2");
+                var myChart = echarts.init(dom);
+                var app = {};
+                var data1 = [];
+                var data2 = [];
+                for (var i = 0; i < msg.length; i++) {
+
+                    data1.push(msg[i].cw_data);
+                    data2.push(msg[i].cw_number);
+                }
+
+                option = null;
+                app.title = 'BOSS-条形图';
+
+                option = {
+                    title: {
+                        text: '最近订单情况'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: ['订单数']
+                    },
+                    xAxis: {
+                        type: 'value',
+                        boundaryGap: [0, 0.01]
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: data1
+                    },
+                    series: [{
+                        name: '订单数',
+                        type: 'bar',
+                        data: data2
+                    }]
+                };
+                ;
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+            }
+        });
+        //BOSS看到的图像：自己门店下最近5天营业额数目
+        $.ajax({
+            type: "POST",
+            url: BOSS_url_second,
+            success: function (msg) {
+
+                var dom = document.getElementById("BOSS_container_1");
+                var myChart = echarts.init(dom);
+                var xAxisData = [];
+                var app = {};
+                option = null;
+                var data1 = [];
+                var data2 = [];
+                for (var i = 0; i < msg.length; i++) {
+                    xAxisData.push(msg[i].cw_data);
+                    data1.push(
+                        {
+                            value: msg[i].total,
+                            name: msg[i].cw_data
+                        }
+                    );
+                    data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
+                }
+
+                option = {
+                    title: {
+                        text: '收入情况图'
+                    },
+                    legend: {
+                        data: ['xxx', 'xx'],
+                        align: 'left'
+                    },
+                    toolbox: {
+                        // y: 'bottom',
+                        feature: {
+                            magicType: {
+                                type: ['stack', 'tiled']
+                            },
+                            dataView: {},
+                            saveAsImage: {
+                                pixelRatio: 2
+                            }
+                        }
+                    },
+                    tooltip: {},
+                    xAxis: {
+                        data: xAxisData,
+                        silent: false,
+                        splitLine: {
+                            show: false
+                        }
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: 'xxx',
+                        type: 'bar',
+                        data: data1,
+                        animationDelay: function (idx) {
+                            return idx * 10;
+                        }
+                    }, {
+                        name: 'xx',
+                        type: 'bar',
+                        data: data2,
+                        animationDelay: function (idx) {
+                            return idx * 10 + 100;
+                        }
+                    }],
+                    animationEasing: 'elasticOut',
+                    animationDelayUpdate: function (idx) {
+                        return idx * 5;
+                    }
+                };
+                ;
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+                // option = {
+                //     //backgroundColor: '#2c343c',
+                //
+                //     title: {
+                //         text: '当前门店附近几天收入',
+                //         left: 'center',
+                //         top: 20
+                //     },
+                //
+                //     tooltip: {
+                //         trigger: 'item',
+                //         formatter: "{a} <br/>{b} : {c} ({d}%)"
+                //     },
+                //
+                //     visualMap: {
+                //         show: false,
+                //         min: 80,
+                //         max: 600,
+                //         inRange: {
+                //             colorLightness: [0, 1]
+                //         }
+                //     },
+                //     series: [{
+                //         name: '信息统计',
+                //         type: 'pie',
+                //         radius: '55%',
+                //         center: ['50%', '50%'],
+                //         data: data1.sort(function (a, b) {
+                //             return a.value - b.value;
+                //         }),
+                //         roseType: 'radius',
+                //         label: {
+                //             normal: {
+                //                 textStyle: {
+                //                     color: '#2c343c'
+                //                 }
+                //             }
+                //         },
+                //         labelLine: {
+                //             normal: {
+                //                 lineStyle: {
+                //                     color: '#2c343c'
+                //                 },
+                //                 smooth: 0.2,
+                //                 length: 10,
+                //                 length2: 20
+                //             }
+                //         },
+                //         itemStyle: {
+                //             normal: {
+                //                 color: '#2c343c',
+                //                 shadowBlur: 200,
+                //                 shadowColor: 'rgba(0, 0, 0, 0.5)'
+                //             }
+                //         },
+                //
+                //         animationType: 'scale',
+                //         animationEasing: 'elasticOut',
+                //         animationDelay: function (idx) {
+                //             return Math.random() * 200;
+                //         }
+                //     }]
+                // };
+                // if (option && typeof option === "object") {
+                //     myChart.setOption(option, true);
+                // }
+
+            }
+        });
+
+
+    });
+</script>
+
+
+
+
+

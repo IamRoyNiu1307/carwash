@@ -26,4 +26,6 @@ public class WXConst {
     public static final String TRADETYPE = "JSAPI";
     //微信统一下单接口地址
     public static final String PAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+    //微信退款通知地址
+    public static final String REFUND_URL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 }

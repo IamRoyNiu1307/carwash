@@ -5,7 +5,7 @@ import com.aaa.project.system.containerBox.domain.ContainerBox;
 
 public class OpenBoxUtil {
 
-    private static final String host = "192.168.1.47:8080";
+    private static final String host = "192.168.1.47:8080/container";
 
     private static final String url="/api/openContainer";
 

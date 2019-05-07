@@ -26,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static com.aaa.project.myconst.MyConst.STATUS_ACCOUNT_UNCHECK;
+
 /**
  * 用户 信息操作处理
  * 
@@ -89,7 +91,7 @@ public class UserAccountController extends BaseController
 	{
 		User sysUser = ShiroUtils.getSysUser();
 		Store store = new Store();
-		store.setOwnerAccount(sysUser.getPhonenumber());
+		store.setOwnerAccount(sysUser.getLoginName());
 		mmap.put("stores",storeService.selectStoreList(store));
 		mmap.put("roles",roleService.selectAllRole());
 		return prefix + "/add";
