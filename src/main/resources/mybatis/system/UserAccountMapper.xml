@@ -32,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
     <select id="selectUserAccountByStoreId" parameterType="list" resultMap="UserAccountResult">
-        <include refid="selectUserAccountVo"/> where store_id=<foreach item="storeIds" collection="list">
-        #{list.store_Id}
+        <include refid="selectUserAccountVo"/> where store_id in <foreach item="list" collection="list" open="(" separator="," close=")">
+        #{list}
     </foreach>
     </select>
     <select id="selectStoreIdByOpenId" parameterType="string" resultType="string">

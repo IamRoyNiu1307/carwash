@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.aaa.project.myconst.MyConst.Role_MANAGER;
@@ -72,7 +73,11 @@ public class UserAccountController extends BaseController {
             Store store = new Store();
             store.setOwnerAccount(user.getLoginName());
             List<Store> storeList = storeService.selectStoreList(store);
-            List<UserAccount> list = userAccountService.selectUserAccountByStoreId(storeList);
+            List<String> storeIdList = new ArrayList<>();
+            for(int i =0;i<storeList.size();i++){
+                storeIdList.add(storeList.get(i).getStoreId());
+            }
+            List<UserAccount> list = userAccountService.selectUserAccountByStoreId(storeIdList);
             return getDataTable(list);
         } else if (RoleId == Role_MANAGER) {
             UserAccount account = userAccountService.selectUserAccountByUserId(userId);
