@@ -107,4 +107,8 @@ public class MyConst {
     public static final int PASS_CONST_ID = 105;
     //门店审核 拒绝ID
     public static final int REFUSE_CONST_ID = 105;
+    //role 商家
+    public static final long Role_MERCHANT=100;
+    //role 店长
+    public static final long Role_MANAGER=101;
 }

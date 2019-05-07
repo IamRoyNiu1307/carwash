@@ -36,6 +36,13 @@ public interface UserAccountMapper
 	 */
 	public String selectStoreIdByOpenId(String openId);
 
+	/**查询所属门店的userAccount
+	 *
+	 * @param list 店
+	 * @return 用户信息
+	 */
+	public List<UserAccount> selectUserAccountByStoreId(List list);
+
 	/**
      * 查询用户列表
      * 

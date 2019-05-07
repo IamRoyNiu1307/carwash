@@ -46,7 +46,14 @@ public interface IUserAccountService
      * @return 用户集合
      */
 	public List<UserAccount> selectUserAccountList(UserAccount userAccount);
-	
+
+	/**查询所属门店的userAccount
+	 *
+	 * @param list 店
+	 * @return 用户信息
+	 */
+	public List<UserAccount> selectUserAccountByStoreId(List list);
+
 	/**
      * 新增用户
      * 

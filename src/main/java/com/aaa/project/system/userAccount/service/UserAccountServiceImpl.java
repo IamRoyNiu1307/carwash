@@ -74,6 +74,16 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     /**
+     * 查询userAccount
+     * @param list 店
+     * @return userAccount
+     */
+    @Override
+    public List<UserAccount> selectUserAccountByStoreId(List list) {
+        return userAccountMapper.selectUserAccountByStoreId(list);
+    }
+
+    /**
      * 新增用户
      *
      * @param userAccount 用户信息
