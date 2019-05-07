@@ -20,6 +20,13 @@ public interface StoreMapper {
     public Store selectStoreById(Integer id);
 
     /**
+     * 根据登陆名查询门店信息
+     * @param name
+     * @return 门店信息
+     */
+
+     public  Store selectStoreByLoginName(String name);
+    /**
      * 查询门店列表
      *
      * @param store 门店信息

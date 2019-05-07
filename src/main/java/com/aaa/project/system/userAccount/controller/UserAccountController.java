@@ -89,7 +89,7 @@ public class UserAccountController extends BaseController
 	{
 		User sysUser = ShiroUtils.getSysUser();
 		Store store = new Store();
-		store.setOwnerAccount(sysUser.getPhonenumber());
+		store.setOwnerAccount(sysUser.getLoginName());
 		mmap.put("stores",storeService.selectStoreList(store));
 		mmap.put("roles",roleService.selectAllRole());
 		return prefix + "/add";

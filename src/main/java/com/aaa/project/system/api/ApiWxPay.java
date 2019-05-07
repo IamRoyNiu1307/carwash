@@ -28,7 +28,7 @@ import static com.aaa.project.myconst.MyConst.STATUS_ORDER_PAID;
  */
 @RestController
 @RequestMapping("/api/wxpay")
-public class ApiWxPay {
+    public class ApiWxPay {
 
     @Autowired
     private IOrderService orderService;

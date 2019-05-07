@@ -19,7 +19,8 @@
         <result property="statusId" column="status_id"/>
         <result property="introduction" column="introduction"/>
         <result property="faviconPath" column="favicon_path"/>
-        <collection property="storeEnvList" column="store_id" select="com.aaa.project.system.storeEnv.mapper.StoreEnvMapper.selectStoreEnvByStoreId" />
+        <collection property="storeEnvList" column="store_id"
+                    select="com.aaa.project.system.storeEnv.mapper.StoreEnvMapper.selectStoreEnvByStoreId"/>
 
     </resultMap>
 
@@ -69,6 +70,10 @@
 
     <select id="selectStoreNameByStoreId" parameterType="String" resultType="String">
         select store_name from cw_store where store_id =#{storeId}
+    </select>
+    <select id="selectStoreByLoginName" parameterType="String" resultMap="StoreResult">
+        <include refid="selectStoreVo"/>
+        where owner_account= #{name}
     </select>
 
     <insert id="insertStore" parameterType="Store">
@@ -126,7 +131,6 @@
         </trim>
         where id = #{id}
     </update>
-
 
 
     <delete id="deleteStoreById" parameterType="Integer">

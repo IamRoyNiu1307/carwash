@@ -31,6 +31,7 @@ public class IndexController extends BaseController
     {
         // 取身份信息
         User user = getSysUser();
+
         // 根据用户id取出菜单
         List<Menu> menus = menuService.selectMenusByUser(user);
         mmap.put("menus", menus);

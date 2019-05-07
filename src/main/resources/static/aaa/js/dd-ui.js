@@ -475,7 +475,6 @@
                 $.modal.confirm("确定同意" + $.table._option.modalName + "审批信息吗？", function () {
                     var url = $.common.isEmpty(id) ? $.table._option.agreeUrl : $.table._option.agreeUrl.replace("{id}", id);
                     var data = {"ids": id};
-                    alert(url);
                     $.operate.submit(url, "post", "json", data);
                 });
             },

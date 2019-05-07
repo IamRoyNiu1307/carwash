@@ -46,6 +46,17 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     /**
+     * 根据登陆名查询店铺信息
+     *
+     * @param loginName
+     * @return 结果
+     */
+    @Override
+    public Store selectStoreByLoginName(String loginName) {
+        return storeMapper.selectStoreByLoginName(loginName);
+    }
+
+    /**
      * 查询门店列表
      *
      * @param store 门店信息
@@ -70,7 +81,7 @@ public class StoreServiceImpl implements IStoreService {
     @Override
     public int insertStore(Store store, MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
         //得到文件路径
-        String url = STORE_ICON_IMAGE_DIR+upload(UPLOAD_STORE_ICON, file, ".jpg");
+        String url = STORE_ICON_IMAGE_DIR + upload(UPLOAD_STORE_ICON, file, ".jpg");
         //处理门店信息将 province 和city 变为 code
         System.out.println(url);
         Cities cities = citiesMapper.selectCityInfoByCity(store.getCityid());
@@ -152,14 +163,20 @@ public class StoreServiceImpl implements IStoreService {
 
     /**
      * 根据storeId查询门店名称
+     *
      * @param storeId 门店编号
      * @return 门店名称
      */
     @Override
-    public String selectStoreNameByStoreId(String storeId){return storeMapper.selectStoreNameByStoreId(storeId);};
+    public String selectStoreNameByStoreId(String storeId) {
+        return storeMapper.selectStoreNameByStoreId(storeId);
+    }
+
+    ;
 
     /**
-     *  更新门店信息
+     * 更新门店信息
+     *
      * @param ids
      * @return
      */

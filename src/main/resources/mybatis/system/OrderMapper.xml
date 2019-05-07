@@ -23,7 +23,7 @@
         <result property="appointmentTime" column="appointment_time"/>
         <result property="timeQuantum" column="time_quantum"/>
         <result property="expectCostId" column="expect_cost_id"/>
-        <result property="journey" column="journey" />
+        <result property="journey" column="journey"/>
         <association property="keyInfo" column="key_info_id"
                      select="com.aaa.project.system.keyInfo.mapper.KeyInfoMapper.selectKeyInfoById"/>
         <association property="statusName" column="status_id"
@@ -130,6 +130,27 @@ AND cw_order_service.order_id NOT IN (
 )
 GROUP BY
 	cw_order_service.order_id
+    </select>
+    <select id="selectCountOrder" resultType="java.util.Map">
+        SELECT count(*) as sum,b.store_name FROM cw_order  a,cw_store  b WHERE a.store_id=b.store_id  GROUP BY a.store_id  ORDER BY sum DESC LIMIT 5
+    </select>
+    <select id="firstGraphGetSource" resultType="java.util.Map">
+        SELECT substr(create_date,6,5) as cw_data, COUNT(*) as cw_number FROM cw_order WHERE store_id=#{store_id} GROUP BY cw_data ORDER BY substr(create_date,6,5) DESC LIMIT 5
+    </select>
+    <select id="secondGraphGetSource" resultType="java.util.Map">
+      SELECT substr(create_date,6,5) as cw_data,sum(b.final_amount) as dayIncome FROM cw_order a,cw_order_amount b WHERE a.order_id=b.order_id AND  a.store_id=#{store_id} GROUP BY cw_data ORDER BY substr(create_date,6,5) DESC LIMIT 5;
+    </select>
+    <select id="thirdGraphGetSource" resultType="java.util.Map">
+        SELECT s.service_name, result.cishu from (SELECT b.*,a.store_id ,COUNT(*) as cishu FROM cw_order_service b,cw_order a  WHERE a.order_id=b.order_id AND  a.store_id=#{store_id} GROUP BY b.service_id) result ,cw_store_service s WHERE result.store_id=s.store_id AND result.service_id=s.id
+    </select>
+    <select id="bossFirstGraphGetSource" resultType="java.util.Map">
+         SELECT substr(create_date,6,5) as cw_data, COUNT(*) as cw_number FROM cw_order ,cw_store WHERE cw_store.owner_account=#{owner_account} AND cw_store.store_id=cw_order.store_id GROUP BY cw_data ORDER BY substr(create_date,6,5) DESC LIMIT 5;
+    </select>
+    <select id="bossSecondGraphGetSource" resultType="java.util.Map">
+SELECT substr(a.create_date,6,5) as cw_data,sum(b.final_amount) as total
+from cw_order a,cw_order_amount b,cw_store c
+where c.owner_account = #{owner_account} and a.store_id = c.store_id and a.order_id = b.order_id
+GROUP BY cw_data
     </select>
 
 
