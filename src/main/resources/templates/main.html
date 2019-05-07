@@ -171,8 +171,7 @@
 
                 option = {
                     title: {
-                        text: '最近订单情况',
-                        subtext: '数据来自XX'
+                        text: '最近订单情况'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -391,13 +390,20 @@
                 var dom = document.getElementById("BOSS_container_2");
                 var myChart = echarts.init(dom);
                 var app = {};
+                var data1 = [];
+                var data2 = [];
+                for (var i = 0; i < msg.length; i++) {
+
+                    data1.push(msg[i].cw_data);
+                    data2.push(msg[i].cw_number);
+                }
+
                 option = null;
                 app.title = 'BOSS-条形图';
 
                 option = {
                     title: {
-                        text: '最近订单情况',
-                        subtext: '数据来自XX'
+                        text: '最近订单情况'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -408,24 +414,18 @@
                     legend: {
                         data: ['订单数']
                     },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
                     xAxis: {
                         type: 'value',
                         boundaryGap: [0, 0.01]
                     },
                     yAxis: {
                         type: 'category',
-                        data: [msg[0].cw_data, msg[1].cw_data, msg[2].cw_data, msg[3].cw_data, msg[4].cw_data]
+                        data: data1
                     },
                     series: [{
                         name: '订单数',
                         type: 'bar',
-                        data: [msg[0].cw_number, msg[1].cw_number, msg[2].cw_number, msg[3].cw_number, msg[4].cw_number]
+                        data: data2
                     }]
                 };
                 ;

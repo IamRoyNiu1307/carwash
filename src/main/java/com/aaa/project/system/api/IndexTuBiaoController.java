@@ -90,7 +90,6 @@ public class IndexTuBiaoController extends BaseController {
         return null;
     }
 
-
     /**
      * BOSS首页报表
      *
@@ -127,6 +126,4 @@ public class IndexTuBiaoController extends BaseController {
         }
         return null;
     }
-
-
 }
