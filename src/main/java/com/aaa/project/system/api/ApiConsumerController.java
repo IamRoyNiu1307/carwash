@@ -44,7 +44,6 @@ public class ApiConsumerController {
                             @RequestParam(name = "openid", required = false) String openid,
                             @RequestParam(name = "code", required = false) String code,
                             HttpSession session) {
-        System.out.println(account+"   "+password);
         AjaxResult ajaxResult = new AjaxResult();
         ConsumerAccount consumer =  consumerAccountService.selectConsumerAccountByAccount(account);
         if(consumer!=null){

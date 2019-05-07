@@ -8,7 +8,6 @@ import com.aaa.framework.aspectj.lang.enums.BusinessType;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
-import com.aaa.project.system.role.domain.Role;
 import com.aaa.project.system.role.service.IRoleService;
 import com.aaa.project.system.store.domain.Store;
 import com.aaa.project.system.store.service.IStoreService;
@@ -157,61 +156,62 @@ public class UserAccountController extends BaseController {
         return toAjax(userAccountService.insertUserAccount(userAccount, drivingLicence1, drivingLicence2));
     }
 
-    /**
-     * 修改用户
-     */
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap) {
-        //根据id查找userAccount
-        UserAccount userAccount = userAccountService.selectUserAccountById(id);
-        //找出创建用户
-        User sysUser = ShiroUtils.getSysUser();
-        //找出需要修改的用户
-        User user = userService.selectUserById(userAccount.getUserId());
-        //获取该用户下的所有店铺
-        Store store = new Store();
-        store.setOwnerAccount(sysUser.getPhonenumber());
-        //通过用户ID查询角色ID
-        Long roleId = userService.selectRoleIdByUserId(userAccount.getUserId());
-        //通过角色ID查询角色名称
-        String roleName = roleService.selectRoleNameByRoleId(roleId);
-        mmap.put("user", user);
-        mmap.put("stores", storeService.selectStoreList(store));
-        mmap.put("userAccount", userAccount);
-        mmap.put("rolename", roleName);
-        mmap.put("roles", roleService.selectAllRole());
-        return prefix + "/edit";
-    }
+	/**
+	 * 修改用户
+	 */
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+	{
+		//根据id查找userAccount
+		UserAccount userAccount = userAccountService.selectUserAccountById(id);
+		//找出创建用户
+		User sysUser = ShiroUtils.getSysUser();
+		//找出需要修改的用户
+		User user = userService.selectUserById(userAccount.getUserId());
+		//获取该用户下的所有店铺
+		Store store = new Store();
+		store.setOwnerAccount(sysUser.getPhonenumber());
+		//通过用户ID查询角色ID
+		Long roleId = userService.selectRoleIdByUserId(userAccount.getUserId());
+		//通过角色ID查询角色名称
+		String roleName = roleService.selectRoleNameByRoleId(roleId);
+		mmap.put("user",user);
+		mmap.put("stores",storeService.selectStoreList(store));
+		mmap.put("userAccount", userAccount);
+		mmap.put("rolename",roleName);
+		mmap.put("roles",roleService.selectAllRole());
+	    return prefix + "/edit";
+	}
 
-    /**
-     * 修改保存用户
-     */
-    @RequiresPermissions("system:userAccount:edit")
-    @Log(title = "用户", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editSave(@RequestParam(name = "id") Integer id,
-                               @RequestParam(name = "loginName") String loginName,
-                               @RequestParam(name = "password") String password,
-                               @RequestParam(name = "phonenumber") String phonenumber,
-                               @RequestParam(name = "status") String status,
-                               @RequestParam(name = "roleIds") Long[] roleIds,
-                               @RequestParam(name = "storeId") String stordId) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
-        //根据id更新userAccount表的信息
-        UserAccount userAccount = new UserAccount();
-        userAccount.setId(id);
-        userAccount.setStoreId(stordId);
-        System.out.println(userAccount);
-        userAccountService.updateUserAccount(userAccount);
-        //更新sysUser表的信息
-        UserAccount userAccount1 = userAccountService.selectUserAccountById(id);
-        User user = new User();
-        user.setUserId(userAccount1.getUserId());
-        user.setLoginName(loginName);
-        user.setPassword(password);
-        user.setPhonenumber(phonenumber);
-        user.setStatus(status);
-        user.setRoleIds(roleIds);
+	/**
+	 * 修改保存用户
+	 */
+	@RequiresPermissions("system:userAccount:edit")
+	@Log(title = "用户", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult editSave(@RequestParam(name = "id") Integer id,
+							   @RequestParam(name = "loginName") String loginName,
+							   @RequestParam(name = "password") String password,
+							   @RequestParam(name = "phonenumber") String phonenumber,
+							   @RequestParam(name = "status") String status,
+							   @RequestParam(name = "roleIds") Long[] roleIds,
+							   @RequestParam(name = "storeId")String stordId)throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException
+	{
+		//根据id更新userAccount表的信息
+		UserAccount userAccount = new UserAccount();
+		userAccount.setId(id);
+		userAccount.setStoreId(stordId);
+		userAccountService.updateUserAccount(userAccount);
+		//更新sysUser表的信息
+		UserAccount userAccount1 = userAccountService.selectUserAccountById(id);
+		User user = new User();
+		user.setUserId(userAccount1.getUserId());
+		user.setLoginName(loginName);
+		user.setPassword(password);
+		user.setPhonenumber(phonenumber);
+		user.setStatus(status);
+		user.setRoleIds(roleIds);
 
         userService.updateUserInfo(user);
 
