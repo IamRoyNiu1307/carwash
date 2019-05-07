@@ -55,7 +55,6 @@
     var dianzhang_url_third = "/api/index/thirdGraphGetSource";
     var BOOS_url_Frist = "/api/index/BOSSFirstGraphGetSource";
     var BOSS_url_second = "/api/index/BOSSSecondGraphGetSource";
-    var BOSS_url_third = "/api/index/BOSSThirdGraphGetSource";
     $(function () {
         //管理员看到的图像（热门的前五洗车店）
         $.ajax({
@@ -156,7 +155,6 @@
             }
         });
 
-
         //店长看到的图像：自己最近5天门店下的订单数
         $.ajax({
             type: "POST",
@@ -203,7 +201,6 @@
                         data: data2
                     }]
                 };
-                ;
                 if (option && typeof option === "object") {
                     myChart.setOption(option, true);
                 }
@@ -306,6 +303,7 @@
                             name: msg[i].service_name
                         }
                     );
+                }
                     option = null;
                     option = {
                         backgroundColor: '#2c343c',
