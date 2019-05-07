@@ -65,29 +65,32 @@ public class UserAccountController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(UserAccount userAccount) {
+        //通过shiro查询登录的userId
         Long userId = ShiroUtils.getUserId();
-
+        //通过userId找登录角色职位（商家、店长、admin）
         Long RoleId = userService.selectRoleIdByUserId(userId);
+        //当登录角色是商家时 查看该商家所有门店的userAccount
         if (RoleId == Role_MERCHANT) {
             User user = userService.selectUserById(userId);
             Store store = new Store();
             store.setOwnerAccount(user.getLoginName());
+            //查询商家所有门店
             List<Store> storeList = storeService.selectStoreList(store);
             List<String> storeIdList = new ArrayList<>();
             for(int i =0;i<storeList.size();i++){
                 storeIdList.add(storeList.get(i).getStoreId());
             }
+            startPage();
             List<UserAccount> list = userAccountService.selectUserAccountByStoreId(storeIdList);
             return getDataTable(list);
-        } else if (RoleId == Role_MANAGER) {
+        } else if (RoleId == Role_MANAGER) {//当登录角色是店长时 查看该店下的所有userAccount
             UserAccount account = userAccountService.selectUserAccountByUserId(userId);
             userAccount.setStoreId(account.getStoreId());
             startPage();
             List<UserAccount> list = userAccountService.selectUserAccountList(userAccount);
             return getDataTable(list);
         } else {
-
-            System.out.println();
+            //当登录为admin时 查看所有userAccount
             startPage();
             List<UserAccount> list = userAccountService.selectUserAccountList(userAccount);
             return getDataTable(list);
