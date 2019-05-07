@@ -26,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static com.aaa.project.myconst.MyConst.STATUS_ACCOUNT_UNCHECK;
+
 /**
  * 用户 信息操作处理
  * 

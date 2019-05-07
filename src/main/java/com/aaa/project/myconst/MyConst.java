@@ -70,6 +70,8 @@ public class MyConst {
     public static final Integer STATUS_KEY_STORED = 300;
     //钥匙状态：已取出
     public static final Integer STATUS_KEY_TAKED = 301;
+    //账号状态：待审核
+    public static final Integer STATUS_ACCOUNT_UNCHECK = 500;
     //格子状态：占用
     public static final Integer STATUS_BOX_USED = 601;
     //格子状态：空闲
@@ -94,11 +96,11 @@ public class MyConst {
     //洗车照片请求路径
     public static final String WASHCAR_IMAGE_DIR="/washcar/";
     //新增门店图标上传路径
-    public  static  final  String UPLOAD_STORE_ICON="/Users/roy/project/pcarwash/src/main/resources/static/fileupload/store/logo";
+    public  static  final  String UPLOAD_STORE_ICON="/Users/roy/project/pcarwash/src/main/resources/static/fileupload/store/logo/";
     //store图标请求路径
     public static final String STORE_ICON_IMAGE_DIR = "/store/logo/";
     //用户驾驶证照片上传路径
-    public static  final String DRIVING_LICENCE_IMG="/Users/roy/project/carwash/src/main/resources/static/fileupload/user/drivingLicence";
+    public static  final String DRIVING_LICENCE_IMG="/Users/roy/project/carwash/src/main/resources/static/fileupload/user/drivingLicence/";
     //用户驾驶证照片请求路径
     public static final String DRIVING_LICENCE_ICON_IMG = "/user/drivingLicence/";
     //洗车员角色id

@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectAllRole" resultMap="RoleResult">
 		<include refid="selectRoleContactVo"/>
-		where r.role_id>=100
+		where r.role_id>=101
 	</select>
 	
 	<delete id="deleteRoleById" parameterType="Long">
