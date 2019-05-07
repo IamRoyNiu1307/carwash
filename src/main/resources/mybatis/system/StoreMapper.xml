@@ -20,7 +20,7 @@
         <result property="introduction" column="introduction"/>
         <result property="faviconPath" column="favicon_path"/>
         <collection property="storeEnvList" column="store_id" select="com.aaa.project.system.storeEnv.mapper.StoreEnvMapper.selectStoreEnvByStoreId" />
-
+        <collection property="star" column="store_id" select="com.aaa.project.system.evaluate.mapper.EvaluateMapper.selectStarByStoreId" />
     </resultMap>
 
     <sql id="selectStoreVo">

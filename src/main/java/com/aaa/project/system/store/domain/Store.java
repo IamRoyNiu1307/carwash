@@ -46,6 +46,8 @@ public class Store extends BaseEntity
 	private String introduction;
 	/** 图标路径 */
 	private String faviconPath;
+	/** 评价等级 */
+	private Integer star;
 
 	private List<StoreEnv> storeEnvList;
 
@@ -182,6 +184,14 @@ public class Store extends BaseEntity
 
 	public void setStoreEnvList(List<StoreEnv> storeEnvList) {
 		this.storeEnvList = storeEnvList;
+	}
+
+	public Integer getStar() {
+		return star;
+	}
+
+	public void setStar(Integer star) {
+		this.star = star;
 	}
 
 	public String toString() {
