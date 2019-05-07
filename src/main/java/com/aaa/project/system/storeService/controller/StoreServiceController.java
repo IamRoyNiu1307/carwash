@@ -65,8 +65,6 @@ public class StoreServiceController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(StoreService storeService) {
-        Long userId = ShiroUtils.getUserId();
-        System.out.println(userId);
         startPage();
         List<StoreService> list = storeServiceService.selectStoreServiceList(storeService);
         return getDataTable(list);

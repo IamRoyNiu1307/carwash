@@ -59,7 +59,6 @@ public class ApiUserController {
                             @RequestParam(name = "openid", required = false) String openid,
                             @RequestParam(name = "code", required = false) String code,
                             HttpSession session) {
-        System.out.println(account + "   " + password);
         AjaxResult ajaxResult = new AjaxResult();
         User user = new User();
         user.setLoginName(account);

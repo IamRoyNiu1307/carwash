@@ -30,7 +30,6 @@ public class IStoreReviewServiceImpl implements IStoreReviewService {
         //设置store值
         store.setId(id);
         store.setStatusId(statusID);
-        System.out.println(store);
         return storeMapper.updateStore(store);
     }
 }

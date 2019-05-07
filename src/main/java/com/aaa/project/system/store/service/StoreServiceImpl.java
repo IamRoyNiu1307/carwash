@@ -83,7 +83,6 @@ public class StoreServiceImpl implements IStoreService {
         //得到文件路径
         String url = STORE_ICON_IMAGE_DIR + upload(UPLOAD_STORE_ICON, file, ".jpg");
         //处理门店信息将 province 和city 变为 code
-        System.out.println(url);
         Cities cities = citiesMapper.selectCityInfoByCity(store.getCityid());
         //重新设值
         store.setCityid(cities.getCityid());
@@ -186,7 +185,6 @@ public class StoreServiceImpl implements IStoreService {
         Store store = new Store();
         store.setId(Convert.toInt(ids));
         store.setStatusId(100);
-        System.out.println(store);
         storeMapper.updateStore(store);
         return 0;
     }

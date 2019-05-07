@@ -99,7 +99,6 @@ public class StoreController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Store store, @RequestParam("file") MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
-        System.out.println(store);
         return toAjax(storeService.insertStore(store, file));
     }
 

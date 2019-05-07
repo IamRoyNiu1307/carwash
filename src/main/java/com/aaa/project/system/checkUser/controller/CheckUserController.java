@@ -68,7 +68,6 @@ public class CheckUserController extends BaseController {
     @ResponseBody
     public AjaxResult refuseUser(@RequestParam("userId") Long userId){
         User user = userService.selectUserById(userId);
-        System.out.println(user);
         UserAccount userAccount = userAccountService.selectUserAccountByUserId(userId);
         user.setStatus("1");
         userAccount.setStatusId(509);
