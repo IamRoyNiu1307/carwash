@@ -13,11 +13,9 @@ import com.aaa.project.system.role.service.IRoleService;
 import com.aaa.project.system.store.domain.Store;
 import com.aaa.project.system.store.service.IStoreService;
 import com.aaa.project.system.user.domain.User;
-import com.aaa.project.system.user.domain.UserRole;
 import com.aaa.project.system.user.service.IUserService;
 import com.aaa.project.system.userAccount.domain.UserAccount;
 import com.aaa.project.system.userAccount.service.IUserAccountService;
-import javassist.expr.NewArray;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,7 @@ import java.util.List;
 
 import static com.aaa.project.myconst.MyConst.Role_MANAGER;
 import static com.aaa.project.myconst.MyConst.Role_MERCHANT;
+
 
 /**
  * 用户 信息操作处理

@@ -31,6 +31,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectEvaluateVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectStarByStoreId" parameterType="String" resultType="int">
+        select ROUND(AVG(star),0) from cw_evaluate where store_id=#{storeId}
+    </select>
         
     <insert id="insertEvaluate" parameterType="Evaluate">
         insert into cw_evaluate

@@ -58,5 +58,12 @@ public interface EvaluateMapper
      * @return 结果
      */
 	public int deleteEvaluateByIds(String[] ids);
+
+	/**
+	 * 根据店铺id查询该店铺的评价星级
+	 * @param storeId 店铺id
+	 * @return 星级
+	 */
+	public int selectStarByStoreId(String storeId);
 	
 }

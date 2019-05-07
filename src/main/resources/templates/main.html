@@ -55,7 +55,6 @@
     var dianzhang_url_third = "/api/index/thirdGraphGetSource";
     var BOOS_url_Frist = "/api/index/BOSSFirstGraphGetSource";
     var BOSS_url_second = "/api/index/BOSSSecondGraphGetSource";
-    var BOSS_url_third = "/api/index/BOSSThirdGraphGetSource";
     $(function () {
         //管理员看到的图像（热门的前五洗车店）
         $.ajax({
@@ -156,7 +155,6 @@
             }
         });
 
-
         //店长看到的图像：自己最近5天门店下的订单数
         $.ajax({
             type: "POST",
@@ -166,13 +164,19 @@
                 var dom = document.getElementById("dianzhang_container_2");
                 var myChart = echarts.init(dom);
                 var app = {};
+                var data1 = [];
+                var data2 = [];
+                for (var i = 0; i < msg.length; i++) {
+
+                    data1.push(msg[i].cw_data);
+                    data2.push(msg[i].cw_number);
+                }
                 option = null;
                 app.title = '店长-条形图';
 
                 option = {
                     title: {
-                        text: '最近订单情况',
-                        subtext: '数据来自XX'
+                        text: '最近订单情况'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -183,27 +187,20 @@
                     legend: {
                         data: ['订单数']
                     },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
                     xAxis: {
                         type: 'value',
                         boundaryGap: [0, 0.01]
                     },
                     yAxis: {
                         type: 'category',
-                        data: [msg[0].cw_data, msg[1].cw_data, msg[2].cw_data, msg[3].cw_data, msg[4].cw_data]
+                        data: data1
                     },
                     series: [{
                         name: '订单数',
                         type: 'bar',
-                        data: [msg[0].cw_number, msg[1].cw_number, msg[2].cw_number, msg[3].cw_number, msg[4].cw_number]
+                        data: data2
                     }]
                 };
-                ;
                 if (option && typeof option === "object") {
                     myChart.setOption(option, true);
                 }
@@ -306,6 +303,7 @@
                             name: msg[i].service_name
                         }
                     );
+                }
                     option = null;
                     option = {
                         backgroundColor: '#2c343c',
@@ -391,13 +389,20 @@
                 var dom = document.getElementById("BOSS_container_2");
                 var myChart = echarts.init(dom);
                 var app = {};
+                var data1 = [];
+                var data2 = [];
+                for (var i = 0; i < msg.length; i++) {
+
+                    data1.push(msg[i].cw_data);
+                    data2.push(msg[i].cw_number);
+                }
+
                 option = null;
                 app.title = 'BOSS-条形图';
 
                 option = {
                     title: {
-                        text: '最近订单情况',
-                        subtext: '数据来自XX'
+                        text: '最近订单情况'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -408,24 +413,18 @@
                     legend: {
                         data: ['订单数']
                     },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
                     xAxis: {
                         type: 'value',
                         boundaryGap: [0, 0.01]
                     },
                     yAxis: {
                         type: 'category',
-                        data: [msg[0].cw_data, msg[1].cw_data, msg[2].cw_data, msg[3].cw_data, msg[4].cw_data]
+                        data: data1
                     },
                     series: [{
                         name: '订单数',
                         type: 'bar',
-                        data: [msg[0].cw_number, msg[1].cw_number, msg[2].cw_number, msg[3].cw_number, msg[4].cw_number]
+                        data: data2
                     }]
                 };
                 ;
