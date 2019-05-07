@@ -69,6 +69,9 @@ public class AssignOrderController extends BaseController {
 
     /**
      * 修改订单：指派任务
+     * @param id 订单id
+     * @param mmap modelmap
+     * @return 跳转页面
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap)
@@ -115,8 +118,13 @@ public class AssignOrderController extends BaseController {
         mmap.put("missionList",missionList);
         return prefix + "/assign";
     }
+
     /**
+     *
      * 修改保存订单
+     * @param userId 用户id
+     * @param id 订单id
+     * @return ajaxResult
      */
     @RequiresPermissions("system:assignOrder:save")
     @Log(title = "订单", businessType = BusinessType.UPDATE)
@@ -124,9 +132,12 @@ public class AssignOrderController extends BaseController {
     @ResponseBody
     public AjaxResult editSave(@RequestParam("userId") Integer userId, @RequestParam("id") int id)
     {
+        //根据传过来的userId查找员工和订单
         User user = userService.selectUserById(Long.parseLong(userId.toString()));
         Order order = orderService.selectOrderById(id);
+        //将订单的负责人电话设置为被指派的工作人员的电话
         order.setUserAccount(user.getPhonenumber());
+        //将订单状态改为进行中
         order.setStatusId(STATUS_ORDER_ONGOING);
         return toAjax( orderService.updateOrder(order));
     }

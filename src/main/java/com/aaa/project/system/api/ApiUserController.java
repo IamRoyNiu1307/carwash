@@ -113,7 +113,7 @@ public class ApiUserController {
     /**
      * 根据openid获得绑定的账号
      *
-     * @param openid
+     * @param openid 微信唯一标识
      * @return ajaxResult
      */
     @RequestMapping("/bind")
@@ -132,7 +132,6 @@ public class ApiUserController {
      * 洗车员返回订单
      *
      * @param account 洗车员账号
-     * @param statusId   订单状态
      * @return ajaxResult
      */
     @RequestMapping("/getOrderList")
@@ -141,7 +140,6 @@ public class ApiUserController {
         List<Map<String,Object>> orderInfoList=new ArrayList<>();
         Order order = new Order();
         order.setUserAccount(account);
-        //order.setStatusId(statusId);
         List<Order> orderList = orderService.selectOrderList(order);
         for(Order each:orderList){
             Map orderInfo = new HashMap();

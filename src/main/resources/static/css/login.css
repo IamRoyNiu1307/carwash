@@ -3,12 +3,7 @@ html {
 }
 body.signin {
 	height:auto;
-	background:url(../img/timg.jpg) no-repeat center fixed;
-	-webkit-background-size:cover;
-	-moz-background-size:cover;
-	-o-background-size:cover;
-	background-size:cover;
-	color:rgba(255,255,255,.95)
+	background-color:#d2d6de;
 }
 .signinpanel {
 	width:750px;
