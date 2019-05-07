@@ -1,4 +1,4 @@
-const host = 'localhost'
+const host = 'sxejdh.natappfree.cc'
 
 const config = {
 

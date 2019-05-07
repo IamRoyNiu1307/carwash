@@ -164,12 +164,14 @@ public class ApiUserController {
      */
     @RequestMapping("/insertLocation")
     public AjaxResult insertLocation(@RequestParam(name = "account", required = true) String account, @RequestParam(name = "posLng", required = true) String posLng, @RequestParam(name = "posLat", required = true) String posLat) {
+        AjaxResult ajaxResult = new AjaxResult();
         UserLocation userLocation = new UserLocation();
         userLocation.setUserAccount(account);
         userLocation.setPosLng(new BigDecimal(posLng));
         userLocation.setPosLat(new BigDecimal(posLat));
         userLocation.setUpdateDatetime(new Date());
         userLocationService.insertUserLocation(userLocation);
-        return AjaxResult.success();
+        ajaxResult.put("code",0);
+        return ajaxResult;
     }
 }

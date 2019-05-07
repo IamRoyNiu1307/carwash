@@ -44,6 +44,8 @@ public class MyConst {
     public static final int STATUS_ORDER_UNPAY = 201;
     //订单状态：已付款
     public static final int STATUS_ORDER_PAID=202;
+    //订单状态：已取消
+    public static final int STATUS_ORDER_CANCELED=206;
     //订单状态：进行中
     public static final int STATUS_ORDER_ONGOING=208;
     //订单状态：已完成

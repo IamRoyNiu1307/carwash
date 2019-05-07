@@ -195,6 +195,7 @@ GROUP BY
             <if test="keyInfoId != null  ">key_info_id = #{keyInfoId},</if>
             <if test="typeId != null  ">type_id = #{typeId},</if>
             <if test="userAccount != null  and userAccount != ''  ">user_account = #{userAccount},</if>
+            <if test="userAccount != null  and userAccount == ''  ">user_account = NULL,</if>
             <if test="orderComment != null  and orderComment != ''  ">order_comment = #{orderComment},</if>
             <if test="appointmentTime != null  ">appointment_time = #{appointmentTime},</if>
             <if test="timeQuantum != null  ">time_quantum = #{timeQuantum},</if>

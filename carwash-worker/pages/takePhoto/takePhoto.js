@@ -38,7 +38,7 @@ Page({
       statusId = 212
     }
     if (this.data.todo == 'b3') {
-      statusId = 213
+      statusId = 203
     }
     //拍摄
     this.data.context.takePhoto({

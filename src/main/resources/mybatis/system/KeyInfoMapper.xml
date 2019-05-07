@@ -64,8 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="statusId != null  ">status_id = #{statusId},</if>
             <if test="verifyCode != null  ">verify_code = #{verifyCode},</if>
             <if test="verifyCode == null  ">verify_code = NULL,</if>
-            <if test="containerBoxId == null  ">container_boxId = NULL,</if>
-            <if test="containerBoxId != null  ">container_boxId = #{containerBoxId},</if>
+            <if test="containerBoxId == null  ">container_box_id = NULL,</if>
+            <if test="containerBoxId != null  ">container_box_id = #{containerBoxId},</if>
         </trim>
         where id = #{id}
     </update>
