@@ -24,6 +24,8 @@ import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.common.utils.poi.ExcelUtil;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.aaa.project.myconst.MyConst.Role_MERCHANT;
+
 /**
  * 门店 信息操作处理
  *
@@ -56,7 +58,7 @@ public class StoreController extends BaseController {
         Long userId = ShiroUtils.getSysUser().getUserId();
         Long roleId = userService.selectRoleIdByUserId(userId);
         //如果登录用户的角色是管理员，查看所有门店
-        if (roleId == 1) {
+        if (roleId == Role_MERCHANT) {
             startPage();
             List<Store> list = storeService.selectStoreList(store);
             return getDataTable(list);

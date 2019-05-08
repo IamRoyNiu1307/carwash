@@ -205,7 +205,6 @@ public class UserAccountController extends BaseController
 		UserAccount userAccount = new UserAccount();
 		userAccount.setId(id);
 		userAccount.setStoreId(stordId);
-		System.out.println(userAccount);
 		userAccountService.updateUserAccount(userAccount);
 		//更新sysUser表的信息
 		UserAccount userAccount1 = userAccountService.selectUserAccountById(id);

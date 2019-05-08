@@ -36,6 +36,10 @@ public class CheckUserController extends BaseController {
         return prefix + "/checkUser";
     }
 
+    /**
+     * 显示待审核用户列表
+     * @return
+     */
     @RequiresPermissions("system:checkUser:list")
     @PostMapping("/list")
     @ResponseBody
@@ -45,6 +49,12 @@ public class CheckUserController extends BaseController {
         return getDataTable(list);
     }
 
+    /**
+     * 查看详细信息
+     * @param userId
+     * @param mmap
+     * @return
+     */
     @RequiresPermissions("system:checkUser:detail")
     @GetMapping("/detail/{userId}")
     public String detail(@PathVariable("userId") String userId, ModelMap mmap)
@@ -54,22 +64,36 @@ public class CheckUserController extends BaseController {
         return prefix + "/detail";
     }
 
+    /**
+     * 接受用户--审核通过
+     * @param userId
+     * @return
+     */
     @RequiresPermissions("system:checkUser:acceptUser")
     @PostMapping("/acceptUser")
     @ResponseBody
     public AjaxResult acceptUser(@RequestParam("userId") Integer userId){
         UserAccount user = userAccountService.selectUserAccountByUserId(Long.parseLong(userId.toString()));
+        //审核通过
+        //用户账号设为使用中
         user.setStatusId(501);
         return toAjax(userAccountService.updateUserAccount(user));
     }
 
+    /**
+     * 拒绝用户--审核不通过
+     * @param userId
+     * @return
+     */
     @RequiresPermissions("system:checkUser:refuseUser")
     @PostMapping("/refuseUser")
     @ResponseBody
     public AjaxResult refuseUser(@RequestParam("userId") Long userId){
         User user = userService.selectUserById(userId);
         UserAccount userAccount = userAccountService.selectUserAccountByUserId(userId);
+        //用户状态设为1，未通过
         user.setStatus("1");
+        //用户账号状态设为异常
         userAccount.setStatusId(509);
         userService.updateUserInfo(user);
         return toAjax(userAccountService.updateUserAccount(userAccount));
