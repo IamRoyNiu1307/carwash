@@ -73,5 +73,11 @@
             city like #{%cityName%}
         </where>
     </select>
+    <select id="selectCityInfoByCityId" resultType="com.aaa.project.system.cities.domain.Cities">
+        <include refid="selectCitiesVo"/>
+        <where>
+            cityid = #{cityId}
+        </where>
+    </select>
 
 </mapper>

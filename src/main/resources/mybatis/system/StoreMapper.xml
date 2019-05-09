@@ -21,6 +21,9 @@
         <result property="faviconPath" column="favicon_path"/>
         <collection property="storeEnvList" column="store_id" select="com.aaa.project.system.storeEnv.mapper.StoreEnvMapper.selectStoreEnvByStoreId" />
         <collection property="star" column="store_id" select="com.aaa.project.system.evaluate.mapper.EvaluateMapper.selectStarByStoreId" />
+        <collection property="province" column="provinceid" select="com.aaa.project.system.provinces.mapper.ProvincesMapper.selectProvincesByProvinceId" />
+        <collection property="city" column="cityid" select="com.aaa.project.system.cities.mapper.CitiesMapper.selectCityInfoByCityId" />
+        <collection property="status" column="status_id" select="com.aaa.project.system.status.mapper.StatusMapper.selectStatusById" />
     </resultMap>
 
     <sql id="selectStoreVo">

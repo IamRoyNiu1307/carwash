@@ -352,7 +352,7 @@
                     area: [_width + 'px', _height + 'px'],
                     content: _url,
                     shadeClose: true,
-                    btn: ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'],
+                    btn: ['<i class="fa fa-check"></i> 确定', '<i class="fa fa-close"></i> 关闭'],
                     yes: function (index, layero) {
                         options.callBack(index, layero)
                     }, cancel: function () {
@@ -360,6 +360,7 @@
                     }
                 });
             },
+
             // 弹出层全屏
             openFull: function (title, url, width, height) {
                 //如果是移动端，就使用自适应大小弹窗
@@ -478,6 +479,22 @@
                     $.operate.submit(url, "post", "json", data);
                 });
             },
+            //查看详细信息
+            shenpi_showStoreDetail: function (id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = $.table._option.showDetail.replace("{id}", id);
+                } else {
+                    var id = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+                    if (id.length == 0) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
+                    }
+                    url = $.table._option.showDetail.replace("id", id);
+                }
+
+                $.modal.open($.table._option.modalName + "详细信息", url);
+            },
 
             // 拒绝信息
             refuse: function (id) {
@@ -502,10 +519,10 @@
 
                 }
 
-                $.modal.open("展示" + $.table._option.modalName+"详细信息", url);
+                $.modal.open("展示" + $.table._option.modalName + "详细信息", url);
             },
             //抢订单
-            loot: function (url,data) {
+            loot: function (url, data) {
                 $.modal.loading("正在处理中，请稍后...");
                 var config = {
                     url: url,

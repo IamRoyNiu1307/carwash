@@ -68,5 +68,11 @@ public interface CitiesMapper {
 
     public Cities selectCityInfoByCity(String cityName);
 
+    /**
+     * 根据cityId查询city信息
+     * @param cityId
+     * @return city信息
+     */
+    public Cities selectCityInfoByCityId(String cityId);
 
 }

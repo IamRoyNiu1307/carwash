@@ -58,22 +58,7 @@
             </form>
         </div>
 
-        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:store:add">
-                <i class="fa fa-plus"></i> 添加
-            </a>
-            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
-               shiro:hasPermission="system:store:edit">
-                <i class="fa fa-edit"></i> 通过
-            </a>
-            <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
-               shiro:hasPermission="system:store:remove">
-                <i class="fa fa-remove"></i> 拒绝
-            </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:store:export">
-                <i class="fa fa-download"></i> 导出
-            </a>
-        </div>
+
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
@@ -81,18 +66,18 @@
 </div>
 <div th:include="include :: footer"></div>
 <script th:inline="javascript">
-     var agreeFlag = [[${@permission.hasPermi('system:reviewedstore:agree')}]];
-     var refuseFlag = [[${@permission.hasPermi('system:reviewedstore:refuse')}]];
-     var prefix = ctx + "system/reviewedStore";
+    var showFlag = [[${@permission.hasPermi('system:store:showstoreinfo')}]];
+    var agreeFlag = [[${@permission.hasPermi('system:reviewedstore:agree')}]];
+    var refuseFlag = [[${@permission.hasPermi('system:reviewedstore:refuse')}]];
+    var prefix = ctx + "system/reviewedStore";
 
     $(function () {
         var options = {
             url: prefix + "/list",
-            createUrl: prefix + "/add",
-            updateUrl: prefix + "/edit/{id}",
+            showDetail: prefix + "/showDetail/{id}",
             agreeUrl: prefix + "/agree",
             removeUrl: prefix + "/refuse",
-            exportUrl: prefix + "/export",
+            // exportUrl: prefix + "/export",
             modalName: "审核门店",
             search: false,
             showExport: true,
@@ -120,28 +105,18 @@
                     sortable: true
                 },
                 {
-                    field: 'provinceid',
+                    field: 'province.province',
                     title: '所在省份',
                     sortable: true
                 },
                 {
-                    field: 'cityid',
+                    field: 'city.city',
                     title: '所在城市',
                     sortable: true
                 },
                 {
                     field: 'street',
                     title: '所在街道',
-                    sortable: true
-                },
-                {
-                    field: 'posLng',
-                    title: '经度',
-                    sortable: true
-                },
-                {
-                    field: 'posLat',
-                    title: '纬度',
                     sortable: true
                 },
                 {
@@ -155,27 +130,20 @@
                     sortable: true
                 },
                 {
-                    field: 'statusId',
-                    title: '门店状态编号',
-                    sortable: true
-                },
-                {
                     field: 'introduction',
                     title: '简介',
                     sortable: true
                 },
                 {
-                    field: 'faviconPath',
-                    title: '图标路径',
-                    sortable: true
-                },
-                {
+
                     title: '操作',
-                    align: 'center',
+                    width: '30%',
+                    align: "center",
                     formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs' + agreeFlag + '" href="#" onclick="$.operate.agree(\'' + row.id + '\')"><i class="fa fa-edit"></i>通过</a>');
-                        actions.push('<a class="btn btn-danger btn-xs' + refuseFlag + '"  href="#" onclick="$.operate. refuse(\'' + row.id + '\')"><i class="fa fa-remove"></i>拒绝</a>');
+                        actions.push('<a class="btn btn-success btn-xs ' + showFlag + '" href="#" onclick="$.operate.shenpi_showStoreDetail(\'' + row.id + '\')"><i class="fa fa-edit"></i>详情</a> ');
+                        actions.push('<a class="btn btn-info btn-xs ' + agreeFlag + '" href="#" onclick="$.operate.agree(\'' + row.id + '\')"><i class="fa fa-plus"></i>同意</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + refuseFlag + '" href="#" onclick="refuse(\'' + row.id + '\')"><i class="fa fa-remove"></i>拒绝</a>');
                         return actions.join('');
                     }
                 }]

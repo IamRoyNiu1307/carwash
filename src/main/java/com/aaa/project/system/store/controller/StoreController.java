@@ -61,6 +61,7 @@ public class StoreController extends BaseController {
         if (roleId == Role_MERCHANT) {
             startPage();
             List<Store> list = storeService.selectStoreList(store);
+
             return getDataTable(list);
         }
         //如果登录用户的角色是商家，查看该商家创建的所有门店
@@ -69,6 +70,7 @@ public class StoreController extends BaseController {
             store.setOwnerAccount(user.getLoginName());
             startPage();
             List<Store> list = storeService.selectStoreList(store);
+
             return getDataTable(list);
         }
     }

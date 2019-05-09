@@ -1,6 +1,13 @@
 package com.aaa.project.system.user.controller;
 
+import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
+
+import com.aaa.project.system.role.domain.Role;
+import com.aaa.project.system.role.service.IRoleService;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.web.session.HttpServletSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,6 +17,8 @@ import com.aaa.framework.web.controller.BaseController;
 import com.aaa.project.system.menu.domain.Menu;
 import com.aaa.project.system.menu.service.IMenuService;
 import com.aaa.project.system.user.domain.User;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * 首页 业务处理
@@ -24,19 +33,38 @@ public class IndexController extends BaseController
 
     @Autowired
     private DouDouConfig douDouConfig;
+    @Autowired
+    private IRoleService roleService;
 
     // 系统首页
     @GetMapping("/index")
-    public String index(ModelMap mmap)
+    public String index(ModelMap mmap,HttpSession session)
     {
+        String roleFlag = "";
         // 取身份信息
         User user = getSysUser();
+        List<Role> roles = roleService.selectRolesByUserId(user.getUserId());
+        for(Role each : roles){
 
+            if(each.isFlag()&&"manager".equals(each.getRoleKey())){
+                roleFlag="manager";
+
+            }
+            if(each.isFlag()&&"merchant".equals(each.getRoleKey())){
+                roleFlag="merchant";
+
+            }
+            if(each.isFlag()&&"admin".equals(each.getRoleKey())){
+                roleFlag="admin";
+                break;
+            }
+        }
         // 根据用户id取出菜单
         List<Menu> menus = menuService.selectMenusByUser(user);
         mmap.put("menus", menus);
         mmap.put("user", user);
         mmap.put("copyrightYear", douDouConfig.getCopyrightYear());
+        session.setAttribute("roleFlag",roleFlag);
         return "index";
     }
 

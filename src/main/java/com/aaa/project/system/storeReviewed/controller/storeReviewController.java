@@ -7,14 +7,13 @@ import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.project.system.store.domain.Store;
+import com.aaa.project.system.store.service.IStoreService;
 import com.aaa.project.system.storeReviewed.service.IStoreReviewService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +27,8 @@ public class storeReviewController extends BaseController {
 
     @Autowired
     private IStoreReviewService iStoreReviewService;
+    @Autowired
+    private IStoreService storeService;
 
     @RequiresPermissions("system:reviewedstore:view")
     @GetMapping()
@@ -74,6 +75,16 @@ public class storeReviewController extends BaseController {
     public AjaxResult agree(String ids) {
         return toAjax(iStoreReviewService.updateStoreStatusById(Convert.toInt(ids), PASS_CONST_ID));
     }
+
+    @GetMapping("/showDetail/{id}")
+    public String edit(@PathVariable("id") Integer id, ModelMap mmap) {
+        Store store = storeService.selectStoreById(id);
+        mmap.put("store", store);
+        return prefix + "/storeDetail";
+    }
+
+
+
 
 
 }
