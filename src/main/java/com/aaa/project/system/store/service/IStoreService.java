@@ -29,7 +29,7 @@ public interface IStoreService {
      * @param loginName
      * @return 门店信息
      */
-    public Store selectStoreByLoginName(String loginName);
+    public List<Store> selectStoreByLoginName(String loginName);
 
     /**
      * 查询门店列表
@@ -110,4 +110,5 @@ public interface IStoreService {
      * @return 所属门店
      */
     Store selectByUserId(Long userId);
+
 }

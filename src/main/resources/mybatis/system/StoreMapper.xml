@@ -52,6 +52,11 @@
         where id= #{id}
     </select>
 
+    <select id="selectStoreByLoginName" parameterType="String" resultMap="StoreResult">
+        <include refid="selectStoreVo"/>
+        where owner_account= #{name}
+    </select>
+
     <select id="selectStoreByCityId" parameterType="String" resultMap="StoreResult">
         <include refid="selectStoreVo"/>
         where cityid = #{cityId}
@@ -76,6 +81,7 @@
 from cw_store,cw_user_account
 where cw_store.store_id = cw_user_account.store_id and cw_user_account.user_id = #{userId}
     </select>
+
 
     <insert id="insertStore" parameterType="Store">
         insert into cw_store

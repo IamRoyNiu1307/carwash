@@ -29,8 +29,8 @@
     
   </view>
 
-  <view class="addr_info btn">
-  <view class="addr_info_addr">
+  <view class="addr_info btn" wx:if="{{order.statusId !== 203}}">
+  <view class="addr_info_addr" >
       钥匙寄取：{{keyInfo.addr}}
     </view>
     <view class='btnArea'>

@@ -52,7 +52,7 @@ public class StoreServiceImpl implements IStoreService {
      * @return 结果
      */
     @Override
-    public Store selectStoreByLoginName(String loginName) {
+    public List<Store> selectStoreByLoginName(String loginName) {
         return storeMapper.selectStoreByLoginName(loginName);
     }
 
@@ -198,4 +198,6 @@ public class StoreServiceImpl implements IStoreService {
     public Store selectByUserId(Long userId) {
         return storeMapper.selectByUserId(userId);
     }
+
+
 }

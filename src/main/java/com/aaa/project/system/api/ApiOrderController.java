@@ -186,15 +186,6 @@ public class ApiOrderController {
         order.setStatusId(statusId);
         orderLog.setOrderId(orderId);
         orderLog.setContent("订单追踪，照片上传 操作员账号：" + order.getUserAccount() + "操作员：" + userService.selectUserByPhoneNumber(order.getUserAccount()).getUserName());
-        //判断插入车辆照片状态内容
-        //int i = orderLogService.selectOrderCountByOrderId(orderId);
-        //if(i==0){
-        //    orderLog.setContent("取车时车辆仪表盘");
-        //}else if(i==1){
-        //    orderLog.setContent("洗车完毕车辆外观");
-        //}else {
-        //    orderLog.setContent("还车完毕车辆仪表盘");
-        //}
         orderService.updateOrder(order);
         orderLog.setCreateDate(new Date());
         //插入日志并返回主键

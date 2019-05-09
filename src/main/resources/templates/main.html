@@ -235,7 +235,7 @@
                         text: '收入情况图'
                     },
                     legend: {
-                        data: ['xxx', 'xx'],
+                        data: ['收入', '退款'],
                         align: 'left'
                     },
                     toolbox: {
@@ -260,14 +260,14 @@
                     },
                     yAxis: {},
                     series: [{
-                        name: 'xxx',
+                        name: '收入',
                         type: 'bar',
                         data: data1,
                         animationDelay: function (idx) {
                             return idx * 10;
                         }
                     }, {
-                        name: 'xx',
+                        name: '退款',
                         type: 'bar',
                         data: data2,
                         animationDelay: function (idx) {
@@ -376,7 +376,7 @@
                         myChart.setOption(option, true);
                     }
                 }
-            }
+            })
         });
 
 
@@ -462,7 +462,7 @@
                         text: '收入情况图'
                     },
                     legend: {
-                        data: ['xxx', 'xx'],
+                        data: ['收入', '退款'],
                         align: 'left'
                     },
                     toolbox: {
@@ -487,14 +487,14 @@
                     },
                     yAxis: {},
                     series: [{
-                        name: 'xxx',
+                        name: '收入',
                         type: 'bar',
                         data: data1,
                         animationDelay: function (idx) {
                             return idx * 10;
                         }
                     }, {
-                        name: 'xx',
+                        name: '退款',
                         type: 'bar',
                         data: data2,
                         animationDelay: function (idx) {
@@ -510,78 +510,12 @@
                 if (option && typeof option === "object") {
                     myChart.setOption(option, true);
                 }
-                // option = {
-                //     //backgroundColor: '#2c343c',
-                //
-                //     title: {
-                //         text: '当前门店附近几天收入',
-                //         left: 'center',
-                //         top: 20
-                //     },
-                //
-                //     tooltip: {
-                //         trigger: 'item',
-                //         formatter: "{a} <br/>{b} : {c} ({d}%)"
-                //     },
-                //
-                //     visualMap: {
-                //         show: false,
-                //         min: 80,
-                //         max: 600,
-                //         inRange: {
-                //             colorLightness: [0, 1]
-                //         }
-                //     },
-                //     series: [{
-                //         name: '信息统计',
-                //         type: 'pie',
-                //         radius: '55%',
-                //         center: ['50%', '50%'],
-                //         data: data1.sort(function (a, b) {
-                //             return a.value - b.value;
-                //         }),
-                //         roseType: 'radius',
-                //         label: {
-                //             normal: {
-                //                 textStyle: {
-                //                     color: '#2c343c'
-                //                 }
-                //             }
-                //         },
-                //         labelLine: {
-                //             normal: {
-                //                 lineStyle: {
-                //                     color: '#2c343c'
-                //                 },
-                //                 smooth: 0.2,
-                //                 length: 10,
-                //                 length2: 20
-                //             }
-                //         },
-                //         itemStyle: {
-                //             normal: {
-                //                 color: '#2c343c',
-                //                 shadowBlur: 200,
-                //                 shadowColor: 'rgba(0, 0, 0, 0.5)'
-                //             }
-                //         },
-                //
-                //         animationType: 'scale',
-                //         animationEasing: 'elasticOut',
-                //         animationDelay: function (idx) {
-                //             return Math.random() * 200;
-                //         }
-                //     }]
-                // };
-                // if (option && typeof option === "object") {
-                //     myChart.setOption(option, true);
-                // }
+
 
             }
         });
 
 
-    });
 </script>
 
 

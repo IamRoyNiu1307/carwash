@@ -24,12 +24,14 @@ public class ApiWxRefundController {
     public AjaxResult refund(HttpServletRequest request){
         JSONObject refund = RefundUtil.refund(request);
         if("success".equals(refund.getString("returnCode"))){
+            AjaxResult ajaxResult = new AjaxResult();
             String orderId = request.getParameter("orderId");
             Order order = orderService.selectOrderByOrderId(orderId);
             order.setStatusId(STATUS_ORDER_CANCELED);
             order.setUserAccount(null);
             orderService.updateOrder(order);
-            return AjaxResult.success();
+            ajaxResult.put("code",0);
+            return ajaxResult;
         }
         return AjaxResult.error();
     }

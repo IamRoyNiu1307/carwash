@@ -175,7 +175,7 @@ public class KeyInfoServiceImpl implements IKeyInfoService
 
 			//更改订单中的钥匙信息
 			order.setKeyInfo(keyInfo);
-			if(order.getStatusId().equals(STATUS_ORDER_RUNNING)){
+			if(order.getStatusId().equals(STATUS_ORDER_RUNNING)||order.getStatusId().equals(STATUS_ORDER_RETUENED)){
 			    order.setStatusId(STATUS_ORDER_FINISHED);
             }
 			//更新订单信息

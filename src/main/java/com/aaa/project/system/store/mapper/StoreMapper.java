@@ -25,7 +25,7 @@ public interface StoreMapper {
      * @return 门店信息
      */
 
-     public  Store selectStoreByLoginName(String name);
+     public List<Store> selectStoreByLoginName(String name);
     /**
      * 查询门店列表
      *
@@ -102,4 +102,6 @@ public interface StoreMapper {
      * @return 所属门店
      */
     Store selectByUserId(Long userId);
+
+
 }

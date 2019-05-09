@@ -19,7 +19,8 @@
           </view>
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
             <view class="weui-media-box__title">手机: {{item.order.consumerAccount}}</view>
-            <view class="weui-media-box__desc" style="margin-top:8rpx;">类型: {{item.order.typeName}}</view>
+            <view class="weui-media-box__desc" style="margin-top:8rpx;">类型: {{item.order.typeName}}</view>
+            <view class="weui-media-box__desc" style="margin-top:8rpx;">备注: {{item.order.orderComment}}</view>
             <view class="weui-media-box__desc" style="margin-top:8rpx;">预约时间: {{item.order.appointmentTime}}</view>
           </view>
         </view>
