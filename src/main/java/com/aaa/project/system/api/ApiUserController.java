@@ -60,6 +60,7 @@ public class ApiUserController {
                             @RequestParam(name = "code", required = false) String code,
                             HttpSession session) {
         AjaxResult ajaxResult = new AjaxResult();
+        ajaxResult.put("role","worker");
         User user = new User();
         user.setLoginName(account);
         List<User> userList = userService.selectUserList(user);

@@ -1,4 +1,4 @@
-const host = 'hc3vkf.natappfree.cc'
+const host = 'localhost'
 
 const config = {
 

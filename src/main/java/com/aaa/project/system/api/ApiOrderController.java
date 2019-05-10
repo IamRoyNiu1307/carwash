@@ -227,6 +227,7 @@ public class ApiOrderController {
     public AjaxResult getOrderList(@RequestParam(name = "account", required = true) String consumerAccount,
                                    @RequestParam(name = "statusId", required = false) Integer statusId) {
         AjaxResult ajaxResult = new AjaxResult();
+        System.out.println(statusId);
         List<Order> orders = orderService.selectOrderListByConsumerAccountAndStatusId(consumerAccount, statusId);
         ajaxResult.put("orderList", orders);
         return ajaxResult;

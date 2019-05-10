@@ -60,6 +60,7 @@ public class SmsUtil {
             ZhenziSmsClient client = new ZhenziSmsClient("https://sms_developer.zhenzikj.com", "100701",
                     "e63cba85-be9b-40d0-bfa2-d70bbc13cb6f");
             String result = client.send(phone, "您的验证码为:" + verifyCode +"，"+ msg);
+            System.out.println(verifyCode);
             json = JSONObject.parseObject(result);
             if (json.getIntValue("code") != 0)// 发送短信失败
                 return AjaxResult.error("短信发送失败！");

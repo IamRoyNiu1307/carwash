@@ -45,6 +45,7 @@ public class ApiConsumerController {
                             @RequestParam(name = "code", required = false) String code,
                             HttpSession session) {
         AjaxResult ajaxResult = new AjaxResult();
+        ajaxResult.put("role","consumer");
         ConsumerAccount consumer =  consumerAccountService.selectConsumerAccountByAccount(account);
         if(consumer!=null){
             if (password != null ){
@@ -135,6 +136,7 @@ public class ApiConsumerController {
         AjaxResult ajaxResult = new AjaxResult();
         if(consumerAccount!=null) {
             ajaxResult.put("account", consumerAccount.getConsumerAccount());
+            ajaxResult.put("role", "consumer");
         }
         return ajaxResult;
     }
