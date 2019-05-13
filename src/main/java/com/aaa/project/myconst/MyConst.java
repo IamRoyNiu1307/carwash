@@ -89,24 +89,6 @@ public class MyConst {
         TIME_MAP.put("24时", 24);
     }
 
-    //车辆照片上传路径
-    //public static final String UPLOAD_CAR_IMAGE = "/Users/roy/project/carwash/src/main/resources/static/fileupload/car/";
-//    public static final String UPLOAD_CAR_IMAGE ="E:\\IdeaProject\\carwash\\src\\main\\resources\\static\\fileupload\\store\\";
-    //车辆照片请求路径
-    //public static final String CAR_IMAGE_DIR = "/car/";
-    //洗车照片上传路径
-    //public static final String UPLOAD_WARHCAR_IMAGE = "/Users/roy/project/carwash/src/main/resources/static/fileupload/washcar/";
-    //洗车照片请求路径
-    //public static final String WASHCAR_IMAGE_DIR = "/washcar/";
-    //新增门店图标上传路径
-     //public  static  final  String UPLOAD_STORE_ICON="/Users/roy/project/pcarwash/src/main/resources/static/fileupload/store/logo/";
-//    public  static  final  String UPLOAD_STORE_ICON ="E:\\IdeaProject\\carwash\\src\\main\\resources\\static\\fileupload\\store\\logo\\";
-    //store图标请求路径
-    //public static final String STORE_ICON_IMAGE_DIR = "/store/logo/";
-    //用户驾驶证照片上传路径
-    //public static final String DRIVING_LICENCE_IMG = "/Users/roy/project/carwash/src/main/resources/static/fileupload/user/drivingLicence/";
-    //用户驾驶证照片请求路径
-    //public static final String DRIVING_LICENCE_ICON_IMG = "/user/drivingLicence/";
     //洗车员角色id
     public static final long STAFF_ROLE_ID = 102;
     //门店审核 通过ID
