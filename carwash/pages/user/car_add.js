@@ -169,7 +169,16 @@ Page({
                 name: 'file',
                 formData: { carInfoId: res.data.carInfo.id },//这里是上传图片时一起上传的数据
                 success: (res) => {
-                  console.log("file upload",res)
+                  wx.showToast({
+                    title: '上传成功',
+                    icon: 'success',
+                    duration: 2000
+                  })
+                  setTimeout(function () {
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }, 1500)
                 }
               })
             }

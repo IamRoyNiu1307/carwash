@@ -4,6 +4,7 @@ import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.common.support.Convert;
 import com.aaa.common.utils.Distance;
 import com.aaa.common.utils.ReGeo;
+import com.aaa.framework.config.FileUploadConfig;
 import com.aaa.project.system.cities.domain.Cities;
 import com.aaa.project.system.cities.mapper.CitiesMapper;
 import com.aaa.project.system.store.domain.Store;
@@ -33,6 +34,8 @@ public class StoreServiceImpl implements IStoreService {
 
     @Autowired
     private StoreMapper storeMapper;
+    @Autowired
+    private FileUploadConfig config;
 
     /**
      * 查询门店信息
@@ -81,7 +84,7 @@ public class StoreServiceImpl implements IStoreService {
     @Override
     public int insertStore(Store store, MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
         //得到文件路径
-        String url = STORE_ICON_IMAGE_DIR + upload(UPLOAD_STORE_ICON, file, ".jpg");
+        String url = config.getStoreIconImageDir() + upload(config.getUploadStoreIcon(), file, ".jpg");
         //处理门店信息将 province 和city 变为 code
         Cities cities = citiesMapper.selectCityInfoByCity(store.getCityid());
         //重新设值

@@ -8,7 +8,8 @@ Page({
   data: {
     account:'',
     info: {},
-    userInfo:null
+    userInfo:null,
+    role:''
   },
 
   /**
@@ -34,13 +35,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 2 //这个数是，tabBar从左到右的下标，从0开始
+      })
+    }
     if(app.globalData.account){
       this.setData({
-        account: app.globalData.account
+        account: app.globalData.account,
+        role:app.globalData.role
       })
-    }else if(app.globalData.openid){
-      this.bind()
     }
+    // else if(app.globalData.openid){
+    //   this.bind()
+    // }
   },
 
   /**

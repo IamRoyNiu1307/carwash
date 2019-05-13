@@ -1,5 +1,8 @@
 // pages/order/preview.js
+
+const config = require('../../config.js')
 const app = getApp();
+const util = require('../../utils/util.js')
 Page({
 
   /**
@@ -21,6 +24,9 @@ Page({
     day: "",
     startHour: "",
     endHour: "",
+    uuid:'',
+    uploadFile:'',
+    store:{},
     // items: [
     //   { id: 0, value: '车身清洗', detail: '高压洗车，除锈、去除沥青',itemChecked:false},
     //   { id: 1, value: '上蜡增艳', detail: '车身上蜡，镜面处理', itemChecked: false},
@@ -146,6 +152,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var _this = this
+    this.setData({
+      uploadFile: config.uploadFileUrl
+    })
+    if (options.uuid) {
+      this.setData({
+        uuid: options.uuid
+      })
+    }
     //storeId有值的时候 说明是指定门店下单，调用接口获取该门店下的所有业务
     //反之为快速下单，获取所有默认服务
     if (options.storeId){
@@ -154,6 +169,38 @@ Page({
         storeId:storeId
       })
     }
+
+    wx.getLocation({
+      complete: res => {
+        
+        var lng = res.longitude
+        var lat = res.latitude
+      
+        app.http('/api/store/aroundStoreList',{
+          posLng:lng,
+          posLat:lat
+        }).then(res=>{
+          console.log(res.aroundStoreList)
+          _this.setData({
+            store: res.aroundStoreList[0],
+            storeId: res.aroundStoreList[0].store.storeId
+          })
+          app.http('/api/store/getServices', {
+            storeId: _this.data.storeId
+          }).then(res => {
+            if (res.serviceList) {
+              var serviceList = res.serviceList
+              for (var i = 0; i < serviceList.length; i++) {
+                serviceList[i].itemChecked = false
+              }
+              _this.setData({
+                items: serviceList
+              })
+            }
+          })
+        })
+      }})
+       
 
     this.setData({ startTime: this.getNowFormatDate(), orderData: '请选择时间', queryString: options });
     var date = new Date();
@@ -376,12 +423,23 @@ Page({
    */
   onShow: function () {
     var _this = this
-    app.http('/api/car/getDefaultCar',{
+    if(!_this.data.carInfo){
+      app.http('/api/car/getDefaultCar',{
       account:app.globalData.account
     }).then(res=>{
       if(res.code==0){
         _this.setData({
           carInfo:res.carInfo
+        })
+      }
+    })
+    }
+    app.http('/api/store/getStore',{
+      storeId:_this.data.storeId
+    }).then(res=>{
+      if(res.store){
+        _this.setData({
+          store:res.store
         })
       }
     })
@@ -454,6 +512,7 @@ Page({
     
   },
   submitOrder() {
+    var _this = this
     console.log(this.data)
     var data = this.data
     var flag = true
@@ -461,11 +520,13 @@ Page({
     var selectItem = []
     var startHour = data.multiArray[3][data.multiIndex[3]]
     var endHour = data.multiArray[5][data.multiIndex[5]]
+    var amount = 0
 
     for(var i = 0;i<data.items.length;i++){
       console.log("itemChecked", data.items[i].itemChecked)
       if(data.items[i].itemChecked==true){
         selectItem.push(data.items[i].id)
+        amount = amount + data.items[i].cost
       }
     }
     if (selectItem.length==0){
@@ -487,7 +548,7 @@ Page({
         if (res.confirm) {
           
           var sendData={
-            consumerAccount:'18625521997',
+            consumerAccount:app.globalData.account,
             serviceIdList:JSON.stringify(selectItem),
             startTime:data.startTime,
             startHour:startHour,
@@ -499,17 +560,18 @@ Page({
           if (data.storeId) {
             sendData.storeId = data.storeId
           }
-          console.log("aaaaaaaaa",sendData)
-          //测试
-          wx.navigateTo({
-            url: `/pages/order/prisucc?id=${res}`,
-          })
+          
           //提交订单
-          app.http("/api/order/createOrder", sendData,{
-              baseUrl:'http://192.168.1.25'
-          }).then((res)=>{
-            if(res.code==0)
-              url: `/pages/order/prisucc?id=1`
+          app.http("/api/order/createOrder", sendData).then((res)=>{
+            if(res.code==0){
+              //url: `/pages/order/prisucc`
+              wx.showToast({
+                title: '请稍后',
+                icon: 'loading',
+                duration: 2000
+              });
+              _this.payOrder(res.order,amount)
+            }
           })
           // app.http('/Iorder/addorder', {
           //   businessid: this.data.info.business_id,
@@ -526,6 +588,75 @@ Page({
       }
     })
 
+  },
+  payOrder(order,amount) {
+    var _this = this
+    wx.request({
+      url: config.paymentUrl,
+      data: {
+        orderId: order.orderId,
+        openid: app.globalData.openid,
+        amount: amount,
+        //openId: openId
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      method: "POST",
+      success: function (res) {
+        console.log(res);
+        _this.doWxPay(res.data, order.orderId,amount);
+      },
+      fail: function (err) {
+        wx.showToast({
+          icon: "none",
+          title: '服务器异常，清稍候再试'
+        })
+      },
+    });
+  },
+  doWxPay(param, orderId,amount) {
+    var _this = this
+    var date = util.formatTime(new Date())
+    //小程序发起微信支付
+    wx.requestPayment({
+      timeStamp: param.data.timeStamp,//记住，这边的timeStamp一定要是字符串类型的，不然会报错
+      nonceStr: param.data.nonceStr,
+      package: param.data.package,
+      signType: 'MD5',
+      paySign: param.data.paySign,
+      success: function (event) {
+        // success
+        app.http("/api/wxpay/payComplete", {
+          orderId: orderId,
+          date: date,
+          uuid:_this.data.uuid,
+          amount:amount
+        }).then(res => {
+          // wx.showToast({
+          //   title: '支付成功',
+          //   icon: 'success',
+          //   duration: 2000
+          // });
+          // setTimeout(function () {
+          //   _this.onShow()
+          // }, 1500)
+          wx.navigateTo({
+            url: `/pages/order/prisucc`,
+          })
+        })
+
+      },
+      fail: function (error) {
+        // fail
+        console.log("支付失败")
+        console.log(error)
+      },
+      complete: function () {
+        // complete
+        console.log("pay complete")
+      }
+    });
   },
   commentInput(e){
     this.setData({

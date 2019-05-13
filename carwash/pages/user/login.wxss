@@ -1,3 +1,6 @@
+page{
+  background: white;
+}
 .top_bind {
   background: #f5f5f5;
   color: #999;
@@ -59,9 +62,20 @@
 }
 
 .register{
-  margin-top:25rpx;
+  margin: 0 auto;
+  margin-top:35rpx;
   width: 100%;
   text-align: center;
   color:#37bca1;
+  font-size:28rpx;
+}
+.worker_login{
+  position: absolute;
+  bottom: 60rpx;
+  margin: 0 auto;
+  margin-top:35rpx;
+  width: 100%;
+  text-align: center;
+  color:#999;
   font-size:28rpx;
 }

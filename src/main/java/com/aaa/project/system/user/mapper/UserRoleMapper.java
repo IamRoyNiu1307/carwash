@@ -48,5 +48,5 @@ public interface UserRoleMapper
      * @param userId 用户ID
      * @return 角色ID
      */
-    public Long selectRoleIdByUserId(Long userId);
+    public List<Long> selectRoleIdByUserId(Long userId);
 }

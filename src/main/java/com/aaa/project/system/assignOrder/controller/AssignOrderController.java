@@ -87,9 +87,9 @@ public class AssignOrderController extends BaseController {
         List<Map<String,Object>> missionList=new ArrayList<>();
         for (UserAccount eachAccount : userAccounts ){
             //根据员工的userid查询该员工的角色
-            Long aLong = userService.selectRoleIdByUserId(eachAccount.getUserId());
+            List<Long> aLong = userService.selectRoleIdByUserId(eachAccount.getUserId());
             //判断是否为洗车员
-            if(aLong.equals(STAFF_ROLE_ID)){
+            if(aLong.get(0).equals(STAFF_ROLE_ID)){
                 HashMap<String, Object> mission = new HashMap<>();
                 User user = userService.selectUserById(eachAccount.getUserId());
                 //是洗车员就加进mission中

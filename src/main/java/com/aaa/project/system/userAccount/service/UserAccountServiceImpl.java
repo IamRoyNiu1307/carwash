@@ -2,6 +2,7 @@ package com.aaa.project.system.userAccount.service;
 
 import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.common.support.Convert;
+import com.aaa.framework.config.FileUploadConfig;
 import com.aaa.project.system.userAccount.domain.UserAccount;
 import com.aaa.project.system.userAccount.mapper.UserAccountMapper;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
@@ -15,8 +16,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.aaa.common.utils.file.FileUploadUtils.upload;
-import static com.aaa.project.myconst.MyConst.DRIVING_LICENCE_ICON_IMG;
-import static com.aaa.project.myconst.MyConst.DRIVING_LICENCE_IMG;
 
 /**
  * 用户 服务层实现
@@ -28,6 +27,8 @@ import static com.aaa.project.myconst.MyConst.DRIVING_LICENCE_IMG;
 public class UserAccountServiceImpl implements IUserAccountService {
     @Autowired
     private UserAccountMapper userAccountMapper;
+    @Autowired
+    private FileUploadConfig config;
 
     /**
      * 查询用户信息
@@ -94,8 +95,8 @@ public class UserAccountServiceImpl implements IUserAccountService {
 	{
 	    if(drivingLicence1!=null&&drivingLicence2!=null){
             //得到用户驾照图片路径
-            String url1=DRIVING_LICENCE_ICON_IMG+upload(DRIVING_LICENCE_IMG, drivingLicence1, ".jpg");
-            String url2=DRIVING_LICENCE_ICON_IMG+upload(DRIVING_LICENCE_IMG, drivingLicence2, ".jpg");
+            String url1=config.getDrivingLicenceImgDir()+upload(config.getDrivingLicenceImg(), drivingLicence1, ".jpg");
+            String url2=config.getDrivingLicenceImgDir()+upload(config.getDrivingLicenceImg(), drivingLicence2, ".jpg");
             userAccount.setDrivingLicence1(url1);
             userAccount.setDrivingLicence2(url2);
         }

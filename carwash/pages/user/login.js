@@ -111,6 +111,7 @@ Page({
       }).then(res => {
         if(res.account){
           app.globalData.account = res.account
+          app.globalData.role = res.role
           setTimeout(function () {
             wx.switchTab({
               url: '/pages/user/index'

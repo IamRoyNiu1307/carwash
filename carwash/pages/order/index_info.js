@@ -10,6 +10,7 @@ Page({
     order:{},
     carInfo:{},
     keyInfo:{},
+    orderService:[],
     uploadFile:''
   },
 
@@ -28,7 +29,8 @@ Page({
       if(res.code==0){
         _this.setData({
           order:res.order,
-          keyInfo:res.order.keyInfo
+          keyInfo:res.order.keyInfo,
+          orderService:res.orderService
         })
         app.http('/api/car/getCarInfo',{
           carInfoId:res.order.carId
@@ -112,6 +114,45 @@ Page({
           });
         }
       }
+    })
+  },
+  scanCode(){
+    var _this = this
+    wx.scanCode({
+      onlyFromCamera: true,
+      success(res) {
+        var uuid = res.result
+        app.http("/api/key/storeKey",{
+          uuid:uuid,
+          orderId:_this.data.order.orderId
+        }).then(res=>{
+          if(res.code==0){
+            wx.showToast({
+              title: res.msg,
+              icon: 'success',
+              duration: 1500
+            });
+            setTimeout(function () {
+              wx.switchTab({
+                url: '/pages/order/index'
+              })
+            }, 1500)
+          }
+        })
+      }
+    })
+  },
+  getVerifyCode(){
+    var _this = this
+    app.http("/api/key/getVerifyCode",{
+      phone:app.globalData.account,
+      orderId:_this.data.order.orderId
+    }).then(res=>{
+      wx.showToast({
+        title: res.msg,
+        icon: 'success',
+        duration: 1500
+      });
     })
   }
 })

@@ -23,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,33 +69,36 @@ public class UserAccountController extends BaseController
         //通过shiro查询登录的userId
         Long userId = ShiroUtils.getUserId();
         //通过userId找登录角色职位（商家、店长、admin）
-        Long RoleId = userService.selectRoleIdByUserId(userId);
+        List<Long> roleId = userService.selectRoleIdByUserId(userId);
         //当登录角色是商家时 查看该商家所有门店的userAccount
-        if (RoleId == Role_MERCHANT) {
-            User user = userService.selectUserById(userId);
-            Store store = new Store();
-            store.setOwnerAccount(user.getLoginName());
-            //查询商家所有门店
-            List<Store> storeList = storeService.selectStoreList(store);
-            List<String> storeIdList = new ArrayList<>();
-            for(int i =0;i<storeList.size();i++){
-                storeIdList.add(storeList.get(i).getStoreId());
-            }
-            startPage();
-            List<UserAccount> list = userAccountService.selectUserAccountByStoreId(storeIdList);
-            return getDataTable(list);
-        } else if (RoleId == Role_MANAGER) {//当登录角色是店长时 查看该店下的所有userAccount
-            UserAccount account = userAccountService.selectUserAccountByUserId(userId);
-            userAccount.setStoreId(account.getStoreId());
-            startPage();
-            List<UserAccount> list = userAccountService.selectUserAccountList(userAccount);
-            return getDataTable(list);
-        } else {
-            //当登录为admin时 查看所有userAccount
-            startPage();
-            List<UserAccount> list = userAccountService.selectUserAccountList(userAccount);
-            return getDataTable(list);
-        }
+		for(Long each : roleId) {
+			if (each == Role_MERCHANT) {
+				User user = userService.selectUserById(userId);
+				Store store = new Store();
+				store.setOwnerAccount(user.getLoginName());
+				//查询商家所有门店
+				List<Store> storeList = storeService.selectStoreList(store);
+				List<String> storeIdList = new ArrayList<>();
+				for (int i = 0; i < storeList.size(); i++) {
+					storeIdList.add(storeList.get(i).getStoreId());
+				}
+				startPage();
+				List<UserAccount> list = userAccountService.selectUserAccountByStoreId(storeIdList);
+				return getDataTable(list);
+			} else if (each == Role_MANAGER) {//当登录角色是店长时 查看该店下的所有userAccount
+				UserAccount account = userAccountService.selectUserAccountByUserId(userId);
+				userAccount.setStoreId(account.getStoreId());
+				startPage();
+				List<UserAccount> list = userAccountService.selectUserAccountList(userAccount);
+				return getDataTable(list);
+			}
+
+
+		}
+		//当登录为admin时 查看所有userAccount
+		startPage();
+		List<UserAccount> list = userAccountService.selectUserAccountList(userAccount);
+		return getDataTable(list);
     }
 
 
@@ -114,12 +118,19 @@ public class UserAccountController extends BaseController
 	 * 新增用户
 	 */
 	@GetMapping("/add")
-	public String add(ModelMap mmap)
+	public String add(ModelMap mmap, HttpSession session)
 	{
 		User sysUser = ShiroUtils.getSysUser();
 		Store store = new Store();
-		store.setOwnerAccount(sysUser.getLoginName());
-		mmap.put("stores",storeService.selectStoreList(store));
+		String role = (String)session.getAttribute("roleFlag");
+		if("merchant".equals(role)) {
+			store.setOwnerAccount(sysUser.getLoginName());
+			mmap.put("stores", storeService.selectStoreList(store));
+		}else if("manager".equals(role)){
+			UserAccount userAccount = userAccountService.selectUserAccountByUserId(sysUser.getUserId());
+			store.setStoreId(userAccount.getStoreId());
+			mmap.put("stores", storeService.selectStoreList(store));
+		}
 		mmap.put("roles",roleService.selectAllRole());
 		return prefix + "/add";
 	}
@@ -175,9 +186,9 @@ public class UserAccountController extends BaseController
 		Store store = new Store();
 		store.setOwnerAccount(sysUser.getPhonenumber());
 		//通过用户ID查询角色ID
-		Long roleId = userService.selectRoleIdByUserId(userAccount.getUserId());
+		List<Long> roleId = userService.selectRoleIdByUserId(userAccount.getUserId());
 		//通过角色ID查询角色名称
-		String roleName = roleService.selectRoleNameByRoleId(roleId);
+		String roleName = roleService.selectRoleNameByRoleId(roleId.get(0));
 		mmap.put("user",user);
 		mmap.put("stores",storeService.selectStoreList(store));
 		mmap.put("userAccount", userAccount);

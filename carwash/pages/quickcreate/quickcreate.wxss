@@ -172,14 +172,14 @@ page {
 }
 
 .button {
-  z-index: 9999;
+  z-index: 99999;
   bottom: 0rpx;
-  background: white;
-  color: #37bca1;
+  background: #37bca1;
+  color: white;
   font-size: 34rpx;
-  height: 100rpx;
+  height: 150rpx;
   left: 0rpx;
-  line-height: 100rpx;
+  line-height: 150rpx;
   text-align: center;
   position: fixed;
   width: 100%;
@@ -220,4 +220,16 @@ page {
   font-size: 28rpx;
   color:#42c293;
   float: right;
+}
+.clear{
+  height:220rpx;
+}
+.clear image{
+  height: 100%;
+}
+.list-item .right_distance{
+  margin-top:14rpx;
+  float: right;
+  font-size: 24rpx;
+  color:#666;
 }

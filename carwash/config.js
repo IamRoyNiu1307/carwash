@@ -1,4 +1,4 @@
-const host = 'localhost'
+const host = 'h7g49w.natappfree.cc'
 
 const config = {
 
@@ -16,6 +16,8 @@ const config = {
   getOrderLogsUrl: `http://${host}/wx/getOrderLogs`,
 
   getCodeUrl: `http://${host}/wx/getCode`,
+
+  refundUrl: `http://${host}/api/wxrefund/refund`,
   // 登录地址，用于建立会话
   loginUrl: `http://${host}/login`,
 
@@ -29,7 +31,7 @@ const config = {
   tunnelUrl: `http://${host}/tunnel`,
 
   // 生成支付订单的接口
-  paymentUrl: `http://${host}/api/pay`,
+  paymentUrl: `http://${host}/api/wxpay/pay`,
 
   // 发送模板消息接口
   templateMessageUrl: `http://${host}/templateMessage`,

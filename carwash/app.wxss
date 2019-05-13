@@ -1,5 +1,7 @@
 /**app.wxss**/
 @import 'libs/weui/weui.wxss';
+@import "colorui/main.wxss";
+@import "colorui/icon.wxss";
 
 .clear::after {
   clear: both;

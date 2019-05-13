@@ -1,21 +1,37 @@
 // pages/order/index_comit.js
 const app = getApp();
+const config = require('../../config.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    query: {},
-    info: {},
-    points: 5
+    order:{},
+    orderId:null,
+    points: 5,
+    uploadFile:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({ query: options });
+    var _this = this
+    this.setData({
+      uploadFile: config.uploadFileUrl
+    })
+    console.log(options)
+    this.setData({ 
+      orderId:options.orderId
+    });
+    app.http('/api/order/getOrder',{
+      orderId:options.orderId
+    }).then(res=>{
+      _this.setData({
+        order:res.order
+      })
+    })
   },
 
   /**
@@ -29,7 +45,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function (options) {
-    this.getOrderInfo(this.data.query.sn);
   },
 
   /**
@@ -68,10 +83,12 @@ Page({
   },
 
   submit() {
-    app.http('/Iorder/addevaluate', {
-      openid: app.globalData.userInfo.openid,
-      sn: this.data.info.sn,
-      points: this.data.points
+    var _this = this
+    app.http('/api/store/evaluate',{
+      orderId:_this.data.order.orderId,
+      storeId:_this.data.order.storeId,
+      account: app.globalData.account,
+      star: _this.data.points,
     }).then(()=>{
       wx.showToast({
         title: '评价成功',

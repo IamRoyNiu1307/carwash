@@ -6,6 +6,7 @@ import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.common.utils.Distance;
 import com.aaa.common.utils.IDUtil;
 import com.aaa.common.utils.ReGeo;
+import com.aaa.framework.config.FileUploadConfig;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.project.system.carInfo.domain.CarInfo;
 import com.aaa.project.system.carInfo.service.ICarInfoService;
@@ -73,6 +74,8 @@ public class ApiOrderController {
     private IStoreService storeService;
     @Autowired
     private IUserLocationService userLocationService;
+    @Autowired
+    private FileUploadConfig config;
 
     /**
      * @param consumerAccount 顾客账号
@@ -194,7 +197,7 @@ public class ApiOrderController {
         LogImage logImage = new LogImage();
         logImage.setLogId(orderLog.getId());
         //得到文件路径
-        String url = WASHCAR_IMAGE_DIR + upload(UPLOAD_WARHCAR_IMAGE, file, ".jpg");
+        String url = config.getWashCarImageDir() + upload(config.getUploadWashCarImage(), file, ".jpg");
         logImage.setImagePath(url);
 
         logImageService.insertLogImage(logImage);

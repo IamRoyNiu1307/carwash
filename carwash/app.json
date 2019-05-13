@@ -21,12 +21,22 @@
     "pages/tmp/tmp",
     "pages/user/car",
     "pages/user/car_add",
-    "pages/user/register"
+    "pages/user/register",
+    "pages/storeList/storeList",
+    "pages/order/traceOrder",
+    "pages/user/worker_login",
+    "custom-tab-bar/index",
+    "pages/order/index_info_worker"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#37BCA1",
-    "navigationBarTitleText": "51洗车",
+    "navigationBarTitleText": "夜夜洗车",
     "navigationBarTextStyle": "white",
     "navigationStyle": "default"
   },
@@ -54,5 +64,7 @@
         "text": "我的"
       }
     ]
-  }
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

@@ -37,7 +37,7 @@ page {
 .addr_info {
   background: white;
   border-radius: 8rpx;
-  padding: 0px 35rpx 20rpx;
+  padding: 0px 35rpx ;
 }
 
 .addr_info_pre {
@@ -153,7 +153,7 @@ page {
   color: #37bca1;
 }
 .btn{
-  height:130rpx;
+  height:150rpx;
 }
 .btnArea{
   margin-top:10rpx;

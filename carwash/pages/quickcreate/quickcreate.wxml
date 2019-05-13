@@ -2,6 +2,42 @@
   <view class="addr_info">
 
     <view class="addr_info_pre">
+      <image src="/image/img_lable_information.png" mode="widthFix" /> 推荐洗车店
+    </view>
+
+    <navigator url="/pages/storeList/storeList" class="list-item clear">
+    <image src="{{uploadFile+store.store.faviconPath}}" mode="widthFix" class="left" />
+    <view class="right">
+      <view class='right_distance' wx:if='{{store.distance}}'>
+        {{store.distance}}m
+      </view>
+      <view class="right_phone">
+        <image src="/image/img_list_store.png" mode="widthFix" />{{store.store.storeName}}
+      </view>
+      <view class="right_phone">
+        <image src="/image/img_list_iphone.png" mode="widthFix" />{{store.store.contactsPhone}}
+      </view>
+      <view class="right_phone right_addr">
+        <image src="/image/img_list_adress.png" mode="widthFix" /> {{store.store.street}}
+      </view>
+      <view class="right_star">
+
+        <image src="/image/icon_star{{store.store.star > 0 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+        <image src="/image/icon_star{{store.store.star > 1 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+        <image src="/image/icon_star{{store.store.star > 2 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+        <image src="/image/icon_star{{store.store.star > 3 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+        <image src="/image/icon_star{{store.store.star > 4 ? '_pressed' : ''}}.png" mode="widthFix" class="star" />
+      </view>
+    </view>
+  </navigator>
+
+  </view>
+</view>
+
+<view class='addr'>
+  <view class="addr_info">
+
+    <view class="addr_info_pre">
       <image src="/image/img_lable_information.png" mode="widthFix" /> 预约信息
     </view>
 
@@ -76,19 +112,16 @@
     </view>
   </view>
 
-  <view class="dateTime-box">
+  <!-- <view class="dateTime-box">
     <view class="label">预算范围</view>
     <view class="value">
-      <!-- <picker mode="date" value="{{dateTime}}" start="{{startTime}}" bindchange="dateTimeChange">
-        <view class="weui-input">{{dateTime}}</view>
-      </picker> -->
       <picker bindchange="bindPickerChange" bindchange="bindSinglePickerChange" value="{{arrayIndex}}" range="{{array}}">
     <view class="picker">
       {{array[arrayIndex]}}
     </view>
   </picker>
     </view>
-  </view>
+  </view> -->
 
   
 
@@ -106,4 +139,4 @@
 
 
 
-<view class="button" bindtap='submitOrder'>下单</view>
+<view class="button" bindtap='submitOrder' >下单</view>

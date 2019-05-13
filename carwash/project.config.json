@@ -12,9 +12,11 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.0.0",
-	"appid": "wxde6415f50b2d05c3",
+	"appid": "wx8087d8149331d27c",
 	"projectname": "carwash",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

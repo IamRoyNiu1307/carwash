@@ -364,5 +364,5 @@ public class UserServiceImpl implements IUserService
      * @return 角色ID
      */
     @Override
-    public Long selectRoleIdByUserId(Long userId){ return userRoleMapper.selectRoleIdByUserId(userId);};
+    public List<Long> selectRoleIdByUserId(Long userId){ return userRoleMapper.selectRoleIdByUserId(userId);};
 }

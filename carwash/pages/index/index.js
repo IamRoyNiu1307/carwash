@@ -15,7 +15,8 @@ Page({
     listype: 0,
     longitude: 0,
     latitude: 0,
-    uploadFile:''
+    uploadFile:'',
+    role:''
   },
 
   onLoad: function () {
@@ -25,23 +26,29 @@ Page({
   },
 
   onShow: function () {
-    
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 0 //这个数是，tabBar从左到右的下标，从0开始
+      })
+    }
+    this.setData({
+      role:app.globalData.role
+    })
     var _this = this;
     if(!app.globalData.openid){
       wx.login({
       success(loginRes) {
-        if (app.globalData.user == null) {
           _this.authorization(loginRes.code).then(res=>{
             if(res.openid){
               console.log('openid:',res.openid)
               app.globalData.openid=res.openid
               
               //登录
-              _this.bind()
+              //_this.bind()
             }
           })
           
-        }
       }
     });
     }
@@ -53,40 +60,39 @@ Page({
           longitude: res.longitude,
           latitude: res.latitude
         });
-        //获取附近门店
-        app.http('/api/store/aroundStoreList',
-        {
-          posLng: _this.data.longitude,
-          posLat:_this.data.latitude
-        },{
-          useCookie:false
-        }
-        ).then(res=>{
-          if(res.code==0){
-            _this.setData({
-              storeList: res.aroundStoreList
-            })
+        // //获取附近门店
+        // app.http('/api/store/aroundStoreList',
+        // {
+        //   posLng: _this.data.longitude,
+        //   posLat:_this.data.latitude
+        // },{
+        //   useCookie:false
+        // }
+        // ).then(res=>{
+        //   if(res.code==0){
+        //     _this.setData({
+        //       storeList: res.aroundStoreList
+        //     })
             
+        //   }
+          
+        // })
+        //获取附近钥匙柜
+        app.http('/api/key/aroundContainer',
+          {
+            posLng: _this.data.longitude,
+            posLat: _this.data.latitude
+          }, {
+            useCookie: false
           }
-          //获取附近钥匙柜
-          app.http('/api/key/aroundContainer',
-            {
-              posLng: _this.data.longitude,
-              posLat: _this.data.latitude
-            }, {
-              useCookie: false
-            }
-          ).then(res => {
-            if (res.code == 0) {
-              _this.setData({
-                containerList: res.aroundContainerList
-              })
-              _this.createContainerMarks()
-            }
-          })
+        ).then(res => {
+          if (res.code == 0) {
+            _this.setData({
+              containerList: res.aroundContainerList
+            })
+            _this.createContainerMarks()
+          }
         })
-
-        
       },
     });
     
@@ -198,21 +204,24 @@ Page({
   },
 
   quickcreate:function(){
-    wx.navigateTo({
-      url: '/pages/quickcreate/quickcreate',
-    })
+    
 
-    // wx.scanCode({
-    //   onlyFromCamera: true,
-    //   success(res) {
-    //     console.log(res)
-    //   }
-    // })
+    wx.scanCode({
+      onlyFromCamera: true,
+      success(res) {
+        var uuid = res.result
+        wx.navigateTo({
+          url: '/pages/quickcreate/quickcreate?uuid=' + uuid,
+        })
+      }
+    })
   },
+  
   bind() {
     var _this = this
     app.http('/api/consumer/bind', { openid: app.globalData.openid }).then(res => {
       if (res.account) {
+        console.log("get account",account)
         app.globalData.account= res.account
 
       }

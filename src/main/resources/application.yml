@@ -136,3 +136,16 @@ gen:
   autoRemovePre: true
   # 表前缀(类名不会包含表前缀)
   tablePrefix: sys_,cw_
+
+
+
+
+upload:
+  uploadCarImage: /Users/roy/project/carwash/src/main/resources/static/fileupload/car/
+  carImageDir: /car/
+  uploadWashCarImage: /Users/roy/project/carwash/src/main/resources/static/fileupload/washcar/
+  washCarImageDir: /washcar/
+  uploadStoreIcon: /Users/roy/project/pcarwash/src/main/resources/static/fileupload/store/logo/
+  storeIconImageDir: /store/logo/
+  drivingLicenceImg: /Users/roy/project/carwash/src/main/resources/static/fileupload/user/drivingLicence/
+  drivingLicenceImgDir: /user/drivingLicence/

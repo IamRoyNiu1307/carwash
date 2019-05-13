@@ -1,0 +1,33 @@
+<view class="map_container">
+  <map
+  id="map"
+  longitude="{{longitude}}"
+  latitude="{{latitude}}"
+  scale="13"
+  bindcontroltap="controltap"
+  markers="{{markers}}"
+  bindmarkertap="markertap"
+  polyline="{{polyline}}"
+  bindregionchange="regionchange"
+  style="width: 100%; height: 100%;"
+></map>
+</view>
+
+
+<view class="cu-timeline">
+  <view class="cu-time">{{date}}</view>
+  <view class="cu-item" wx:for='{{logList}}'>
+    <view class="content">
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-cyan">{{item.createDate}}</view>
+      </view>
+      <view class="margin-top">
+        <image src='{{uploadFile+item.imagePath}}' style='width:540rpx;height:480rpx;'></image>
+      </view>
+      <view class="margin-top">{{item.content}}</view>
+    </view>
+  </view>
+  <view class="cu-item" wx:if='{{!logList}}'>
+    暂无信息
+  </view>
+</view>

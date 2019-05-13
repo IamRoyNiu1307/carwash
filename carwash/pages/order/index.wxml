@@ -1,11 +1,11 @@
 <!--pages/order/index.wxml-->
-
+<view class="consumer" wx:if="{{role==='consumer'}}">
 <view class="topbar clear">
   <view class="topbar-item">
     <text class="{{listype=='all'?'active':''}}" id="all" bindtap='changeType'>全部订单</text>
   </view>
   <view class="topbar-item">
-    <text class="{{listype==1?'active':''}}" id="1" bindtap='changeType'>待接单</text>
+    <text class="{{listype==1?'active':''}}" id="1" bindtap='changeType'>进行中</text>
   </view>
   <view class="topbar-item">
     <text class="{{listype==2?'active':''}}" id="2" bindtap='changeType'>已完成</text>
@@ -15,26 +15,19 @@
   </view>
 </view>
 
-<view class="list">
+<view class="list" style='padding: 88rpx 10rpx 0rpx;'>
 
   <view class="list-item" wx:for="{{orderList}}" wx:key="{{item.id}}">
     <navigator url="/pages/order/index_info?orderId={{item.orderId}}" class="weui-panel weui-panel_access">
       <view class="weui-panel__hd">
         订单号: {{item.orderId}}
-        <text class="fini" wx:if="{{item.statusId === 200}}">待接单</text>
-        <text class="fini" wx:elif="{{item.statusId === 201}}">待付款</text>
-        <text class="fini" wx:elif="{{item.statusId === 202}}">已付款</text>
-        <text class="fini" wx:elif="{{item.statusId === 203}}">已完成</text>
-        <text class="fini" wx:elif="{{item.statusId === 204}}">待评价</text>
-        <text class="fini" wx:elif="{{item.statusId === 205}}">已评价</text>
-        <text class="fini" wx:elif="{{item.statusId === 206}}">已取消</text>
-        <text class="fini" wx:elif="{{item.statusId === 207}}">未接单</text>
-        <text class="fini" wx:elif="{{item.statusId === 209}}">异常单</text>
+        <text class="fini">{{item.statusName}}</text>
+        
       </view>
       <view class="weui-panel__bd">
         <view class="weui-media-box weui-media-box_appmsg">
           <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-            <image class="weui-media-box__thumb" src="{{uploadFile+item.store.faviconPath}}" />
+            <image class="weui-media-box__thumb" src="{{item.store? uploadFile+item.store.faviconPath:'/image/shop-temp.png'}}" />
           </view>
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
             <view class="weui-media-box__title">{{item.store.storeName}}</view>
@@ -49,13 +42,15 @@
         <view class="weui-cell__bd"></view>
         <view class="weui-cell__ft">
         <view class=''>
-          <view class="list-button" wx:if="{{item.statusId === 200 || item.statusId === 201 || item.statusId === 202}}" bindtap="cancelOrder" id="{{item.sn}}">取消订单</view>
-          <view class="list-button" wx:if="{{item.statusId === 200 || item.statusId === 201 || item.statusId === 202}}" bindtap="payOrder" id="{{item.orderId}}">确认付款</view>
+          <view class="list-button" wx:if="{{item.statusId === 200 || item.statusId === 201 || item.statusId === 202}}" bindtap="cancelOrder" id="{{item.orderId}}">取消订单</view>
+          <view class="list-button" wx:if="{{item.statusId === 201}}" bindtap="payOrder" id="{{item.orderId}}">确认付款</view>
+          <navigator url="/pages/order/traceOrder?orderId={{item.orderId}}" class="list-button" wx:if="{{item.statusId === 208||item.statusId === 203||item.statusId === 211||item.statusId === 212||item.statusId === 213}}" id="{{item.orderId}}">追踪订单</navigator>
+          <navigator url="{{'/pages/order/index_comit?orderId='+item.orderId}}" class="list-button" wx:if="{{item.statusId === 203||item.statusId === 204}}" id="{{item.orderId}}">评价</navigator>
           
         </view>
           
 
-          <navigator url="/pages/order/index_comit?sn={{item.sn}}" wx:if="{{item.status === 2}}">
+          <navigator url="/pages/order/index_comit?orderId={{item.orderId}}" wx:if="{{item.statusId === 204}}">
             <view class="list-button list-button-act">去评价</view>
           </navigator>
         </view>
@@ -63,4 +58,54 @@
     </view>
   </view>
 
+</view>
+</view>
+<view class='worker' wx:if="{{role==='worker'}}">
+<view class="list" style='padding: 10rpx 10rpx 0rpx;'>
+
+  <view class="list-item" wx:for="{{orderInfoList}}" wx:key="item.id">
+    <navigator url="/pages/order/index_info_worker?orderId={{item.order.orderId}}" class="weui-panel">
+      <view class="weui-panel__hd">
+        订单号: {{item.order.orderId}}
+        <!-- <text class="wait">待接单</text>
+        <text class="fini" hidden="1">已完成</text>
+        <text class="fini" hidden="1">已取消</text> -->
+        <text class="fini" >{{item.order.statusName}}</text>
+        
+      </view>
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_appmsg">
+          <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+            <image class="weui-media-box__thumb" src="{{uploadFile+item.carImage[0].imageUrl}}" />
+          </view>
+          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+            <view class="weui-media-box__title">手机: {{item.order.consumerAccount}}</view>
+            <view class="weui-media-box__desc" style="margin-top:8rpx;">类型: {{item.order.typeName}}</view>
+            <view class="weui-media-box__desc" style="margin-top:8rpx;">备注: {{item.order.orderComment}}</view>
+            <view class="weui-media-box__desc" style="margin-top:8rpx;">预约时间: {{item.order.appointmentTime}}</view>
+          </view>
+        </view>
+      </view>
+    </navigator>
+    <view class="weui-panel__ft">
+      <view class="weui-cell weui-cell_access weui-cell_link">
+        <view class="weui-cell__bd"></view>
+        <view class="weui-cell__ft">
+          <view class="list-button list-button-act" wx:if="{{item.order.statusId === 208||item.order.statusId === 211||item.order.statusId === 212}}" id="{{item.order.orderId}}" bindtap="showModal">更新进度</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+<view class="modals modals-bottom-dialog" hidden="{{hideModal}}">
+    <view class="modals-cancel" bindtap="hideModal"></view>
+    <view class="bottom-dialog-body bottom-pos" animation="{{animationData}}">
+    <button id='b1' class="btn b1" bindtap="updateOrder">已取车</button>
+    <button id='b2' class="btn b1" bindtap="updateOrder">已洗车</button>
+    <button id='b3' class="btn b1" bindtap="updateOrder">已还车</button>
+    <button wx:if="{{disabled==true}}" class="btn b2" bindtap="finishMission">配送完成</button>
+</view>
+</view>
 </view>

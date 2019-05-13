@@ -56,23 +56,24 @@ public class StoreController extends BaseController {
     @ResponseBody
     public TableDataInfo list(Store store) {
         Long userId = ShiroUtils.getSysUser().getUserId();
-        Long roleId = userService.selectRoleIdByUserId(userId);
+        List<Long> roleId = userService.selectRoleIdByUserId(userId);
         //如果登录用户的角色是管理员，查看所有门店
-        if (roleId == Role_MERCHANT) {
-            startPage();
-            List<Store> list = storeService.selectStoreList(store);
+        for(Long each : roleId) {
+            if (each == 1L) {
+                startPage();
+                List<Store> list = storeService.selectStoreList(store);
 
-            return getDataTable(list);
+                return getDataTable(list);
+            }
         }
         //如果登录用户的角色是商家，查看该商家创建的所有门店
-        else {
-            User user = userService.selectUserById(userId);
-            store.setOwnerAccount(user.getLoginName());
-            startPage();
-            List<Store> list = storeService.selectStoreList(store);
+        User user = userService.selectUserById(userId);
+        store.setOwnerAccount(user.getLoginName());
+        startPage();
+        List<Store> list = storeService.selectStoreList(store);
 
-            return getDataTable(list);
-        }
+        return getDataTable(list);
+
     }
 
 

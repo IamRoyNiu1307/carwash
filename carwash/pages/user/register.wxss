@@ -1,4 +1,7 @@
 /* pages/user/register.wxss */
+page{
+  background: white;
+}
 .top_bind {
   background: #f5f5f5;
   color: #999;

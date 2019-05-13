@@ -2,6 +2,7 @@ package com.aaa.project.system.carImage.service;
 
 import com.aaa.common.exception.file.FileNameLengthLimitExceededException;
 import com.aaa.common.support.Convert;
+import com.aaa.framework.config.FileUploadConfig;
 import com.aaa.project.system.carImage.domain.CarImage;
 import com.aaa.project.system.carImage.mapper.CarImageMapper;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
@@ -13,8 +14,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.aaa.common.utils.file.FileUploadUtils.upload;
-import static com.aaa.project.myconst.MyConst.CAR_IMAGE_DIR;
-import static com.aaa.project.myconst.MyConst.UPLOAD_CAR_IMAGE;
 
 /**
  * 汽车图片 服务层实现
@@ -26,6 +25,8 @@ import static com.aaa.project.myconst.MyConst.UPLOAD_CAR_IMAGE;
 public class CarImageServiceImpl implements ICarImageService {
     @Autowired
     private CarImageMapper carImageMapper;
+    @Autowired
+    private FileUploadConfig config;
 
     /**
      * 查询汽车图片信息
@@ -92,7 +93,7 @@ public class CarImageServiceImpl implements ICarImageService {
     @Override
     public String UpdateCarImageByCarInfoId(int carInfoId, MultipartFile file) throws FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
         //得到文件路径
-        String url = CAR_IMAGE_DIR + upload(UPLOAD_CAR_IMAGE, file, ".jpg");
+        String url = config.getCarImageDir() + upload(config.getUploadCarImage(), file, ".jpg");
         // 组合一个carImage对象
         CarImage carImage = new CarImage();
         carImage.setCarInfoId(carInfoId);
