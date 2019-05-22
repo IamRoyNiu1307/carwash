@@ -4200,6 +4200,8 @@ INSERT INTO `cw_status` VALUES (502, '已停用');
 INSERT INTO `cw_status` VALUES (509, '异常');
 INSERT INTO `cw_status` VALUES (600, '空闲');
 INSERT INTO `cw_status` VALUES (601, '占用');
+INSERT INTO `cw_status` VALUES (602, '打开待存');
+INSERT INTO `cw_status` VALUES (603, '打开待取');
 
 -- ----------------------------
 -- Table structure for cw_store
