@@ -76,6 +76,10 @@ public class MyConst {
     public static final Integer STATUS_ACCOUNT_UNCHECK = 500;
     //格子状态：占用
     public static final Integer STATUS_BOX_USED = 601;
+    //格子状态：打开待存
+    public static final Integer STATUS_BOX_STORE = 602;
+    //格子状态：打开待取
+    public static final Integer STATUS_BOX_TAKE = 603;
     //格子状态：空闲
     public static final Integer STATUS_BOX_FREE = 600;
     //洗车员位置更新最大间隔

@@ -38,6 +38,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectContainerBoxVo"/>
         where uuid = #{uuid} and status_id = 600 limit 1
     </select>
+
+    <select id="selectOpenBox" parameterType="String" resultMap="ContainerBoxResult">
+        <include refid="selectContainerBoxVo"/>
+        where uuid = #{uuid} and status_id in (602,603)  limit 1
+    </select>
         
     <insert id="insertContainerBox" parameterType="ContainerBox">
         insert into cw_container_box

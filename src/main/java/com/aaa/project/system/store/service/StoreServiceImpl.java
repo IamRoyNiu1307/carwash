@@ -11,6 +11,7 @@ import com.aaa.project.system.store.domain.Store;
 import com.aaa.project.system.store.mapper.StoreMapper;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +29,7 @@ import static com.aaa.project.myconst.MyConst.*;
  * @date 2019-04-18
  */
 @Service
+@Cacheable(value = "StoreCache")
 public class StoreServiceImpl implements IStoreService {
     @Autowired
     private CitiesMapper citiesMapper;
@@ -55,6 +57,7 @@ public class StoreServiceImpl implements IStoreService {
      * @return 结果
      */
     @Override
+    @Cacheable(value = "selectStoreByLoginName")
     public List<Store> selectStoreByLoginName(String loginName) {
         return storeMapper.selectStoreByLoginName(loginName);
     }
@@ -68,6 +71,7 @@ public class StoreServiceImpl implements IStoreService {
     @Override
     public List<Store> selectStoreList(Store store) {
         return storeMapper.selectStoreList(store);
+
     }
 
     @Override

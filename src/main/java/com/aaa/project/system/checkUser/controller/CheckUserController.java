@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -44,8 +45,13 @@ public class CheckUserController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list() {
+        System.out.println("--------------------start query--------------------");
+        Date start = new Date();
         startPage();
         List<CheckUser> list = checkUserService.selectCheckUserList();
+        long l = new Date().getTime() - start.getTime();
+        System.out.println("--------------------end query--------------------");
+        System.out.println("--------------------use:"+l+"--------------------");
         return getDataTable(list);
     }
 

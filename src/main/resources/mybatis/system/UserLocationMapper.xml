@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectUserLocationVo">
         select id, user_account, pos_lng, pos_lat, update_datetime from cw_user_location
     </sql>
-	
+<!--    <cache eviction="LRU" type="com.aaa.framework.redis.RedisCache"></cache>-->
     <select id="selectUserLocationList" parameterType="UserLocation" resultMap="UserLocationResult">
         <include refid="selectUserLocationVo"/>
         <where>  

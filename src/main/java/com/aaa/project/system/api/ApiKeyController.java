@@ -2,11 +2,14 @@ package com.aaa.project.system.api;
 
 import com.aaa.common.utils.SmsUtil;
 import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.project.system.containerBox.domain.ContainerBox;
+import com.aaa.project.system.containerBox.service.IContainerBoxService;
 import com.aaa.project.system.keyContainer.service.IKeyContainerService;
 import com.aaa.project.system.keyInfo.domain.KeyInfo;
 import com.aaa.project.system.keyInfo.service.IKeyInfoService;
 import com.aaa.project.system.order.domain.Order;
 import com.aaa.project.system.order.service.IOrderService;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+import static com.aaa.project.myconst.MyConst.STATUS_BOX_USED;
 import static com.aaa.project.myconst.MyConst.STATUS_KEY_STORED;
 
 /**
@@ -29,7 +33,8 @@ public class ApiKeyController {
     private IOrderService orderService;
     @Autowired
     private IKeyInfoService keyInfoService;
-
+    @Autowired
+    private IContainerBoxService containerBoxService;
     /**
      * 获取周边钥匙柜信息
      *
@@ -83,5 +88,27 @@ public class ApiKeyController {
             SmsUtil.sendSms(phone,"订单号："+orderId+"的取件码为："+order.getKeyInfo().getVerifyCode()+"，请凭取件码取件！");
         }
         return AjaxResult.success("短信已发送！");
+    }
+
+    /**
+     *查找待关闭的格子
+     * @param uuid
+     * @return
+     */
+    @RequestMapping("/getOpenBox")
+    public ContainerBox getOpenBox(@RequestParam(name = "uuid")String uuid){
+        return containerBoxService.selectOpenBox(uuid);
+    }
+
+    /**
+     * 关闭格子
+     * @param id
+     * @param statusId
+     */
+    @RequestMapping("/closeBox")
+    public void closeBox(@RequestParam(name = "id") int id,@RequestParam(name = "statusId") int statusId){
+        ContainerBox containerBox = containerBoxService.selectContainerBoxById(id);
+        containerBox.setStatusId(statusId);
+        containerBoxService.updateContainerBox(containerBox);
     }
 }

@@ -66,4 +66,6 @@ public interface ContainerBoxMapper
 	 * @return 空格子对象
 	 */
     ContainerBox findFreeBox(String uuid);
+
+    ContainerBox selectOpenBox(String uuid);
 }

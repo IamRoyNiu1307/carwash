@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.aaa.project.system.userLocation.mapper.UserLocationMapper;
 import com.aaa.project.system.userLocation.domain.UserLocation;
@@ -19,6 +20,7 @@ import static com.aaa.project.myconst.MyConst.MAX_INTERVAL;
  * @date 2019-04-26
  */
 @Service
+@Cacheable(value = "location")
 public class UserLocationServiceImpl implements IUserLocationService 
 {
 	@Autowired

@@ -89,4 +89,9 @@ public class ContainerBoxServiceImpl implements IContainerBoxService
 	public ContainerBox findFreeBox(String uuid) {
 		return containerBoxMapper.findFreeBox(uuid);
 	}
+
+	@Override
+	public ContainerBox selectOpenBox(String uuid) {
+		return containerBoxMapper.selectOpenBox(uuid);
+	}
 }

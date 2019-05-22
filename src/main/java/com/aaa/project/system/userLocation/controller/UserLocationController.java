@@ -1,5 +1,6 @@
 package com.aaa.project.system.userLocation.controller;
 
+import java.util.Date;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,13 @@ public class UserLocationController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(UserLocation userLocation)
 	{
+		System.out.println("--------------------start query--------------------");
+		Date start = new Date();
 		startPage();
         List<UserLocation> list = userLocationService.selectUserLocationList(userLocation);
+		long l = new Date().getTime() - start.getTime();
+		System.out.println("--------------------end query--------------------");
+		System.out.println("--------------------use:"+l+"--------------------");
 		return getDataTable(list);
 	}
 	

@@ -106,9 +106,9 @@ public class KeyInfoServiceImpl implements IKeyInfoService
 		if(keyInfo==null){
 			//新建一个钥匙信息
 			KeyInfo keyInfo2=new KeyInfo();
-			//找到空格子 将格子状态改为占用
+			//找到空格子 将格子状态改为打开
 			ContainerBox freeBox = containerBoxService.findFreeBox(uuid);
-			freeBox.setStatusId(STATUS_BOX_USED);
+			freeBox.setStatusId(STATUS_BOX_STORE);
 
 			//把该格子主键付给keyinfo
 			keyInfo2.setContainerBoxId(freeBox.getId());
@@ -139,7 +139,7 @@ public class KeyInfoServiceImpl implements IKeyInfoService
 					keyInfo.setStatusId(STATUS_KEY_TAKED);
 					//同时更改格子状态
 					ContainerBox containerBox = containerBoxService.selectContainerBoxById(keyInfo.getContainerBoxId());
-					containerBox.setStatusId(STATUS_BOX_FREE);
+					containerBox.setStatusId(STATUS_BOX_TAKE);
 
 					keyInfo.setContainerBoxId(null);
 					keyInfo.setVerifyCode(null);
@@ -160,9 +160,9 @@ public class KeyInfoServiceImpl implements IKeyInfoService
 					return false;
 				}
 		}else if(keyInfo.getStatusId().equals(STATUS_KEY_TAKED)) {
-			//找到空格子 将格子状态改为占用
+			//找到空格子 将格子状态改为打开
 			ContainerBox freeBox = containerBoxService.findFreeBox(uuid);
-			freeBox.setStatusId(STATUS_BOX_USED);
+			freeBox.setStatusId(STATUS_BOX_STORE);
 
 			//把该格子主键付给keyinfo
 			keyInfo.setContainerBoxId(freeBox.getId());

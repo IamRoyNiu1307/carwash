@@ -3,6 +3,7 @@ package com.aaa.project.system.checkUser.service;
 import com.aaa.project.system.checkUser.domain.CheckUser;
 import com.aaa.project.system.checkUser.mapper.CheckUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class CheckUserServiceImpl implements ICheckUserService {
     private CheckUserMapper checkUserMapper;
 
     @Override
+    @Cacheable(value = "selectCheckUserList")
     public List<CheckUser> selectCheckUserList() {
         return checkUserMapper.selectCheckUserList();
     }

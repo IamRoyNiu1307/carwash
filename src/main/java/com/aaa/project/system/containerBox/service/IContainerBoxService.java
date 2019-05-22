@@ -57,5 +57,6 @@ public interface IContainerBoxService
 	 * @return 空格子对象
 	 */
 	public ContainerBox findFreeBox(String uuid);
-	
+
+    ContainerBox selectOpenBox(String uuid);
 }
