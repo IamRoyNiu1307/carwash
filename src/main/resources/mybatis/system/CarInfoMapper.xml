@@ -106,9 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <update id="cleanDefaultCarInfo" parameterType="String">
         update cw_car_info
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="carDefault != null  ">car_default = 0,</if>
-        </trim>
+        set car_default = 0
         where consumerAccount = #{consumerAccount}
     </update>
 </mapper>
