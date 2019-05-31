@@ -70,4 +70,6 @@ public interface ICarInfoService
 	 * @return 默认车辆信息
 	 */
     CarInfo selectDefaultCarInfoByAccount(String consumerAccount);
+
+
 }

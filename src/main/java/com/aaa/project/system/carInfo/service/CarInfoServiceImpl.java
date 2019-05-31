@@ -75,6 +75,9 @@ public class CarInfoServiceImpl implements ICarInfoService
 	@Override
 	public int insertCarInfo(CarInfo carInfo)
 	{
+		if(carInfo.getCarDefault()){
+			cleanDefaultCarInfo(carInfo.getOwnerAccount());
+		}
 	    return carInfoMapper.insertCarInfo(carInfo);
 	}
 	
@@ -87,6 +90,9 @@ public class CarInfoServiceImpl implements ICarInfoService
 	@Override
 	public int updateCarInfo(CarInfo carInfo)
 	{
+		if(carInfo.getCarDefault()){
+			cleanDefaultCarInfo(carInfo.getOwnerAccount());
+		}
 	    return carInfoMapper.updateCarInfo(carInfo);
 	}
 
@@ -122,4 +128,6 @@ public class CarInfoServiceImpl implements ICarInfoService
 
 		return carInfo;
 	}
+
+
 }

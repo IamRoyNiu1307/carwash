@@ -49,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectDefaultCarInfoByAccount" parameterType="string" resultMap="CarInfoResult">
         <include refid="selectCarInfoVo"/>
         where owner_account = #{owner_account} and car_default=1
+        limit 1
     </select>
         
     <insert id="insertCarInfo" useGeneratedKeys="true" keyProperty="id" parameterType="CarInfo">
